@@ -8,11 +8,16 @@ using BusinessLayer.Utilities;
 
 namespace BusinessLayer.Entities {
     public class Bestuurder {
-        public Bestuurder(string naam, string voornaam, DateTime geboorteDatum, string rijksregisterNummer, string rijbewijs) {
+        public Bestuurder(string naam, string voornaam, DateTime geboorteDatum, string rijksregisternummer, string rijbewijs, int? postcode = null, string gemeente = null, string straat = null, string huisnummer = null)
+        {
             UpdateNaam(naam);
             UpdateVoornaam(voornaam);
+            UpdatePostcode(postcode);
+            UpdateGemeente(gemeente);
+            UpdateStraat(straat);
+            UpdateStraat(huisnummer);
             GeboorteDatum = geboorteDatum;
-            UpdateRijksregisternummer(rijksregisterNummer);
+            UpdateRijksregisternummer(rijksregisternummer);
             UpdateRijbewijs(rijbewijs);
         }
 
@@ -47,7 +52,7 @@ namespace BusinessLayer.Entities {
             }
         }
 
-        public void UpdatePostcode(int postcode) {
+        public void UpdatePostcode(int? postcode) {
             if (Postcode != postcode) {
                 Postcode = postcode;
             } else {
@@ -80,7 +85,7 @@ namespace BusinessLayer.Entities {
         }
 
         public void UpdateRijksregisternummer(string rijksregisternummer) {
-            if (!string.IsNullOrWhiteSpace(rijksregisternummer) && RijksregisterNummer != rijksregisternummer && RijksregisternummerControleren.ValidatieRijkregisternummer(rijksregisternummer)) {
+            if (!string.IsNullOrWhiteSpace(rijksregisternummer) && RijksregisterNummer != rijksregisternummer && Controls.ValidatieRijkregisternummer(rijksregisternummer)) {
                 RijksregisterNummer = rijksregisternummer;
             } else {
                 throw new BestuurderException(""); // Message nog in te vullen

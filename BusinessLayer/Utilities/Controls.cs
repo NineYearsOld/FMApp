@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Utilities
 {
-    public class RijksregisternummerControleren
+    public class Controls
     {
         public static bool ValidatieRijkregisternummer(string rijksregisternr)
         { // Zou correct moeten zijn.

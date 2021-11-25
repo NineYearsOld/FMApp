@@ -56,40 +56,48 @@ namespace DataAccessLayer.Repositories {
             SqlConnection connection = getConnection();
             using(SqlCommand command = new SqlCommand(query, connection))
             {
-                    try
-                    {
-                        connection.Open();
-                        command.Parameters.Add(new SqlParameter("@naam", SqlDbType.NVarChar));
-                        command.Parameters.Add(new SqlParameter("@voornaam", SqlDbType.NVarChar));
-                        command.Parameters.Add(new SqlParameter("@postcode", SqlDbType.Int));
-                        command.Parameters.Add(new SqlParameter("@gemeente", SqlDbType.NVarChar));
-                        command.Parameters.Add(new SqlParameter("@straat", SqlDbType.NVarChar));
-                        command.Parameters.Add(new SqlParameter("@huisnummer", SqlDbType.NVarChar));
-                        command.Parameters.Add(new SqlParameter("@geboortedatum", SqlDbType.DateTime));
-                        command.Parameters.Add(new SqlParameter("@rijksregisternummer", SqlDbType.NVarChar));
-                        command.Parameters.Add(new SqlParameter("@rijbewijs", SqlDbType.NVarChar));
+                try
+                {
+                    connection.Open();
+                    command.Parameters.Add(new SqlParameter("@naam", SqlDbType.NVarChar));
+                    command.Parameters.Add(new SqlParameter("@voornaam", SqlDbType.NVarChar));
+                    SqlParameter _postcode = new SqlParameter("@postcode", SqlDbType.Int);
+                    _postcode.IsNullable = true;
+                    command.Parameters.Add(_postcode);
+                    SqlParameter _gemeente = new SqlParameter("@gemeente", SqlDbType.NVarChar);
+                    _gemeente.IsNullable = true;
+                    command.Parameters.Add(_gemeente);
+                    SqlParameter _straat = new SqlParameter("@straat", SqlDbType.NVarChar);
+                    _straat.IsNullable = true;
+                    command.Parameters.Add(_straat);
+                    SqlParameter _huisnummer = new SqlParameter("@huisnummer", SqlDbType.NVarChar);
+                    _huisnummer.IsNullable = true;
+                    command.Parameters.Add(_huisnummer);
+                    command.Parameters.Add(new SqlParameter("@geboortedatum", SqlDbType.DateTime));
+                    command.Parameters.Add(new SqlParameter("@rijksregisternummer", SqlDbType.NVarChar));
+                    command.Parameters.Add(new SqlParameter("@rijbewijs", SqlDbType.NVarChar));
 
-                        command.Parameters["@naam"].Value = bestuurder.Naam;
-                        command.Parameters["@voornaam"].Value = bestuurder.Voornaam;
-                        command.Parameters["@postcode"].Value = bestuurder.Postcode;
-                        command.Parameters["@gemeente"].Value = bestuurder.Gemeente;
-                        command.Parameters["@straat"].Value = bestuurder.Straat;
-                        command.Parameters["@huisnummer"].Value = bestuurder.Huisnummer;
-                        command.Parameters["@geboortedatum"].Value = bestuurder.GeboorteDatum;
-                        command.Parameters["@rijksregisternummer"].Value = bestuurder.RijksregisterNummer;
-                        command.Parameters["@rijbewijs"].Value = bestuurder.Rijbewijs;
+                    command.Parameters["@naam"].Value = bestuurder.Naam;
+                    command.Parameters["@voornaam"].Value = bestuurder.Voornaam;
+                    command.Parameters["@postcode"].Value = bestuurder.Postcode;
+                    command.Parameters["@gemeente"].Value = bestuurder.Gemeente;
+                    command.Parameters["@straat"].Value = bestuurder.Straat;
+                    command.Parameters["@huisnummer"].Value = bestuurder.Huisnummer;
+                    command.Parameters["@geboortedatum"].Value = bestuurder.GeboorteDatum;
+                    command.Parameters["@rijksregisternummer"].Value = bestuurder.RijksregisterNummer;
+                    command.Parameters["@rijbewijs"].Value = bestuurder.Rijbewijs;
 
-                        command.ExecuteNonQuery();
-                    }
-                    catch (Exception)
-                    {
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
 
-                    }
-                    finally
-                    {
-                        connection.Close();
+                }
+                finally
+                {
+                    connection.Close();
                         
-                    }
+                }
 
             }
         }
