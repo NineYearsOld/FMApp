@@ -5,10 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UI"
         mc:Ignorable="d"
-        Title="BestuurdersBeheer" Height="450" Width="800">
+        Title="BestuurdersBeheer" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid>
-        <Button x:Name="btn_back" Content="Terug" HorizontalAlignment="Left" Margin="44,21,0,0" VerticalAlignment="Top" Click="btn_back_Click"/>
-        <Button x:Name="btn_BestuurderToevoegen" Content="Bestuurder aanmaken" HorizontalAlignment="Left" Margin="44,381,0,0" VerticalAlignment="Top" Click="btn_BestuurderToevoegen_Click"/>
+        <Button x:Name="btn_back" Content="Terug" HorizontalAlignment="Left" Margin="757,10,0,0" VerticalAlignment="Top" Click="btn_back_Click"/>
+        <Button x:Name="btn_BestuurderToevoegen" Content="Bestuurder aanmaken" HorizontalAlignment="Left" Margin="181,376,0,0" VerticalAlignment="Top" Click="btn_BestuurderToevoegen_Click" Width="120"/>
+        <TextBox x:Name="tbk_Naam" HorizontalAlignment="Left" Margin="182,109,0,0" Text="Salvini" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbk_Voornaam" HorizontalAlignment="Left" Margin="182,132,0,0" Text="Mateo" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbk_Huisnummer" HorizontalAlignment="Left" Margin="182,155,0,0" Text="58" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbk_Straat" HorizontalAlignment="Left" Margin="182,178,0,0" Text="DaVinci" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="cmb_Rijbewijs" HorizontalAlignment="Left" Margin="181,82,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="cmb_Gemeente" HorizontalAlignment="Left" Margin="182,201,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbk_Postcode" HorizontalAlignment="Left" Margin="182,228,0,0" Text="8640" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbk_Rijksregnr" HorizontalAlignment="Left" Margin="182,251,0,0" Text="00120200152" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <DatePicker x:Name="dpk_gebDatum" HorizontalAlignment="Left" Margin="181,274,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBlock HorizontalAlignment="Left" Margin="91,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="fr-be" Text="Rijbewijs"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="91,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="fr-be" Text="Naam"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="91,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="fr-be" Text="Huisnummer"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="91,133,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="fr-be" Text="Voornaam"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="91,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="fr-be" Text="Straat"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="91,204,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="fr-be" Text="Gemeente"/><LineBreak/><Run Language="fr-be"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="91,229,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="fr-be" Text="Postcode"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="91,252,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Rijksregnr"/>
+        <TextBlock HorizontalAlignment="Left" Margin="91,278,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="fr-be" Text="Geboortedatum"/></TextBlock>
 
 
     </Grid>

@@ -8,14 +8,14 @@ using BusinessLayer.Utilities;
 
 namespace BusinessLayer.Entities {
     public class Bestuurder {
-        public Bestuurder(string naam, string voornaam, DateTime geboorteDatum, string rijksregisternummer, string rijbewijs, int? postcode = null, string gemeente = null, string straat = null, string huisnummer = null)
+        public Bestuurder(string naam, string voornaam, DateTime geboorteDatum, string rijksregisternummer, string rijbewijs, string gemeente, string straat, string huisnummer, int? postcode = null)
         {
             UpdateNaam(naam);
             UpdateVoornaam(voornaam);
             UpdatePostcode(postcode);
             UpdateGemeente(gemeente);
             UpdateStraat(straat);
-            UpdateStraat(huisnummer);
+            UpdateHuisnummer(huisnummer);
             GeboorteDatum = geboorteDatum;
             UpdateRijksregisternummer(rijksregisternummer);
             UpdateRijbewijs(rijbewijs);
@@ -55,8 +55,13 @@ namespace BusinessLayer.Entities {
         public void UpdatePostcode(int? postcode) {
             if (Postcode != postcode) {
                 Postcode = postcode;
-            } else {
-                throw new BestuurderException(""); // Message nog in te vullen
+            }
+            else if (postcode == null)
+            {
+                Postcode = null;
+            }
+            else {
+                throw new BestuurderException("blablablabkakak"); // Message nog in te vullen
             }
         }
 
@@ -85,7 +90,7 @@ namespace BusinessLayer.Entities {
         }
 
         public void UpdateRijksregisternummer(string rijksregisternummer) {
-            if (!string.IsNullOrWhiteSpace(rijksregisternummer) && RijksregisterNummer != rijksregisternummer && Controls.ValidatieRijkregisternummer(rijksregisternummer)) {
+            if (!string.IsNullOrWhiteSpace(rijksregisternummer) && RijksregisterNummer != rijksregisternummer /*&& Controls.ValidatieRijkregisternummer(rijksregisternummer)*/) {
                 RijksregisterNummer = rijksregisternummer;
             } else {
                 throw new BestuurderException(""); // Message nog in te vullen

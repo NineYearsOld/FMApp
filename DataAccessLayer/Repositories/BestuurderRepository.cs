@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
+using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using BusinessLayer.Entities;
 using BusinessLayer.Interfaces;
@@ -56,22 +56,29 @@ namespace DataAccessLayer.Repositories {
             SqlConnection connection = getConnection();
             using(SqlCommand command = new SqlCommand(query, connection))
             {
+                //TODO: Use transactions
                 try
                 {
                     connection.Open();
+                    
                     command.Parameters.Add(new SqlParameter("@naam", SqlDbType.NVarChar));
                     command.Parameters.Add(new SqlParameter("@voornaam", SqlDbType.NVarChar));
-                    SqlParameter _postcode = new SqlParameter("@postcode", SqlDbType.Int);
+                    SqlParameter _postcode = new SqlParameter("@postcode", bestuurder.Postcode == null ? DBNull.Value : bestuurder.Postcode);
                     _postcode.IsNullable = true;
+                    _postcode.Direction = ParameterDirection.Input;
+                    _postcode.SqlDbType = SqlDbType.Int;
                     command.Parameters.Add(_postcode);
-                    SqlParameter _gemeente = new SqlParameter("@gemeente", SqlDbType.NVarChar);
-                    _gemeente.IsNullable = true;
+                    SqlParameter _gemeente = new SqlParameter("@gemeente", bestuurder.Gemeente == string.Empty ? DBNull.Value : bestuurder.Gemeente);
+                    _gemeente.Direction = ParameterDirection.Input;
+                    _gemeente.SqlDbType = SqlDbType.NVarChar;
                     command.Parameters.Add(_gemeente);
-                    SqlParameter _straat = new SqlParameter("@straat", SqlDbType.NVarChar);
-                    _straat.IsNullable = true;
+                    SqlParameter _straat = new SqlParameter("@straat", bestuurder.Straat == string.Empty ? DBNull.Value : bestuurder.Straat);
+                    _straat.Direction = ParameterDirection.Input;
+                    _straat.SqlDbType = SqlDbType.NVarChar;                  
                     command.Parameters.Add(_straat);
-                    SqlParameter _huisnummer = new SqlParameter("@huisnummer", SqlDbType.NVarChar);
-                    _huisnummer.IsNullable = true;
+                    SqlParameter _huisnummer = new SqlParameter("@huisnummer", bestuurder.Huisnummer == string.Empty ? DBNull.Value : bestuurder.Huisnummer);
+                    _huisnummer.Direction = ParameterDirection.Input;
+                    _huisnummer.SqlDbType = SqlDbType.NVarChar;
                     command.Parameters.Add(_huisnummer);
                     command.Parameters.Add(new SqlParameter("@geboortedatum", SqlDbType.DateTime));
                     command.Parameters.Add(new SqlParameter("@rijksregisternummer", SqlDbType.NVarChar));
@@ -79,10 +86,6 @@ namespace DataAccessLayer.Repositories {
 
                     command.Parameters["@naam"].Value = bestuurder.Naam;
                     command.Parameters["@voornaam"].Value = bestuurder.Voornaam;
-                    command.Parameters["@postcode"].Value = bestuurder.Postcode;
-                    command.Parameters["@gemeente"].Value = bestuurder.Gemeente;
-                    command.Parameters["@straat"].Value = bestuurder.Straat;
-                    command.Parameters["@huisnummer"].Value = bestuurder.Huisnummer;
                     command.Parameters["@geboortedatum"].Value = bestuurder.GeboorteDatum;
                     command.Parameters["@rijksregisternummer"].Value = bestuurder.RijksregisterNummer;
                     command.Parameters["@rijbewijs"].Value = bestuurder.Rijbewijs;
@@ -167,7 +170,7 @@ namespace DataAccessLayer.Repositories {
                     command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
                     IDataReader reader = command.ExecuteReader();
                     reader.Read();
-                    bestuurder = new Bestuurder((string)reader["naam"], (string)reader["voornaam"], (DateTime)reader["geboortedatum"], (string)reader["rijksregisternummer"], (string)reader["rijbewijs"]);
+                    bestuurder = new Bestuurder((string)reader["naam"], (string)reader["voornaam"], (DateTime)reader["geboortedatum"], (string)reader["rijksregisternummer"], (string)reader["rijbewijs"], (string)reader["gemeente"], (string)reader["straat"], (string)reader["huisnummer"], (int?)reader["postcode"]);
                 }
                 catch (Exception)
                 {

@@ -15,11 +15,11 @@ namespace BusinessLayer.Services {
             this.repo = repo;
         }
 
-        public Bestuurder CreateBestuurder(string naam, string voornaam, DateTime geboorteDatum, string rijbewijs, string rijksregisternr, int? postcode = null, string gemeente = null, string straat = null, string huisNummer = null) {
+        public Bestuurder CreateBestuurder(string naam, string voornaam, DateTime geboorteDatum, string rijbewijs, string rijksregisternr, string gemeente, string straat, string huisNummer, int? postcode = null) {
             try {
-                if (!string.IsNullOrWhiteSpace(naam) && !string.IsNullOrWhiteSpace(voornaam) && !string.IsNullOrWhiteSpace(rijbewijs) && Controls.ValidatieRijkregisternummer(rijksregisternr)) {
+                if (!string.IsNullOrWhiteSpace(naam) && !string.IsNullOrWhiteSpace(voornaam) && !string.IsNullOrWhiteSpace(rijbewijs)) {
 
-                    Bestuurder b = new Bestuurder(naam, voornaam, geboorteDatum, rijksregisternr, rijbewijs, postcode, gemeente, straat, huisNummer);
+                    Bestuurder b = new Bestuurder(naam, voornaam, geboorteDatum, rijksregisternr, rijbewijs, gemeente, straat, huisNummer, postcode);
                     // DB Create
                     // Id uit db invullen
                     repo.CreateBestuurder(b);
