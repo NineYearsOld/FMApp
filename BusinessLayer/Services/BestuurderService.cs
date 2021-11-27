@@ -28,7 +28,6 @@ namespace BusinessLayer.Services {
                 } else {
                     throw new BestuurderException("blabla.");
                 }
-                return null;
             } catch (Exception) {
 
                 throw;
