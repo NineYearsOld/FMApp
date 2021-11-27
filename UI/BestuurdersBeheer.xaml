@@ -35,6 +35,10 @@
         <Label x:Name="lbl_Rijbewijzen" Content="" HorizontalAlignment="Left" Margin="182,78,0,0" VerticalAlignment="Top" Width="110" BorderThickness="1,1,1,1" BorderBrush="LightSlateGray" Height="28"/>
         <Button x:Name="btn_RijbewijzenWissen" Content="Wissen" HorizontalAlignment="Left" Margin="297,78,0,0" VerticalAlignment="Top" Width="44" Height="28" Click="btn_RijbewijzenWissen_Click"/>
         <Button x:Name="btn_BestuurderAanpassen" Content="Bestuurder aanpassen" HorizontalAlignment="Left" Margin="91,388,0,0" VerticalAlignment="Top" Width="123" Click="btn_BestuurderAanpassen_Click"/>
+        <Label x:Name="lbl_BestuurderDetails" HorizontalAlignment="Left" Margin="453,52,0,0" VerticalAlignment="Top" Height="246" Width="281" BorderThickness="1,1,1,1" BorderBrush="LightSlateGray">
+            <TextBlock x:Name="tbl_BestuurderDetails" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="234" Width="270" Text=""/>
+        </Label>
+        <Button x:Name="btn_ToonDetails" Content="Toon details" HorizontalAlignment="Left" Margin="648,303,0,0" VerticalAlignment="Top" Click="btn_ToonDetails_Click" Width="86"/>
 
 
     </Grid>

@@ -111,5 +111,16 @@ namespace UI
             BestuurderService().UpdateBestuurder(b, (int)id);
             }
         }
+
+        private void btn_ToonDetails_Click(object sender, RoutedEventArgs e)
+        {
+            int? id = TryParseNullable(tbk_Id.Text);
+            if (id == null)
+            {
+                MessageBox.Show("Gelieve een id in te geven");
+            }
+            Bestuurder b = BestuurderService().ToonDetails((int)id);
+            tbl_BestuurderDetails.Text = $"{b.Naam} {b.Voornaam}\n{b.GeboorteDatum.ToShortDateString()}\nrijksregisternummer: {b.RijksregisterNummer}\nrijbewijs: {b.Rijbewijs}\ngemeente: {b.Gemeente}\nstraat: {b.Straat}\nhuisnummer: {b.Huisnummer}\npostcode: {b.Postcode}";
+        }
     }
 }

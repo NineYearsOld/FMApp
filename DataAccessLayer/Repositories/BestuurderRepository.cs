@@ -185,7 +185,7 @@ namespace DataAccessLayer.Repositories {
 
         public Bestuurder ToonDetails(int id)
         {
-            string query = "select * from dbo.bestuurders where id=@id";
+            string query = "select naam, voornaam, geboortedatum, rijksregisternummer, rijbewijs, gemeente, straat, huisnummer, postcode from dbo.bestuurders where id=@id";
             SqlConnection connection = getConnection();
             Bestuurder bestuurder;
             using (SqlCommand command = new SqlCommand(query, connection))
@@ -193,9 +193,10 @@ namespace DataAccessLayer.Repositories {
                 try
                 {
                     connection.Open();
-                    command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                    command.Parameters.AddWithValue("@id", (int)id);
                     IDataReader reader = command.ExecuteReader();
                     reader.Read();
+                    string date = reader["geboortedatum"].ToString();
                     bestuurder = new Bestuurder((string)reader["naam"], (string)reader["voornaam"], (DateTime)reader["geboortedatum"], (string)reader["rijksregisternummer"], (string)reader["rijbewijs"], (string)reader["gemeente"], (string)reader["straat"], (string)reader["huisnummer"], (int?)reader["postcode"]);
                 }
                 catch (Exception)
