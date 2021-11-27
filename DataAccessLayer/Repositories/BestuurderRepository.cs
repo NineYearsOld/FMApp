@@ -130,19 +130,45 @@ namespace DataAccessLayer.Repositories {
             }
         }
 
-        public void UpdateBestuurder(Bestuurder bestuurder)
+        public void UpdateBestuurder(Bestuurder bestuurder, int id)
         {
-            string query = "update from dbo.bestuurders set naam=@naam, where id=@id";
-            SqlConnection connection = getConnection();
+            string query = "update dbo.bestuurders set naam=@naam, voornaam = @voornaam, postcode = @postcode, gemeente = @gemeente, straat = @straat, huisnummer = @huisnummer, geboortedatum = @geboortedatum, rijksregisternummer = @rijksregisternummer, rijbewijs = @rijbewijs where id=@id";
+            SqlConnection connection = getConnection(); 
             using (SqlCommand command = new SqlCommand(query, connection))
             {
                 try
                 {
                     connection.Open();
-                    command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
-                    command.Parameters["@id"].Value = bestuurder.Id;
+                    command.Parameters.AddWithValue("@id", (int)id);
                     command.Parameters.Add(new SqlParameter("@naam", SqlDbType.NVarChar));
+                    command.Parameters.Add(new SqlParameter("@voornaam", SqlDbType.NVarChar));
+                    SqlParameter _postcode = new SqlParameter("@postcode", bestuurder.Postcode == null ? DBNull.Value : bestuurder.Postcode);
+                    _postcode.IsNullable = true;
+                    _postcode.Direction = ParameterDirection.Input;
+                    _postcode.SqlDbType = SqlDbType.Int;
+                    command.Parameters.Add(_postcode);
+                    SqlParameter _gemeente = new SqlParameter("@gemeente", bestuurder.Gemeente == string.Empty ? DBNull.Value : bestuurder.Gemeente);
+                    _gemeente.Direction = ParameterDirection.Input;
+                    _gemeente.SqlDbType = SqlDbType.NVarChar;
+                    command.Parameters.Add(_gemeente);
+                    SqlParameter _straat = new SqlParameter("@straat", bestuurder.Straat == string.Empty ? DBNull.Value : bestuurder.Straat);
+                    _straat.Direction = ParameterDirection.Input;
+                    _straat.SqlDbType = SqlDbType.NVarChar;
+                    command.Parameters.Add(_straat);
+                    SqlParameter _huisnummer = new SqlParameter("@huisnummer", bestuurder.Huisnummer == string.Empty ? DBNull.Value : bestuurder.Huisnummer);
+                    _huisnummer.Direction = ParameterDirection.Input;
+                    _huisnummer.SqlDbType = SqlDbType.NVarChar;
+                    command.Parameters.Add(_huisnummer);
+                    command.Parameters.Add(new SqlParameter("@geboortedatum", SqlDbType.DateTime));
+                    command.Parameters.Add(new SqlParameter("@rijksregisternummer", SqlDbType.NVarChar));
+                    command.Parameters.Add(new SqlParameter("@rijbewijs", SqlDbType.NVarChar));
+
                     command.Parameters["@naam"].Value = bestuurder.Naam;
+                    command.Parameters["@voornaam"].Value = bestuurder.Voornaam;
+                    command.Parameters["@geboortedatum"].Value = bestuurder.GeboorteDatum;
+                    command.Parameters["@rijksregisternummer"].Value = bestuurder.RijksregisterNummer;
+                    command.Parameters["@rijbewijs"].Value = bestuurder.Rijbewijs;
+
                     command.ExecuteNonQuery();
                 }
                 catch (Exception)

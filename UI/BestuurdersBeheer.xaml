@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterScreen">
     <Grid>
         <Button x:Name="btn_back" Content="Terug" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="btn_back_Click"/>
-        <Button x:Name="btn_BestuurderToevoegen" Content="Bestuurder aanmaken" HorizontalAlignment="Left" Margin="182,317,0,0" VerticalAlignment="Top" Click="btn_BestuurderToevoegen_Click" Width="160"/>
+        <Button x:Name="btn_BestuurderToevoegen" Content="Bestuurder aanmaken" HorizontalAlignment="Left" Margin="218,303,0,0" VerticalAlignment="Top" Click="btn_BestuurderToevoegen_Click" Width="123"/>
         <TextBox x:Name="tbk_Naam" HorizontalAlignment="Left" Margin="182,109,0,0" Text="Salvini" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
         <TextBox x:Name="tbk_Voornaam" HorizontalAlignment="Left" Margin="182,132,0,0" Text="Mateo" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
         <TextBox x:Name="tbk_Huisnummer" HorizontalAlignment="Left" Margin="182,155,0,0" Text="58" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
@@ -28,12 +28,13 @@
         <TextBlock HorizontalAlignment="Left" Margin="91,229,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="fr-be" Text="Postcode"/></TextBlock>
         <TextBlock HorizontalAlignment="Left" Margin="91,252,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Rijksregnr"/>
         <TextBlock HorizontalAlignment="Left" Margin="91,278,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="fr-be" Text="Geboortedatum"/></TextBlock>
-        <Button x:Name="btn_BestuurderVerwijderen" Content="Bestuurder verwijderen" HorizontalAlignment="Left" Margin="182,388,0,0" VerticalAlignment="Top" Width="160" Click="btn_BestuurderVerwijderen_Click"/>
+        <Button x:Name="btn_BestuurderVerwijderen" Content="Bestuurder verwijderen" HorizontalAlignment="Left" Margin="219,388,0,0" VerticalAlignment="Top" Width="123" Click="btn_BestuurderVerwijderen_Click"/>
         <TextBox x:Name="tbk_Id" HorizontalAlignment="Left" Margin="181,356,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
         <Button x:Name="btn_RijbewijsToevoegen" Content="+" HorizontalAlignment="Left" Margin="297,51,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.363,-0.048" Height="22" Width="45" VerticalContentAlignment="Top" Click="btn_RijbewijsToevoegen_Click" IsEnabled="False"/>
         <Label Content="Bestuurder Id" HorizontalAlignment="Left" Margin="86,352,0,0" VerticalAlignment="Top" Width="86"/>
         <Label x:Name="lbl_Rijbewijzen" Content="" HorizontalAlignment="Left" Margin="182,78,0,0" VerticalAlignment="Top" Width="110" BorderThickness="1,1,1,1" BorderBrush="LightSlateGray" Height="28"/>
         <Button x:Name="btn_RijbewijzenWissen" Content="Wissen" HorizontalAlignment="Left" Margin="297,78,0,0" VerticalAlignment="Top" Width="44" Height="28" Click="btn_RijbewijzenWissen_Click"/>
+        <Button x:Name="btn_BestuurderAanpassen" Content="Bestuurder aanpassen" HorizontalAlignment="Left" Margin="91,388,0,0" VerticalAlignment="Top" Width="123" Click="btn_BestuurderAanpassen_Click"/>
 
 
     </Grid>

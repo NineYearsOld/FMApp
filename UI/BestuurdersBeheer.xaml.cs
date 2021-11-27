@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BusinessLayer.Entities;
 
 namespace UI
 {
@@ -96,6 +97,19 @@ namespace UI
             rijbewijzen.Clear();
             lbl_Rijbewijzen.Content = null;
             btn_RijbewijsToevoegen.IsEnabled = true;
+        }
+
+        private void btn_BestuurderAanpassen_Click(object sender, RoutedEventArgs e)
+        {
+            int? id = TryParseNullable(tbk_Id.Text);
+            if (id == null)
+            {
+                MessageBox.Show("Gelieve een id in te geven");
+            }
+            else { 
+            Bestuurder b = new Bestuurder(tbk_Naam.Text, tbk_Voornaam.Text, (DateTime)dpk_gebDatum.SelectedDate, tbk_Rijksregnr.Text, lbl_Rijbewijzen.Content.ToString(), cmb_Gemeente.Text, tbk_Straat.Text, tbk_Huisnummer.Text, TryParseNullable(tbk_Postcode.Text));
+            BestuurderService().UpdateBestuurder(b, (int)id);
+            }
         }
     }
 }

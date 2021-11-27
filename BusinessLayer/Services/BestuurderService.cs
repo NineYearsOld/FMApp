@@ -43,9 +43,9 @@ namespace BusinessLayer.Services {
             }
         }
 
-        public Bestuurder UpdateBestuurder(Bestuurder bestuurder) {
+        public Bestuurder UpdateBestuurder(Bestuurder bestuurder, int id) {
             try {
-                repo.UpdateBestuurder(bestuurder);
+                repo.UpdateBestuurder(bestuurder, id);
                 return bestuurder;
             } catch (Exception) {
 
