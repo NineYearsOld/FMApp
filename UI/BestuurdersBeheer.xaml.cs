@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Services;
+﻿using BusinessLayer.StaticData;
+using BusinessLayer.Services;
 using DataAccessLayer.Repositories;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,26 @@ namespace UI
         {
             InitializeComponent();
         }
+        HashSet<string> rijbewijzen = new HashSet<string>();
+        private BestuurderService BestuurderService()
+        {
+            string connectionString = @"Data Source=LAPTOP-3DP97NFE\SQLEXPRESS;Initial Catalog=FleetManagementDb;Integrated Security=True;TrustServerCertificate=True";
+            BestuurderRepository br = new BestuurderRepository(connectionString);
+            BestuurderService bs = new BestuurderService(br);
+            return bs;
+        }
+        public static int? TryParseNullable(string val)
+        {
+            int nInt;
+            return int.TryParse(val, out nInt) ? nInt : null;
+        }
+        public void FillCmbBoxes()
+        {
+            cmb_Rijbewijs.ItemsSource = Enum.GetValues(typeof(Rijbewijzen));
+            var gems = typeof(Gemeenten).GetFields()
+                .Select(f => f.GetValue(f) as string);
+            cmb_Gemeente.ItemsSource = gems;
+        }
 
         private void btn_back_Click(object sender, RoutedEventArgs e)
         {
@@ -33,33 +54,48 @@ namespace UI
             mw.Show();
         }
 
+
         private void btn_BestuurderToevoegen_Click(object sender, RoutedEventArgs e)
         {
-            string connectionString = @"Data Source=LAPTOP-3DP97NFE\SQLEXPRESS;Initial Catalog=FleetManagementDb;Integrated Security=True;TrustServerCertificate=True";
-            BestuurderRepository br = new BestuurderRepository(connectionString);
-            BestuurderService bs = new BestuurderService(br);
-
-            bs.CreateBestuurder(tbk_Naam.Text, tbk_Voornaam.Text, (DateTime)dpk_gebDatum.SelectedDate, cmb_Rijbewijs.Text, tbk_Rijksregnr.Text, cmb_Gemeente.Text, tbk_Straat.Text, tbk_Huisnummer.Text, TryParseNullable(tbk_Postcode.Text));
-
-        }
-
-        public int? TryParseNullable(string val)
-        {
-            int outValue;
-            return int.TryParse(val, out outValue) ? (int?)outValue : null;
+            BestuurderService().CreateBestuurder(tbk_Naam.Text, tbk_Voornaam.Text, (DateTime)dpk_gebDatum.SelectedDate, cmb_Rijbewijs.Text, tbk_Rijksregnr.Text, cmb_Gemeente.Text, tbk_Straat.Text, tbk_Huisnummer.Text, TryParseNullable(tbk_Postcode.Text));
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             FillCmbBoxes();
         }
-        private void FillCmbBoxes()
+
+        private void btn_BestuurderVerwijderen_Click(object sender, RoutedEventArgs e)
         {
-            cmb_Rijbewijs.Items.Add("B");
-            cmb_Rijbewijs.Items.Add("C");
-            cmb_Gemeente.Items.Add("West-Vlaanderen");
-            cmb_Gemeente.Items.Add("Oost-Vlaanderen");
+            int? id = TryParseNullable(tbk_Id.Text);
+            if (id == null)
+            {
+                MessageBox.Show("Gelieve een id in te geven.");
+            }
+            else BestuurderService().DeleteBestuurder((int)id);
         }
 
+        private void btn_RijbewijsToevoegen_Click(object sender, RoutedEventArgs e)
+        {
+            rijbewijzen.Add(cmb_Rijbewijs.SelectedValue.ToString());
+            lbl_Rijbewijzen.Content = string.Join("; ", rijbewijzen);
+            btn_RijbewijsToevoegen.IsEnabled = false;
+        }
+
+        private void cmb_Rijbewijs_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (rijbewijzen.Contains(cmb_Rijbewijs.SelectedValue.ToString()))
+            {
+                btn_RijbewijsToevoegen.IsEnabled = false;
+            }
+            else btn_RijbewijsToevoegen.IsEnabled = true;
+        }
+
+        private void btn_RijbewijzenWissen_Click(object sender, RoutedEventArgs e)
+        {
+            rijbewijzen.Clear();
+            lbl_Rijbewijzen.Content = null;
+            btn_RijbewijsToevoegen.IsEnabled = true;
+        }
     }
 }

@@ -5,20 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UI"
         mc:Ignorable="d"
-        Title="BestuurdersBeheer" Height="450" Width="800" Loaded="Window_Loaded">
+        Title="BestuurdersBeheer" Height="464" Width="800" Loaded="Window_Loaded"
+        WindowStartupLocation="CenterScreen">
     <Grid>
-        <Button x:Name="btn_back" Content="Terug" HorizontalAlignment="Left" Margin="757,10,0,0" VerticalAlignment="Top" Click="btn_back_Click"/>
-        <Button x:Name="btn_BestuurderToevoegen" Content="Bestuurder aanmaken" HorizontalAlignment="Left" Margin="181,376,0,0" VerticalAlignment="Top" Click="btn_BestuurderToevoegen_Click" Width="120"/>
-        <TextBox x:Name="tbk_Naam" HorizontalAlignment="Left" Margin="182,109,0,0" Text="Salvini" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="tbk_Voornaam" HorizontalAlignment="Left" Margin="182,132,0,0" Text="Mateo" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="tbk_Huisnummer" HorizontalAlignment="Left" Margin="182,155,0,0" Text="58" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="tbk_Straat" HorizontalAlignment="Left" Margin="182,178,0,0" Text="DaVinci" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <ComboBox x:Name="cmb_Rijbewijs" HorizontalAlignment="Left" Margin="181,82,0,0" VerticalAlignment="Top" Width="120"/>
-        <ComboBox x:Name="cmb_Gemeente" HorizontalAlignment="Left" Margin="182,201,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="tbk_Postcode" HorizontalAlignment="Left" Margin="182,228,0,0" Text="8640" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="tbk_Rijksregnr" HorizontalAlignment="Left" Margin="182,251,0,0" Text="00120200152" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <DatePicker x:Name="dpk_gebDatum" HorizontalAlignment="Left" Margin="181,274,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBlock HorizontalAlignment="Left" Margin="91,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="fr-be" Text="Rijbewijs"/></TextBlock>
+        <Button x:Name="btn_back" Content="Terug" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="btn_back_Click"/>
+        <Button x:Name="btn_BestuurderToevoegen" Content="Bestuurder aanmaken" HorizontalAlignment="Left" Margin="182,317,0,0" VerticalAlignment="Top" Click="btn_BestuurderToevoegen_Click" Width="160"/>
+        <TextBox x:Name="tbk_Naam" HorizontalAlignment="Left" Margin="182,109,0,0" Text="Salvini" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
+        <TextBox x:Name="tbk_Voornaam" HorizontalAlignment="Left" Margin="182,132,0,0" Text="Mateo" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
+        <TextBox x:Name="tbk_Huisnummer" HorizontalAlignment="Left" Margin="182,155,0,0" Text="58" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
+        <TextBox x:Name="tbk_Straat" HorizontalAlignment="Left" Margin="182,178,0,0" Text="DaVinci" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
+        <ComboBox x:Name="cmb_Rijbewijs" HorizontalAlignment="Left" Margin="182,51,0,0" VerticalAlignment="Top" Width="110" SelectionChanged="cmb_Rijbewijs_SelectionChanged"/>
+        <ComboBox x:Name="cmb_Gemeente" HorizontalAlignment="Left" Margin="182,201,0,0" VerticalAlignment="Top" Width="160"/>
+        <TextBox x:Name="tbk_Postcode" HorizontalAlignment="Left" Margin="182,228,0,0" Text="8640" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
+        <TextBox x:Name="tbk_Rijksregnr" HorizontalAlignment="Left" Margin="182,251,0,0" Text="00120200152" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
+        <DatePicker x:Name="dpk_gebDatum" HorizontalAlignment="Left" Margin="181,274,0,0" VerticalAlignment="Top" Width="160"/>
+        <TextBlock HorizontalAlignment="Left" Margin="93,54,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="fr-be" Text="Rijbewijs"/></TextBlock>
         <TextBlock HorizontalAlignment="Left" Margin="91,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="fr-be" Text="Naam"/></TextBlock>
         <TextBlock HorizontalAlignment="Left" Margin="91,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="fr-be" Text="Huisnummer"/></TextBlock>
         <TextBlock HorizontalAlignment="Left" Margin="91,133,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="fr-be" Text="Voornaam"/></TextBlock>
@@ -27,6 +28,12 @@
         <TextBlock HorizontalAlignment="Left" Margin="91,229,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="fr-be" Text="Postcode"/></TextBlock>
         <TextBlock HorizontalAlignment="Left" Margin="91,252,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Rijksregnr"/>
         <TextBlock HorizontalAlignment="Left" Margin="91,278,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="fr-be" Text="Geboortedatum"/></TextBlock>
+        <Button x:Name="btn_BestuurderVerwijderen" Content="Bestuurder verwijderen" HorizontalAlignment="Left" Margin="182,388,0,0" VerticalAlignment="Top" Width="160" Click="btn_BestuurderVerwijderen_Click"/>
+        <TextBox x:Name="tbk_Id" HorizontalAlignment="Left" Margin="181,356,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
+        <Button x:Name="btn_RijbewijsToevoegen" Content="+" HorizontalAlignment="Left" Margin="297,51,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.363,-0.048" Height="22" Width="45" VerticalContentAlignment="Top" Click="btn_RijbewijsToevoegen_Click" IsEnabled="False"/>
+        <Label Content="Bestuurder Id" HorizontalAlignment="Left" Margin="86,352,0,0" VerticalAlignment="Top" Width="86"/>
+        <Label x:Name="lbl_Rijbewijzen" Content="" HorizontalAlignment="Left" Margin="182,78,0,0" VerticalAlignment="Top" Width="110" BorderThickness="1,1,1,1" BorderBrush="LightSlateGray" Height="28"/>
+        <Button x:Name="btn_RijbewijzenWissen" Content="Wissen" HorizontalAlignment="Left" Margin="297,78,0,0" VerticalAlignment="Top" Width="44" Height="28" Click="btn_RijbewijzenWissen_Click"/>
 
 
     </Grid>

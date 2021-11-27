@@ -1,5 +1,5 @@
 ﻿using BusinessLayer.Entities;
-using BusinessLayer.Enums;
+using BusinessLayer.StaticData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
