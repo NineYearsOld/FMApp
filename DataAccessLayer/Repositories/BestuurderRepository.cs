@@ -132,7 +132,7 @@ namespace DataAccessLayer.Repositories {
 
                 }
             }
-            else throw new Exception("Bestuurder id bestaat niet");
+            else throw new Exception("Bestuurder id bestaat niet.");
         }
 
         public void UpdateBestuurder(Bestuurder bestuurder, int id)

@@ -79,11 +79,60 @@ namespace BusinessLayer.Repositories {
         }
 
         public void DeleteTankkaart(int kaartnummer) {
+            if (BestaatTankkaart(kaartnummer))
+            {
+                string query = "delete from dbo.tankkaarten where kaartnummer=@kaartnummer";
+                SqlConnection connection = getConnection();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    try
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("kaartnummer", kaartnummer);
+                        command.ExecuteScalar();
+                    }
+                    catch (Exception)
+                    {
 
+                        throw;
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+
+                }
+            }
+            else throw new Exception("Bestuurder id bestaat niet.");
         }
 
         public void UpdateTankkaart(int kaartnummer) { // Nog uit te werken
+            if (BestaatTankkaart(kaartnummer))
+            {
+                string query = "update dbo.taankkaarten set geldigheidsdatum = @geldigheidsdatum, pincode = @pincode, brandstof = @brandstof, bestuurderid = @bestuurderid, where kaartnummer=@kaartnummer";
+                query += " select scope_identity()";
+                SqlConnection connection = getConnection();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    try
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("@kaartnummer", (int)kaartnummer);
 
+                        command.ExecuteScalar();
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+            else throw new Exception("Tankkaart id bestaat niet.");
         }
 
         public Tankkaart ToonDetails(int kaartnummer) {
@@ -98,7 +147,7 @@ namespace BusinessLayer.Repositories {
                     try
                     {
                         connection.Open();
-                        command.Parameters.AddWithValue("@kaartnummer", kaartnummer);
+                        command.Parameters.AddWithValue("@kaartnummer", kaartnummer); 
                         IDataReader reader = command.ExecuteReader();
                         reader.Read();
                         t = new Tankkaart((int)reader["kaartnummer"], (DateTime)reader["geldigheidsdatum"], (string)reader["pincode"], (string)reader["brandstof"], (int)reader["bestuurderId"]);

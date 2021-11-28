@@ -10,7 +10,7 @@ namespace BusinessLayer.Interfaces
 {
     public interface IVoertuigRepository
     {
-        void CreateVoertuig(string merk, string model, string chassisNummer, string nummerplaat, Brandstoffen brandstof, WagenTypes typeWagen);
+        void CreateVoertuig(Voertuig voertuig);
         void DeleteVoertuig(string chassisnummer);
         void UpdateVoertuig(string chassisnummer);
         Voertuig ToonDetails(string chassisnummer);

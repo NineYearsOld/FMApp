@@ -8,7 +8,7 @@ using BusinessLayer.Exceptions;
 
 namespace BusinessLayer.Entities {
     public class Voertuig {
-        public Voertuig(string merk, string model, string chassisNummer, string nummerplaat, Brandstoffen brandstoffen, WagenTypes typeWagen, int bestuurdeId)
+        public Voertuig(string merk, string model, string chassisNummer, string nummerplaat, Brandstoffen brandstoffen, WagenTypes typeWagen, string kleur, int aantalDeuren, int bestuurdeId)
         {
             Merk = merk;
             Model = model;
