@@ -160,7 +160,7 @@ namespace BusinessLayer.Repositories {
                     }
                     finally
                     {
-                        connection.Close();
+                        connection.Close(); 
                     }
 
                 }
