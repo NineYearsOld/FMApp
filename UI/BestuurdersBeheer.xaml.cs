@@ -35,17 +35,33 @@ namespace UI
             BestuurderService bs = new BestuurderService(br);
             return bs;
         }
-        public static int? TryParseNullable(string val)
+        private static int? TryParseNullable(string val)
         {
             int nInt;
             return int.TryParse(val, out nInt) ? nInt : null;
         }
-        public void FillCmbBoxes()
+        private void FillCmbBoxes()
         {
             cmb_Rijbewijs.ItemsSource = Enum.GetValues(typeof(Rijbewijzen));
             var gems = typeof(Gemeenten).GetFields()
                 .Select(f => f.GetValue(f) as string);
             cmb_Gemeente.ItemsSource = gems;
+        }
+        private void ClearFields()
+        {
+            tbl_BestuurderDetails.Text = null;
+            cmb_Gemeente.SelectedItem = null;
+            cmb_Rijbewijs.SelectedItem = null;
+            tbk_Huisnummer.Text = null;
+            tbk_Id.Text = null;
+            tbk_Naam.Text = null;
+            tbk_Postcode.Text = null;
+            tbk_Rijksregnr.Text = null;
+            tbk_Straat.Text = null;
+            tbk_Voornaam.Text = null;
+            lbl_Rijbewijzen.Content = null;
+            dpk_gebDatum.SelectedDate = null;
+            rijbewijzen.Clear();
         }
 
         private void btn_back_Click(object sender, RoutedEventArgs e)
@@ -58,7 +74,11 @@ namespace UI
 
         private void btn_BestuurderToevoegen_Click(object sender, RoutedEventArgs e)
         {
-            BestuurderService().CreateBestuurder(tbk_Naam.Text, tbk_Voornaam.Text, (DateTime)dpk_gebDatum.SelectedDate, cmb_Rijbewijs.Text, tbk_Rijksregnr.Text, cmb_Gemeente.Text, tbk_Straat.Text, tbk_Huisnummer.Text, TryParseNullable(tbk_Postcode.Text));
+            int id = BestuurderService().CreateBestuurder(tbk_Naam.Text, tbk_Voornaam.Text, (DateTime)dpk_gebDatum.SelectedDate, lbl_Rijbewijzen.Content.ToString(), tbk_Rijksregnr.Text, cmb_Gemeente.Text, tbk_Straat.Text, tbk_Huisnummer.Text, TryParseNullable(tbk_Postcode.Text)).Id;
+            ClearFields();
+            Bestuurder b = BestuurderService().ToonDetails(id);
+            tbk_Id.Text = id.ToString();
+            tbl_BestuurderDetails.Text = $"{b.Naam} {b.Voornaam}\n{b.GeboorteDatum.ToShortDateString()}\nrijksregisternummer: {b.RijksregisterNummer}\nrijbewijs: {b.Rijbewijs}\ngemeente: {b.Gemeente}\nstraat: {b.Straat}\nhuisnummer: {b.Huisnummer}\npostcode: {b.Postcode}";
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -74,6 +94,7 @@ namespace UI
                 MessageBox.Show("Gelieve een id in te geven.");
             }
             else BestuurderService().DeleteBestuurder((int)id);
+            ClearFields();
         }
 
         private void btn_RijbewijsToevoegen_Click(object sender, RoutedEventArgs e)
@@ -85,7 +106,8 @@ namespace UI
 
         private void cmb_Rijbewijs_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (rijbewijzen.Contains(cmb_Rijbewijs.SelectedValue.ToString()))
+            if (cmb_Rijbewijs.SelectedItem == null) { }
+            else if (rijbewijzen.Contains(cmb_Rijbewijs.SelectedValue.ToString()))
             {
                 btn_RijbewijsToevoegen.IsEnabled = false;
             }
@@ -109,6 +131,7 @@ namespace UI
             else { 
             Bestuurder b = new Bestuurder(tbk_Naam.Text, tbk_Voornaam.Text, (DateTime)dpk_gebDatum.SelectedDate, tbk_Rijksregnr.Text, lbl_Rijbewijzen.Content.ToString(), cmb_Gemeente.Text, tbk_Straat.Text, tbk_Huisnummer.Text, TryParseNullable(tbk_Postcode.Text));
             BestuurderService().UpdateBestuurder(b, (int)id);
+                tbl_BestuurderDetails.Text = $"{b.Naam} {b.Voornaam}\n{b.GeboorteDatum.ToShortDateString()}\nrijksregisternummer: {b.RijksregisterNummer}\nrijbewijs: {b.Rijbewijs}\ngemeente: {b.Gemeente}\nstraat: {b.Straat}\nhuisnummer: {b.Huisnummer}\npostcode: {b.Postcode}";
             }
         }
 
@@ -119,8 +142,10 @@ namespace UI
             {
                 MessageBox.Show("Gelieve een id in te geven");
             }
-            Bestuurder b = BestuurderService().ToonDetails((int)id);
-            tbl_BestuurderDetails.Text = $"{b.Naam} {b.Voornaam}\n{b.GeboorteDatum.ToShortDateString()}\nrijksregisternummer: {b.RijksregisterNummer}\nrijbewijs: {b.Rijbewijs}\ngemeente: {b.Gemeente}\nstraat: {b.Straat}\nhuisnummer: {b.Huisnummer}\npostcode: {b.Postcode}";
+            else {
+                Bestuurder b = BestuurderService().ToonDetails((int)id);
+                tbl_BestuurderDetails.Text = $"{b.Naam} {b.Voornaam}\n{b.GeboorteDatum.ToShortDateString()}\nrijksregisternummer: {b.RijksregisterNummer}\nrijbewijs: {b.Rijbewijs}\ngemeente: {b.Gemeente}\nstraat: {b.Straat}\nhuisnummer: {b.Huisnummer}\npostcode: {b.Postcode}";
+            }
         }
     }
 }

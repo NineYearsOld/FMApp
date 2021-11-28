@@ -9,7 +9,7 @@ namespace BusinessLayer.Interfaces
 {
     public interface ITankkaartRepository
     {
-        void CreateTankkaart(int kaartnummer, DateTime geldigheidsdatum);
+        void CreateTankkaart(Tankkaart tankkaart);
 
         void DeleteTankkaart(int kaartnummer);
 

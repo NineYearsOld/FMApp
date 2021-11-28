@@ -1,33 +1,85 @@
 ﻿using BusinessLayer.Entities;
 using BusinessLayer.Interfaces;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 
 namespace BusinessLayer.Repositories {
     public class TankkaartRepository: ITankkaartRepository {
-        public TankkaartRepository() {
-            TankkaartLijst = new Dictionary<int, Tankkaart>();
+        private string connectionString;
+        public TankkaartRepository(string connectionString)
+        {
+            this.connectionString = connectionString;
         }
 
-        public Dictionary<int, Tankkaart> TankkaartLijst { get; private set; }
+        public SqlConnection getConnection()
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            return connection;
+        }
+        public bool BestaatTankkaart(int id)
+        {
+            string query = "select count(*) from dbo.tankkaarten where id =@id";
+            SqlConnection connection = getConnection();
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                try
+                {
+                    connection.Open();
+                    command.Parameters.AddWithValue("@id", id);
+                    int qr = (int)command.ExecuteScalar();
+                    if (qr > 0)
+                    {
+                        return true;
+                    }
+                    else return false;
+                }
+                catch (Exception)
+                {
 
-        public void CreateTankkaart(int kaartnummer, DateTime geldigheidsdatum) {
-            if (!TankkaartLijst.ContainsKey(kaartnummer)) { // Kaartnummer moet uniek zijn
-                Tankkaart tk = new Tankkaart(kaartnummer, geldigheidsdatum);
-                // DB Create
-                TankkaartLijst.Add(kaartnummer, tk);
-            } else {
+                    throw;
+                }
+
+                finally
+                {
+                    connection.Close();
+                }
+
+            }
+        }
+
+        public void CreateTankkaart(Tankkaart tankkaart) {
+
+            string query = "insert into dbo.bestuurders (kaartnummer, geldigheidsdatum, pincode, brandstof, bestuurderid) values(@kaartnummer, @geldigheidsdatum, @pincode, @pincode, @brandstof, @bestuurderid)";
+            query += " select scope_identity()";
+            SqlConnection connection = getConnection();
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                //TODO: Use transactions
+                try
+                {
+                    connection.Open();
+
+                    command.Parameters.AddWithValue("@bestuurderid", tankkaart.bestuurderId);
+                    command.Parameters.AddWithValue("@kaartnummer", tankkaart.KaartNummer);
+                    command.ExecuteScalar();
+                }
+                catch (Exception)
+                {
+
+                }
+                finally
+                {
+                    connection.Close();
+
+                }
 
             }
         }
 
         public void DeleteTankkaart(int kaartnummer) {
-            if (TankkaartLijst.ContainsKey(kaartnummer)) {
-                // DB Delete
-                TankkaartLijst.Remove(kaartnummer);
-            } else {
 
-            }
         }
 
         public void UpdateTankkaart(int kaartnummer) { // Nog uit te werken
@@ -35,11 +87,36 @@ namespace BusinessLayer.Repositories {
         }
 
         public Tankkaart ToonDetails(int kaartnummer) {
-            if (TankkaartLijst.ContainsKey(kaartnummer)) {
-                return TankkaartLijst[kaartnummer];
-            } else {
-                return null;
+            if (BestaatTankkaart(kaartnummer))
+            {
+                SqlConnection connection = getConnection();
+                Tankkaart t;
+
+                string query = "select ...";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    try
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("@kaartnummer", kaartnummer);
+                        IDataReader reader = command.ExecuteReader();
+                        reader.Read();
+                        t = new Tankkaart((int)reader["kaartnummer"], (DateTime)reader["geldigheidsdatum"], (string)reader["pincode"], (string)reader["brandstof"], (int)reader["bestuurderId"]);
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+
+                }
+                return t;
             }
+            else throw new Exception();
         }
     }
 }
