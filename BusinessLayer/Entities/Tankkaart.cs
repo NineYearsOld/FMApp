@@ -3,25 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BusinessLayer.Enums;
+using BusinessLayer.StaticData;
 using BusinessLayer.Exceptions;
 
 namespace BusinessLayer.Entities {
     public class Tankkaart {
-        public Tankkaart(int kaartNummer, DateTime geldigheidsDatum) {
+        public Tankkaart(int kaartNummer, DateTime geldigheidsDatum, string pincode, string brandstof, int bestuurderId) {
             KaartNummer = kaartNummer;
-            GeldigheidsDatum = geldigheidsDatum;
+            GeldigheidsDatum = UpdateGeldigheidsdatum(geldigheidsDatum);
+
         }
 
         public int KaartNummer { get; private set; }
         public DateTime GeldigheidsDatum { get; private set; }
         public string Pincode { get; private set; }
         public List<Brandstoffen> Brandstoffen { get; private set; }
-        public Bestuurder Bestuurder { get; private set; }
-
-        public void UpdateGeldigheidsdatum(DateTime geldigheid) {
+        public int bestuurderId { get; set; }
+        public DateTime UpdateGeldigheidsdatum(DateTime geldigheid) {
             if (DateTime.Now < geldigheid && GeldigheidsDatum < geldigheid) {
                 GeldigheidsDatum = geldigheid;
+                return geldigheid;
             } else {
                 throw new TankkaartException(""); // Message
             }
@@ -38,23 +39,6 @@ namespace BusinessLayer.Entities {
         public void UpdateBrandstoffen(List<Brandstoffen> brandstoffen) {
             if (brandstoffen.Count != 0) {
 
-            } else {
-                throw new TankkaartException(""); // Message
-            }
-        }
-
-        public void UpdateBestuurder(Bestuurder bestuurder) {
-            if (Bestuurder != bestuurder) {
-                Bestuurder = bestuurder;
-                try {
-                    if (Bestuurder != null) {
-                        Bestuurder.UpdateTankkaart(this);
-                    } else {
-                        Bestuurder.UpdateTankkaart(null);
-                    }
-                } catch {
-
-                }
             } else {
                 throw new TankkaartException(""); // Message
             }

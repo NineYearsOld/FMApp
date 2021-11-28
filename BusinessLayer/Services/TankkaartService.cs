@@ -12,11 +12,12 @@ namespace BusinessLayer.Services
     {
         private ITankkaartRepository repo;
 
-        public void CreateTankkaart(int kaartnummer, DateTime geldigheidsdatum)
+        public void CreateTankkaart(int kaartnummer, DateTime geldigheidsdatum, string pincode, string brandstof, int bestuurderId)
         {
             try
             {
-                repo.CreateTankkaart(kaartnummer, geldigheidsdatum);
+                Tankkaart k = new Tankkaart(kaartnummer, geldigheidsdatum, pincode, brandstof, bestuurderId);
+                repo.CreateTankkaart(k);
             }
             catch (Exception)
             {

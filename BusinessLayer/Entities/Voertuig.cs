@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BusinessLayer.Enums;
+using BusinessLayer.StaticData;
 using BusinessLayer.Exceptions;
 
 namespace BusinessLayer.Entities {
     public class Voertuig {
-        public Voertuig(string merk, string model, string chassisNummer, string nummerplaat, Brandstoffen brandstoffen, WagenTypes typeWagen)
+        public Voertuig(string merk, string model, string chassisNummer, string nummerplaat, Brandstoffen brandstoffen, WagenTypes typeWagen, string kleur, int aantalDeuren, int bestuurdeId)
         {
             Merk = merk;
             Model = model;
@@ -26,22 +26,16 @@ namespace BusinessLayer.Entities {
         public WagenTypes TypeWagen { get; private set; }
         public string Kleur { get; private set; }
         public int AantalDeuren { get; private set; }
-        public Bestuurder Bestuurder { get; private set; }
+        public int BestuurderId { get; set; }
 
-        public void UpdateBestuurder(Bestuurder bestuurder) {
-            if (Bestuurder != bestuurder) {
-                Bestuurder = bestuurder;
-                try {
-                    if (Bestuurder != null) {
-                        Bestuurder.UpdateVoertuig(this);
-                    } else {
-                        Bestuurder.UpdateVoertuig(null);
-                    }
-                } catch {
-
-                }
-            } else {
-                throw new VoertuigException(""); // Message
+        public void UpdateMerk(string merk) {
+            if (!string.IsNullOrWhiteSpace(merk) && Merk != merk)
+            {
+                Merk = merk;
+            }
+            else
+            {
+                throw new BestuurderException("Merk is verplicht en moet verschillen met de huidige.");
             }
         }
     }

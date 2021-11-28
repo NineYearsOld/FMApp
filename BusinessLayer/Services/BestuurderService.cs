@@ -15,21 +15,11 @@ namespace BusinessLayer.Services {
             this.repo = repo;
         }
 
-        public Bestuurder CreateBestuurder(string naam, string voornaam, int postcode, string gemeente, string straat, string huisNummer, DateTime geboorteDatum, string rijbewijs, string rijksregisternr) {
+        public Bestuurder CreateBestuurder(string naam, string voornaam, DateTime geboorteDatum, string rijbewijs, string rijksregisternr, string gemeente, string straat, string huisNummer, int? postcode = null) {
             try {
-                if (!string.IsNullOrWhiteSpace(naam) && !string.IsNullOrWhiteSpace(voornaam) && !string.IsNullOrWhiteSpace(rijbewijs) && RijksregisternummerControleren.ValidatieRijkregisternummer(rijksregisternr)) {
+                if (!string.IsNullOrWhiteSpace(naam) && !string.IsNullOrWhiteSpace(voornaam) && !string.IsNullOrWhiteSpace(rijbewijs)) {
 
-                    Bestuurder b = new Bestuurder(naam, voornaam, geboorteDatum, rijksregisternr, rijbewijs);
-                    b.UpdatePostcode(postcode);
-                    if (gemeente == null)
-                        b.UpdateGemeente("");
-                    else b.UpdateGemeente(gemeente);
-                    if (straat == null)
-                        b.UpdateStraat("");
-                    else b.UpdateStraat(gemeente);
-                    if (huisNummer == null)
-                        b.UpdateHuisnummer(""); else 
-                    b.UpdateHuisnummer(huisNummer);
+                    Bestuurder b = new Bestuurder(naam, voornaam, geboorteDatum, rijksregisternr, rijbewijs, gemeente, straat, huisNummer, postcode);
                     // DB Create
                     // Id uit db invullen
                     repo.CreateBestuurder(b);
@@ -38,7 +28,6 @@ namespace BusinessLayer.Services {
                 } else {
                     throw new BestuurderException("blabla.");
                 }
-                return null;
             } catch (Exception) {
 
                 throw;
@@ -54,9 +43,9 @@ namespace BusinessLayer.Services {
             }
         }
 
-        public Bestuurder UpdateBestuurder(Bestuurder bestuurder) {
+        public Bestuurder UpdateBestuurder(Bestuurder bestuurder, int id) {
             try {
-                repo.UpdateBestuurder(bestuurder);
+                repo.UpdateBestuurder(bestuurder, id);
                 return bestuurder;
             } catch (Exception) {
 

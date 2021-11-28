@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UI"
         mc:Ignorable="d"
-        Title="VoertuigenBeheer" Height="450" Width="800">
+        Title="VoertuigenBeheer" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
+
     <Grid>
         <Button x:Name="btn_Back" Content="Terug" HorizontalAlignment="Left" Margin="56,41,0,0" VerticalAlignment="Top" Click="btn_Back_Click"/>
 

@@ -11,7 +11,7 @@ namespace BusinessLayer.Interfaces
     {
         void CreateBestuurder(Bestuurder bestuurder);
         void DeleteBestuurder(int id);
-        void UpdateBestuurder(Bestuurder bestuurder);
+        void UpdateBestuurder(Bestuurder bestuurder, int id);
         Bestuurder ToonDetails(int id);
     }
 }
