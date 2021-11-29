@@ -208,7 +208,7 @@ namespace DataAccessLayer.Repositories {
                         command.Parameters.AddWithValue("@id", (int)id);
                         IDataReader reader = command.ExecuteReader();
                         reader.Read();
-                        bestuurder = new Bestuurder((string)reader["naam"], (string)reader["voornaam"], (DateTime)reader["geboortedatum"], (string)reader["rijksregisternummer"], (string)reader["rijbewijs"], (string)reader["gemeente"], (string)reader["straat"], (string)reader["huisnummer"], (int?)reader["postcode"]);
+                        bestuurder = new Bestuurder((string)reader["naam"], (string)reader["voornaam"], (DateTime)reader["geboortedatum"], (string)reader["rijksregisternummer"], (string)reader["rijbewijs"], reader.GetNullableString("gemeente"), reader.GetNullableString("straat"), reader.GetNullableString("huisnummer"), reader.GetNullableInt("postcode"));
                     }
                     catch (Exception)
                     {
@@ -220,5 +220,5 @@ namespace DataAccessLayer.Repositories {
             }
             else throw new Exception("Bestuurder id bestaat niet");
         }
-    }
+    }   
 }

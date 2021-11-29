@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Entities;
 using BusinessLayer.Interfaces;
+using BusinessLayer.StaticData;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -61,8 +62,16 @@ namespace BusinessLayer.Repositories {
                 {
                     connection.Open();
 
-                    command.Parameters.AddWithValue("@bestuurderid", tankkaart.bestuurderId);
+                    command.Parameters.AddWithValue("@bestuurderid", tankkaart.BestuurderId);
                     command.Parameters.AddWithValue("@kaartnummer", tankkaart.KaartNummer);
+                    command.Parameters.Add(new SqlParameter ("@geldigheidsdatum", SqlDbType.Date));
+                    command.Parameters.Add(new SqlParameter("@pincode", SqlDbType.NVarChar));
+                    command.Parameters.Add(new SqlParameter("@brandstof", SqlDbType.NVarChar));
+
+                    command.Parameters["geldigheidsdatum"].Value = tankkaart.GeldigheidsDatum;
+                    command.Parameters["pincode"].Value = tankkaart.Pincode;
+                    command.Parameters["brandstof"].Value = tankkaart.Brandstoffen;
+
                     command.ExecuteScalar();
                 }
                 catch (Exception)

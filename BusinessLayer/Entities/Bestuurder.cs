@@ -80,6 +80,10 @@ namespace BusinessLayer.Entities {
             {
                 Gemeente = gemeente;
             }
+            else if(gemeente == null)
+            {
+                Gemeente = null;
+            }
             else
             {
                 throw new BestuurderException(""); // Message nog in te vullen
@@ -92,6 +96,10 @@ namespace BusinessLayer.Entities {
             {
                 Straat = straat;
             }
+            else if (straat == null)
+            {
+                Straat = null;
+            }
             else
             {
                 throw new BestuurderException(""); // Message nog in te vullen
@@ -103,6 +111,10 @@ namespace BusinessLayer.Entities {
             if (Huisnummer != huisnummer)
             {
                 Huisnummer = huisnummer;
+            }
+            else if (huisnummer == null)
+            {
+                Huisnummer = null;
             }
             else
             {
