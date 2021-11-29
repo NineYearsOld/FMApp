@@ -8,7 +8,7 @@
         Title="BestuurdersBeheer" Height="464" Width="800" Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen">
     <Grid>
-        <Button FontFamily="Marlett" x:Name="btn_back" Content="3" HorizontalAlignment="Left" Margin="718,382,0,0" VerticalAlignment="Top" Click="btn_back_Click"/>
+        <Button FontFamily="Marlett" x:Name="btn_back" Content="3" HorizontalAlignment="Left" Margin="718,392,0,0" VerticalAlignment="Top" Click="btn_back_Click"/>
         <Button x:Name="btn_BestuurderToevoegen" Content="Bestuurder aanmaken" HorizontalAlignment="Left" Margin="218,303,0,0" VerticalAlignment="Top" Click="btn_BestuurderToevoegen_Click" Width="123"/>
         <TextBox x:Name="tbk_Naam" HorizontalAlignment="Left" Margin="182,109,0,0" Text="Salvini" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
         <TextBox x:Name="tbk_Voornaam" HorizontalAlignment="Left" Margin="182,132,0,0" Text="Mateo" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
