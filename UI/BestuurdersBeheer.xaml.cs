@@ -147,5 +147,22 @@ namespace UI
                 tbl_BestuurderDetails.Text = $"{b.Naam} {b.Voornaam}\n{b.GeboorteDatum.ToShortDateString()}\nrijksregisternummer: {b.RijksregisterNummer}\nrijbewijs: {b.Rijbewijs}\ngemeente: {b.Gemeente}\nstraat: {b.Straat}\nhuisnummer: {b.Huisnummer}\npostcode: {b.Postcode}";
             }
         }
+
+        private void btnIdUp_Click(object sender, RoutedEventArgs e)
+        {
+            int.TryParse(tbk_Id.Text, out int count);
+            count++;
+            tbk_Id.Text = count.ToString();
+        }
+
+        private void btnIdDown_Click(object sender, RoutedEventArgs e)
+        {
+            int.TryParse(tbk_Id.Text, out int count);
+            if (count<1)
+            {
+                count = 0;
+            }  else count--;
+            tbk_Id.Text = count.ToString();
+        }
     }
 }
