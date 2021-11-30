@@ -26,9 +26,9 @@ namespace UI
 
         private void btn_Back_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mw = new MainWindow();
+            BestuurdersBeheer bh = new BestuurdersBeheer();
             this.Close();
-            mw.Show();
+            bh.Show();
         }
     }
 }

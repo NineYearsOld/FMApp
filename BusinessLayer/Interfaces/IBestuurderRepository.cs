@@ -9,6 +9,7 @@ namespace BusinessLayer.Interfaces
 {
     public interface IBestuurderRepository
     {
+        bool ExistsBestuurder(int id);
         void CreateBestuurder(Bestuurder bestuurder);
         void DeleteBestuurder(int id);
         void UpdateBestuurder(Bestuurder bestuurder, int id);

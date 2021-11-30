@@ -19,7 +19,7 @@ namespace DataAccessLayer.Repositories {
             return connection;
         }
 
-        public bool BestaatBestuurder(int id)
+        public bool ExistsBestuurder(int id)
         {
             string query = "select count(*) from dbo.bestuurders where id =@id";
             SqlConnection connection = getConnection();
@@ -107,7 +107,7 @@ namespace DataAccessLayer.Repositories {
         }
         public void DeleteBestuurder(int id)
         {
-            if (BestaatBestuurder(id))
+            if (ExistsBestuurder(id))
             {
                 string query = "delete from dbo.bestuurders where id=@id";
                 SqlConnection connection = getConnection();
@@ -137,7 +137,7 @@ namespace DataAccessLayer.Repositories {
 
         public void UpdateBestuurder(Bestuurder bestuurder, int id)
         {
-            if (BestaatBestuurder(id))
+            if (ExistsBestuurder(id))
             {
                 string query = "update dbo.bestuurders set naam=@naam, voornaam = @voornaam, postcode = @postcode, gemeente = @gemeente, straat = @straat, huisnummer = @huisnummer, geboortedatum = @geboortedatum, rijksregisternummer = @rijksregisternummer, rijbewijs = @rijbewijs where id=@id";
                 query += " select scope_identity()";
@@ -195,7 +195,7 @@ namespace DataAccessLayer.Repositories {
 
         public Bestuurder ToonDetails(int id)
         {
-            if (BestaatBestuurder(id))
+            if (ExistsBestuurder(id))
             {
                 string query = "select naam, voornaam, geboortedatum, rijksregisternummer, rijbewijs, gemeente, straat, huisnummer, postcode from dbo.bestuurders where id=@id";
                 SqlConnection connection = getConnection();

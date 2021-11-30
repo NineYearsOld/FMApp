@@ -14,7 +14,14 @@ namespace BusinessLayer.Services {
         public BestuurderService(IBestuurderRepository repo) {
             this.repo = repo;
         }
-
+        public bool ExistsBestuurder(int id)
+        {
+            if (repo.ExistsBestuurder(id))
+            {
+                return true;
+            }
+            else return false;
+        }
         public Bestuurder CreateBestuurder(string naam, string voornaam, DateTime geboorteDatum, string rijbewijs, string rijksregisternr, string gemeente, string straat, string huisNummer, int? postcode = null) {
             try {
                 if (!string.IsNullOrWhiteSpace(naam) && !string.IsNullOrWhiteSpace(voornaam) && !string.IsNullOrWhiteSpace(rijbewijs)) {
