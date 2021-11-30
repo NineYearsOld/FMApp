@@ -29,6 +29,10 @@ namespace UI
 
         private void btn_back_Click(object sender, RoutedEventArgs e)
         {
+            if (VoertuigPage == null)
+            {
+                VoertuigPage = new VoertuigPage();
+            }
             NavigationService.Navigate(VoertuigPage);
         }
     }

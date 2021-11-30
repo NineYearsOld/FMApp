@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="800"
+        Title="Fleet Management" Height="500" Width="800"
         WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
 
     <Grid>
@@ -15,9 +15,9 @@
                     <Setter Property="Margin" Value="30,0,30,0"/>
                 </Style>
             </StackPanel.Resources>
-            <Button x:Name="btn_BestuurdersBeheer" Content="Bestuurder beheren" Click="btn_BestuurdersBeheer_Click"/>
-            <Button x:Name="btn_VoertuigenBeheer" Content="Voertuig beheren" Width="109" Click="btn_VoertuigenBeheer_Click"/>
-            <Button x:Name="btn_TankkaartenBeheer" Content="Tankkaart beheren                     " Width="109" Click="btn_TankkaartenBeheer_Click"/>
+            <Button x:Name="btn_BestuurdersBeheer" Content="Nieuw Bestuurder beheren" Width="180" Click="btn_BestuurdersBeheer_Click"/>
+            <Button x:Name="btn_VoertuigenBeheer" Content="Nieuw Voertuig beheren" Width="180" Click="btn_VoertuigenBeheer_Click"/>
+            <Button x:Name="btn_TankkaartenBeheer" Content="Nieuw Tankkaart beheren" Width="180" Click="btn_TankkaartenBeheer_Click"/>
         </StackPanel>
         <Frame x:Name="Main" Margin="0,40,0,0" NavigationUIVisibility="Hidden"/>
     </Grid>

@@ -28,6 +28,10 @@ namespace UI
         }
         private void btn_back_Click(object sender, RoutedEventArgs e)
         {
+            if (BestuurderPage == null)
+            {
+                BestuurderPage = new BestuurderPage();
+            }
             NavigationService.Navigate(BestuurderPage);
         }
 

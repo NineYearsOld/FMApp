@@ -32,11 +32,6 @@ namespace UI
             BestuurderPage bp = new BestuurderPage();
             bp.FillCmbBoxes();
             Main.Content = bp;
-            /*
-            BestuurdersBeheer bb = new BestuurdersBeheer();
-            this.Close();
-            bb.Show();
-            */
         }
 
         private void btn_VoertuigenBeheer_Click(object sender, RoutedEventArgs e)
@@ -53,9 +48,7 @@ namespace UI
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            BestuurderPage bp = new BestuurderPage();
-            bp.FillCmbBoxes();
-            Main.Content = bp;
+            btn_BestuurdersBeheer_Click(sender, e);
         }
     }
 }
