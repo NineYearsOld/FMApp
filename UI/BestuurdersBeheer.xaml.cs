@@ -205,6 +205,5 @@ namespace UI
         {
             InputValidation(sender, e);
         }
-
     }
 }

@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="178" Width="291"
+        Title="MainWindow" Height="464" Width="800"
         WindowStartupLocation="CenterScreen">
 
     <Grid>
-        <Button x:Name="btn_BestuurdersBeheer" Content="Bestuurder beheren" HorizontalAlignment="Center" Margin="0,48,0,0" VerticalAlignment="Top" Click="btn_BestuurdersBeheer_Click"/>
-        <Button x:Name="btn_VoertuigenBeheer" Content="Voertuig beheren" HorizontalAlignment="Center" Margin="0,73,0,0" VerticalAlignment="Top" Width="109" Click="btn_VoertuigenBeheer_Click"/>
+        <Button x:Name="btn_BestuurdersBeheer" Content="Bestuurder beheren" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="btn_BestuurdersBeheer_Click"/>
+        <Button x:Name="btn_VoertuigenBeheer" Content="Voertuig beheren" HorizontalAlignment="Left" Margin="124,10,0,0" VerticalAlignment="Top" Width="109" Click="btn_VoertuigenBeheer_Click"/>
         <Button x:Name="btn_TankkaartenBeheer" Content="Tankkaart beheren
-                " HorizontalAlignment="Center" Margin="0,98,0,0" VerticalAlignment="Top" Width="109" Click="btn_TankkaartenBeheer_Click"/>
+                " HorizontalAlignment="Left" Margin="238,10,0,0" VerticalAlignment="Top" Width="109" Click="btn_TankkaartenBeheer_Click"/>
     </Grid>
 </Window>
