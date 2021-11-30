@@ -9,16 +9,16 @@
         WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
 
     <Grid>
-        <StackPanel Orientation="Horizontal" Height="40" VerticalAlignment="Top" HorizontalAlignment="Center" Width="Auto">
+        <StackPanel Orientation="Horizontal" Height="30" VerticalAlignment="Top" HorizontalAlignment="Center" Width="Auto">
             <StackPanel.Resources>
                 <Style TargetType="{x:Type Button}">
-                    <Setter Property="Margin" Value="30,0,30,0"/>
+                    <Setter Property="Margin" Value="30,10,30,0"/>
                 </Style>
             </StackPanel.Resources>
             <Button x:Name="btn_BestuurdersBeheer" Content="Nieuw Bestuurder beheren" Width="180" Click="btn_BestuurdersBeheer_Click"/>
             <Button x:Name="btn_VoertuigenBeheer" Content="Nieuw Voertuig beheren" Width="180" Click="btn_VoertuigenBeheer_Click"/>
             <Button x:Name="btn_TankkaartenBeheer" Content="Nieuw Tankkaart beheren" Width="180" Click="btn_TankkaartenBeheer_Click"/>
         </StackPanel>
-        <Frame x:Name="Main" Margin="0,40,0,0" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="Main" Margin="0,20,0,0" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>
