@@ -29,23 +29,33 @@ namespace UI
 
         private void btn_BestuurdersBeheer_Click(object sender, RoutedEventArgs e)
         {
+            BestuurderPage bp = new BestuurderPage();
+            bp.FillCmbBoxes();
+            Main.Content = bp;
+            /*
             BestuurdersBeheer bb = new BestuurdersBeheer();
             this.Close();
             bb.Show();
+            */
         }
 
         private void btn_VoertuigenBeheer_Click(object sender, RoutedEventArgs e)
         {
-            VoertuigenBeheer vb = new VoertuigenBeheer();
-            this.Close();
-            vb.Show();
+            VoertuigPage vp = new VoertuigPage();
+            Main.Content = vp;
         }
 
         private void btn_TankkaartenBeheer_Click(object sender, RoutedEventArgs e)
         {
-            TankkaartenBeheer tb = new TankkaartenBeheer();
-            this.Close();
-            tb.Show();
+            TankkaartPage tp = new TankkaartPage();
+            Main.Content = tp;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            BestuurderPage bp = new BestuurderPage();
+            bp.FillCmbBoxes();
+            Main.Content = bp;
         }
     }
 }
