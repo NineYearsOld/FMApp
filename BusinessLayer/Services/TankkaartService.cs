@@ -52,11 +52,11 @@ namespace BusinessLayer.Services
             }
         }
 
-        public void UpdateTankkaart(int kaartnummer)
+        public void UpdateTankkaart(Tankkaart tankkaart, int kaartnummer)
         { 
             try
             {
-                repo.UpdateTankkaart(kaartnummer);
+                repo.UpdateTankkaart(tankkaart, kaartnummer);
             }
             catch (Exception)
             {

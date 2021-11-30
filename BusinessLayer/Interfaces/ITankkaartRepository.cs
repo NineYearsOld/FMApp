@@ -14,7 +14,7 @@ namespace BusinessLayer.Interfaces
 
         void DeleteTankkaart(int kaartnummer);
 
-        void UpdateTankkaart(int kaartnummer);
+        void UpdateTankkaart(Tankkaart tankkaart, int kaartnummer);
 
         Tankkaart ToonDetails(int kaartnummer);
     }

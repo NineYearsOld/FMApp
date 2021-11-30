@@ -115,7 +115,7 @@ namespace BusinessLayer.Repositories {
             else throw new Exception("Bestuurder id bestaat niet.");
         }
 
-        public void UpdateTankkaart(int kaartnummer) { // Nog uit te werken
+        public void UpdateTankkaart(Tankkaart tankkaart, int kaartnummer) { // Nog uit te werken
             if (ExistsTankkaart(kaartnummer))
             {
                 string query = "update dbo.taankkaarten set geldigheidsdatum = @geldigheidsdatum, pincode = @pincode, brandstof = @brandstof, bestuurderid = @bestuurderid, where kaartnummer=@kaartnummer";
@@ -126,6 +126,13 @@ namespace BusinessLayer.Repositories {
                     {
                         connection.Open();
                         command.Parameters.AddWithValue("@kaartnummer", (int)kaartnummer);
+                        command.Parameters.Add(new SqlParameter("@geldigheidsdatum", SqlDbType.Date));
+                        command.Parameters.Add(new SqlParameter("@pincode", SqlDbType.NVarChar));
+                        command.Parameters.Add(new SqlParameter("@brandstof", SqlDbType.NVarChar));
+
+                        command.Parameters["@geldigheidsdatum"].Value = tankkaart.GeldigheidsDatum;
+                        command.Parameters["@pincode"].Value = tankkaart.Pincode;
+                        command.Parameters["@brandstof"].Value = tankkaart.Brandstoffen;
 
                         command.ExecuteScalar();
                     }
