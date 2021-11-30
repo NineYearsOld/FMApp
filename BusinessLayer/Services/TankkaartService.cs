@@ -11,13 +11,26 @@ namespace BusinessLayer.Services
     public class TankkaartService
     {
         private ITankkaartRepository repo;
+        public TankkaartService(ITankkaartRepository repo)
+        {
+            this.repo = repo;
+        }
+        public bool ExistsTankkaart(int id)
+        {
+            if (repo.ExistsTankkaart(id))
+            {
+                return true;
+            }
+            else return false;
+        }
 
-        public void CreateTankkaart(int kaartnummer, DateTime geldigheidsdatum, string pincode, string brandstof, int bestuurderId)
+        public Tankkaart CreateTankkaart(DateTime geldigheidsdatum, string pincode, string brandstof, int bestuurderId, int? kaartnummer = null)
         {
             try
             {
-                Tankkaart k = new Tankkaart(kaartnummer, geldigheidsdatum, pincode, brandstof, bestuurderId);
+                Tankkaart k = new Tankkaart(geldigheidsdatum, pincode, brandstof, bestuurderId, kaartnummer);
                 repo.CreateTankkaart(k);
+                return k;
             }
             catch (Exception)
             {

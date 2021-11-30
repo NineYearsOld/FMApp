@@ -39,6 +39,7 @@ namespace UI
         private void btn_Forward_Click(object sender, RoutedEventArgs e)
         {
             TankkaartPage tp = new TankkaartPage(this);
+            tp.FillCmbBox();
             NavigationService.Navigate(tp);
         }
     }

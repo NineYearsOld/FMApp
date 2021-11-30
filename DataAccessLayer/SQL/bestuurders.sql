@@ -10,5 +10,6 @@
     [Geboortedatum] DATE NOT NULL, 
     [Rijksregisternummer] NVARCHAR(50) NOT NULL, 
     [Rijbewijs] NVARCHAR(50) NOT NULL,
+    [BestuurderId] INT NOT NULL FOREIGN KEY REFERENCES Bestuurders(Id),
 	PRIMARY KEY CLUSTERED ([Id] ASC)
 )

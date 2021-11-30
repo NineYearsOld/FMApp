@@ -43,6 +43,7 @@ namespace UI
         private void btn_TankkaartenBeheer_Click(object sender, RoutedEventArgs e)
         {
             TankkaartPage tp = new TankkaartPage();
+            tp.FillCmbBox();
             Main.Content = tp;
         }
 

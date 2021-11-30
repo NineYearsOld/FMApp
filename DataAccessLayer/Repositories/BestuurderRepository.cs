@@ -140,7 +140,6 @@ namespace DataAccessLayer.Repositories {
             if (ExistsBestuurder(id))
             {
                 string query = "update dbo.bestuurders set naam=@naam, voornaam = @voornaam, postcode = @postcode, gemeente = @gemeente, straat = @straat, huisnummer = @huisnummer, geboortedatum = @geboortedatum, rijksregisternummer = @rijksregisternummer, rijbewijs = @rijbewijs where id=@id";
-                query += " select scope_identity()";
                 SqlConnection connection = getConnection();
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {

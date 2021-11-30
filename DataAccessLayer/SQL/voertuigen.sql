@@ -8,5 +8,6 @@
     [Typewagen] NVARCHAR(50) NOT NULL, 
     [Kleur] NVARCHAR(50) NULL, 
     [AantalDeuren] INT NULL, 
+    [BestuurderId] INT NOT NULL FOREIGN KEY REFERENCES Bestuurders(Id),
 	PRIMARY KEY CLUSTERED ([Chassisnummer] ASC)
 )

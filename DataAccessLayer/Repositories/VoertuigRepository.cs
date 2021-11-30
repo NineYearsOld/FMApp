@@ -17,7 +17,7 @@ namespace BusinessLayer.Repositories {
             SqlConnection connection = new SqlConnection(connectionString);
             return connection;
         }
-        public bool BestaatVoertuig(string id)
+        public bool ExistsVoertuig(string id)
         {
             string query = "select count(*) from dbo.voertuigen where chassisnummer =@chassisnummer";
             SqlConnection connection = getConnection();
@@ -79,7 +79,7 @@ namespace BusinessLayer.Repositories {
         }
 
         public void DeleteVoertuig(string chassisnummer) {
-            if (BestaatVoertuig(chassisnummer))
+            if (ExistsVoertuig(chassisnummer))
             {
                 string query = "delete from dbo.tankkaarten where kaartnummer=@kaartnummer";
                 SqlConnection connection = getConnection();
@@ -108,7 +108,7 @@ namespace BusinessLayer.Repositories {
         }
 
         public void UpdateVoertuig(string chassisnummer) { // Nog uit te werken
-            if (BestaatVoertuig(chassisnummer))
+            if (ExistsVoertuig(chassisnummer))
             {
                 string query = "update dbo.voertuigen set merk = @merk, model = @model, nummerplaat = @nummerplaat, brandstof = @brandstof, typewagen = @typewagen, kleur = @kleur, aantaldeuren = @aantaldeuren, bestuurderId = bestuurderId where chassisnummer=@chassisnummer";
                 query += " select scope_identity()";
@@ -137,7 +137,7 @@ namespace BusinessLayer.Repositories {
         }
 
         public Voertuig ToonDetails(string chassisnummer) {
-            if (BestaatVoertuig(chassisnummer))
+            if (ExistsVoertuig(chassisnummer))
             {
                 SqlConnection connection = getConnection();
                 Voertuig v;
