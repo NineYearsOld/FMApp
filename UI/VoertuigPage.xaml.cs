@@ -31,6 +31,7 @@ namespace UI
             if (BestuurderPage == null)
             {
                 BestuurderPage = new BestuurderPage();
+                BestuurderPage.FillCmbBoxes();
             }
             NavigationService.Navigate(BestuurderPage);
         }
