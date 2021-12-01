@@ -9,7 +9,8 @@ using BusinessLayer.Interfaces;
 using DataAccessLayer.Repositories;
 
 namespace UnitTests {
-    public class UnitTestBestuurder {/*
+    public class UnitTestBestuurder {
+        /*
         [Fact]
         public void TestValidatieRijksregister() {
             string rijksregister = "12345678912";
