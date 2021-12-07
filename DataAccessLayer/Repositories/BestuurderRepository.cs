@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BusinessLayer.Entities;
 using BusinessLayer.Interfaces;
+using System.Collections;
 
 namespace DataAccessLayer.Repositories {
     public class BestuurderRepository: IBestuurderRepository {
@@ -190,6 +191,58 @@ namespace DataAccessLayer.Repositories {
                 }
             }
             else throw new Exception("Bestuurder id bestaat niet.");
+        }
+
+        public List<Bestuurder> FetchBestuurders(string naam, string voornaam)
+        {
+            List<Bestuurder> bestuurders = new List<Bestuurder>();
+
+            string query = "";
+            string queryNaam = "select * from dbo.bestuurders where naam like @naam";
+            string queryVoornaam = "select * from dbo.bestuurders where voornaam like @voornaam";
+            string queryWithVoornaam = " and voornaam like @voornaam";
+
+            SqlConnection connection = getConnection();
+
+            if (!string.IsNullOrWhiteSpace(naam) && !string.IsNullOrWhiteSpace(voornaam))
+            {
+                query = queryNaam + queryWithVoornaam;
+            }
+            else if (!string.IsNullOrWhiteSpace(naam))
+            {
+                query = queryNaam;
+            }
+            else if (!string.IsNullOrWhiteSpace(voornaam))
+            {
+                query = queryVoornaam;
+            }
+
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                try
+                {
+                    connection.Open();
+                    command.Parameters.AddWithValue("naam", naam);
+                    command.Parameters.AddWithValue("voornaam", voornaam);
+                    IDataReader reader = command.ExecuteReader();
+                    do
+                    {
+                        while (reader.Read())
+                        {
+                            Bestuurder bs = new Bestuurder(reader["naam"].ToString(), reader["voornaam"].ToString(), (DateTime)reader["geboortedatum"], reader["rijksregisternummer"].ToString(), reader["rijbewijs"].ToString(), reader["gemeente"].ToString(), reader["straat"].ToString(), reader["huisnummer"].ToString(), reader.GetNullableInt("postcode"));
+                            bs.Id = (int)reader["id"];
+                            bestuurders.Add(bs);
+                        }
+                    } while (reader.NextResult());
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+
+            return bestuurders;
         }
 
         public Bestuurder ToonDetails(int id)

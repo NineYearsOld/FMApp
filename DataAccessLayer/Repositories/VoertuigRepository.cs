@@ -169,7 +169,6 @@ namespace BusinessLayer.Repositories {
             }
             else throw new Exception("Chassisnummer bestaat niet.");
         }
-
         public Voertuig ToonDetails(string chassisnummer) {
             if (ExistsVoertuig(chassisnummer))
             {

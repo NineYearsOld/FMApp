@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLayer.Utilities;
+using System.Collections;
 
 namespace BusinessLayer.Services {
     public class BestuurderService {
@@ -59,6 +60,19 @@ namespace BusinessLayer.Services {
                 throw;
             }
         }
+        public List<Bestuurder> FetchBestuurders(string naam, string voornaam)
+        {
+            try
+            {
+                return repo.FetchBestuurders(naam, voornaam);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
 
         public Bestuurder ToonDetails(int id) {
             try {

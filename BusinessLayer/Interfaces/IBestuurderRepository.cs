@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Entities;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ namespace BusinessLayer.Interfaces
         void CreateBestuurder(Bestuurder bestuurder);
         void DeleteBestuurder(int id);
         void UpdateBestuurder(Bestuurder bestuurder, int id);
+        List<Bestuurder> FetchBestuurders(string naam, string voornaam);
         Bestuurder ToonDetails(int id);
     }
 }
