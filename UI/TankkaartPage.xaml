@@ -9,8 +9,8 @@
       Title="TankkaartPage">
 
     <Grid>
-        <Button FontFamily="Marlett" x:Name="btn_back" Content="3" HorizontalAlignment="Left" Margin="702,392,0,0" VerticalAlignment="Top" ToolTip="Naar voertuigbeheer." Click="btn_back_Click"/>
-        <Button FontFamily="Marlett" x:Name="btn_Forward" Content="4" HorizontalAlignment="Left" Margin="718,392,0,0" VerticalAlignment="Top" IsEnabled="False"/>
+        <Button FontFamily="Marlett" x:Name="btn_back" Content="3" HorizontalAlignment="Left" Margin="682,392,0,0" VerticalAlignment="Top" ToolTip="Naar voertuigbeheer." Click="btn_back_Click"/>
+        <Button FontFamily="Marlett" x:Name="btn_Forward" Content="4" HorizontalAlignment="Left" Margin="698,392,0,0" VerticalAlignment="Top" IsEnabled="False"/>
         <DatePicker x:Name="dpk_Geldigheid" Language="nl-fr" HorizontalAlignment="Left" Margin="100,75,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="tbk_Pincode" HorizontalAlignment="Left" Margin="100,104,0,0" Text="1234" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="tbk_BestuurderId" HorizontalAlignment="Left" Margin="100,154,0,0" Text="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>

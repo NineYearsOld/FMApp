@@ -9,8 +9,8 @@
       Title="VoertuigPage">
 
     <Grid>
-        <Button FontFamily="Marlett" x:Name="btn_back" Content="3" HorizontalAlignment="Left" Margin="702,392,0,0" VerticalAlignment="Top" ToolTip="Naar bestuurderbeheer." Click="btn_back_Click"/>
-        <Button FontFamily="Marlett" x:Name="btn_Forward" Content="4" HorizontalAlignment="Left" Margin="718,392,0,0" VerticalAlignment="Top" ToolTip="Naar tankkaartbeheer." Click="btn_Forward_Click"/>
+        <Button FontFamily="Marlett" x:Name="btn_back" Content="3" HorizontalAlignment="Left" Margin="682,392,0,0" VerticalAlignment="Top" ToolTip="Naar bestuurderbeheer." Click="btn_back_Click"/>
+        <Button FontFamily="Marlett" x:Name="btn_Forward" Content="4" HorizontalAlignment="Left" Margin="698,392,0,0" VerticalAlignment="Top" ToolTip="Naar tankkaartbeheer." Click="btn_Forward_Click"/>
         <TextBox HorizontalAlignment="Left" Margin="90,79,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Page>
