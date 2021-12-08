@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 
-namespace BusinessLayer.Repositories {
+namespace DataAccessLayer.Repositories {
     public class TankkaartRepository: ITankkaartRepository {
         private string connectionString;
         public TankkaartRepository(string connectionString)

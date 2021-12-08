@@ -4,7 +4,7 @@ using BusinessLayer.StaticData;
 using System;
 using Xunit;
 
-namespace UnitTests {
+namespace UnitTests.Entities {
     public class UnitTestVoertuig {
         [Fact]
         public void TestConstructor() {

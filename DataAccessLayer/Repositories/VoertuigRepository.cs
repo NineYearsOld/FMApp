@@ -6,7 +6,7 @@ using Microsoft.Data.SqlClient;
 using System;
 using System.Data;
 
-namespace BusinessLayer.Repositories {
+namespace DataAccessLayer.Repositories {
     public class VoertuigRepository: IVoertuigRepository {
         private string connectionString;
         public VoertuigRepository(string connectionString) {

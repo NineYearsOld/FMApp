@@ -3,7 +3,7 @@ using BusinessLayer.Exceptions;
 using System;
 using Xunit;
 
-namespace UnitTests {
+namespace UnitTests.Entities {
     public class UnitTestTankkaart {
         [Fact]
         public void TestConstructor() {
