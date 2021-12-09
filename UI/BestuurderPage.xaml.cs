@@ -150,7 +150,8 @@ namespace UI
             {
                 Bestuurder b = new Bestuurder(tbk_Naam.Text, tbk_Voornaam.Text, (DateTime)dpk_gebDatum.SelectedDate, tbk_Rijksregnr.Text, lbl_Rijbewijzen.Content.ToString(), cmb_Gemeente.Text, tbk_Straat.Text, tbk_Huisnummer.Text, TryParseNullable(tbk_Postcode.Text));
                 BestuurderService().UpdateBestuurder(b, (int)id);
-                tbl_BestuurderDetails.Text = $"{b.Naam} {b.Voornaam}\n{b.GeboorteDatum.ToShortDateString()}\nrijksregisternummer: {b.RijksregisterNummer}\nrijbewijs: {b.Rijbewijs}\ngemeente: {b.Gemeente}\nstraat: {b.Straat}\nhuisnummer: {b.Huisnummer}\npostcode: {b.Postcode}";
+                tbl_BestuurderDetails.Text = null;
+                tbl_BestuurderDetails.Text = $"{tbk_Naam.Text} {tbk_Voornaam.Text}\n{b.GeboorteDatum.ToShortDateString()}\nrijksregisternummer: {b.RijksregisterNummer}\nrijbewijs: {b.Rijbewijs}\ngemeente: {b.Gemeente}\nstraat: {b.Straat}\nhuisnummer: {b.Huisnummer}\npostcode: {b.Postcode}";
             }
         }
 
@@ -175,6 +176,16 @@ namespace UI
 
         private void btn_ToonDetails_Click(object sender, RoutedEventArgs e)
         {
+            DateTime date;
+            string textDate = string.Empty;
+            if (dpk_gebDatum.SelectedDate != null)
+            {
+                date = (DateTime)dpk_gebDatum.SelectedDate;
+                textDate = date.ToString("yyyy-MM-dd");
+            }
+            List<Bestuurder> bestuurders = BestuurderService().FetchBestuurders(tbk_Naam.Text, tbk_Voornaam.Text, textDate);
+            lsb_BestuurdersLijst.ItemsSource = bestuurders;
+            /*
             int? id = TryParseNullable(tbk_Id.Text);
             if (id == null)
             {
@@ -189,6 +200,7 @@ namespace UI
                 Bestuurder b = BestuurderService().ToonDetails((int)id);
                 tbl_BestuurderDetails.Text = $"{b.Naam} {b.Voornaam}\n{b.GeboorteDatum.ToShortDateString()}\nrijksregisternummer: {b.RijksregisterNummer}\nrijbewijs: {b.Rijbewijs}\ngemeente: {b.Gemeente}\nstraat: {b.Straat}\nhuisnummer: {b.Huisnummer}\npostcode: {b.Postcode}";
             }
+            */
         }
 
         private void btn_Forward_Click(object sender, RoutedEventArgs e)
@@ -197,5 +209,23 @@ namespace UI
             NavigationService.Navigate(vp);
         }
 
+        private void lsb_BestuurdersLijst_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lsb_BestuurdersLijst.SelectedIndex>-1)
+            {
+                Bestuurder b = (Bestuurder)lsb_BestuurdersLijst.SelectedItem;
+                lbl_BestuurderDetails.Content = tbl_BestuurderDetails.Text = $"{b.Naam} {b.Voornaam}\n{b.GeboorteDatum.ToShortDateString()}\nrijksregisternummer: {b.RijksregisterNummer}\nrijbewijs: {b.Rijbewijs}\ngemeente: {b.Gemeente}\nstraat: {b.Straat}\nhuisnummer: {b.Huisnummer}\npostcode: {b.Postcode}";
+                rijbewijzen = b.Rijbewijs.Split("; ").ToHashSet();
+                lbl_Rijbewijzen.Content = b.Rijbewijs;
+                tbk_Naam.Text = b.Naam;
+                tbk_Voornaam.Text = b.Voornaam;
+                tbk_Huisnummer.Text = b.Huisnummer;
+                cmb_Gemeente.SelectedItem = b.Gemeente;
+                tbk_Postcode.Text = b.Postcode.ToString();
+                tbk_Rijksregnr.Text = b.RijksregisterNummer;
+                dpk_gebDatum.SelectedDate = b.GeboorteDatum;
+                tbk_Id.Text = b.Id.ToString();
+            }
+        }
     }
 }

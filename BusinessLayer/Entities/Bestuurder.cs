@@ -145,5 +145,9 @@ namespace BusinessLayer.Entities {
                 throw new BestuurderException("Een rijbewijs is verplicht.");
             }
         }
+        public override string ToString()
+        {
+            return Naam + " " + Voornaam + " " + GeboorteDatum;
+        }
     }
 }

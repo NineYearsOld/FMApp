@@ -193,7 +193,7 @@ namespace DataAccessLayer.Repositories {
             else throw new Exception("Bestuurder id bestaat niet.");
         }
 
-        public List<Bestuurder> FetchBestuurders(string naam, string voornaam)
+        public List<Bestuurder> FetchBestuurders(string naam, string voornaam, string geboortedatum)
         {
             List<Bestuurder> bestuurders = new List<Bestuurder>();
 
@@ -201,12 +201,26 @@ namespace DataAccessLayer.Repositories {
             string queryNaam = "select * from dbo.bestuurders where naam like @naam";
             string queryVoornaam = "select * from dbo.bestuurders where voornaam like @voornaam";
             string queryWithVoornaam = " and voornaam like @voornaam";
+            string queryWithGeboortedatum = " and geboortedatum like @geboortedatum";
+            string queryGeboorteDatum = "select * from dbo.bestuurders where geboortedatum like @geboortedatum";
 
             SqlConnection connection = getConnection();
 
-            if (!string.IsNullOrWhiteSpace(naam) && !string.IsNullOrWhiteSpace(voornaam))
+            if (!string.IsNullOrWhiteSpace(naam) && !string.IsNullOrWhiteSpace(voornaam) && !string.IsNullOrWhiteSpace(geboortedatum))
+            {
+                query = queryNaam + queryWithVoornaam + queryWithGeboortedatum;
+            }
+            else if (!string.IsNullOrWhiteSpace(naam) && !string.IsNullOrWhiteSpace(voornaam))
             {
                 query = queryNaam + queryWithVoornaam;
+            }
+            else if (!string.IsNullOrWhiteSpace(naam) && !string.IsNullOrWhiteSpace(geboortedatum))
+            {
+                query = queryNaam + queryWithGeboortedatum;
+            }
+            else if (!string.IsNullOrWhiteSpace(voornaam) && !string.IsNullOrWhiteSpace(geboortedatum))
+            {
+                query = queryVoornaam + queryWithGeboortedatum;
             }
             else if (!string.IsNullOrWhiteSpace(naam))
             {
@@ -216,14 +230,19 @@ namespace DataAccessLayer.Repositories {
             {
                 query = queryVoornaam;
             }
+            else if (geboortedatum != null)
+            {
+                query = queryGeboorteDatum;
+            }
 
             using (SqlCommand command = new SqlCommand(query, connection))
             {
                 try
                 {
                     connection.Open();
-                    command.Parameters.AddWithValue("naam", naam);
-                    command.Parameters.AddWithValue("voornaam", voornaam);
+                    command.Parameters.AddWithValue("naam", naam + '%');
+                    command.Parameters.AddWithValue("voornaam", voornaam + '%');
+                    command.Parameters.AddWithValue("geboortedatum", geboortedatum);
                     IDataReader reader = command.ExecuteReader();
                     do
                     {

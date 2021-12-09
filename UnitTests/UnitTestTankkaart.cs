@@ -13,7 +13,7 @@ namespace UnitTests {
             string brandstof = "diesel";
             int bestuurderid = 1;
 
-            Tankkaart t = new Tankkaart(kaartnummer, geldigheidsdatum, pin, brandstof, bestuurderid);
+            Tankkaart t = new Tankkaart(geldigheidsdatum, pin, brandstof, bestuurderid, kaartnummer);
 
             Assert.Equal(123456, t.KaartNummer);
             Assert.Equal(new DateTime(2022, 1, 1), t.GeldigheidsDatum);
@@ -21,12 +21,12 @@ namespace UnitTests {
             Assert.Equal("diesel", t.Brandstoffen);
             Assert.Equal(1, t.BestuurderId);
 
-            Assert.Throws<TankkaartException>(() => new Tankkaart(kaartnummer, new DateTime(2021, 1, 1), pin, brandstof, bestuurderid)); // geldigheidsdatum is al verlopen
-            Assert.Throws<TankkaartException>(() => new Tankkaart(kaartnummer, geldigheidsdatum, pin, brandstof, -3)); // bestuurderid is negatief
-            Assert.Throws<TankkaartException>(() => new Tankkaart(kaartnummer, geldigheidsdatum, "", brandstof, bestuurderid)); // Lege pin
-            Assert.Throws<TankkaartException>(() => new Tankkaart(kaartnummer, geldigheidsdatum, "123", brandstof, bestuurderid)); // pin te kort
-            Assert.Throws<TankkaartException>(() => new Tankkaart(kaartnummer, geldigheidsdatum, "12345", brandstof, bestuurderid)); // pin te lang
-            Assert.Throws<TankkaartException>(() => new Tankkaart(kaartnummer, geldigheidsdatum, null, brandstof, bestuurderid)); // pin = null
+            Assert.Throws<TankkaartException>(() => new Tankkaart(new DateTime(2021, 1, 1), pin, brandstof, bestuurderid, kaartnummer)); // geldigheidsdatum is al verlopen
+            Assert.Throws<TankkaartException>(() => new Tankkaart(geldigheidsdatum, pin, brandstof, -3, kaartnummer)); // bestuurderid is negatief
+            Assert.Throws<TankkaartException>(() => new Tankkaart(geldigheidsdatum, "", brandstof, bestuurderid, kaartnummer)); // Lege pin
+            Assert.Throws<TankkaartException>(() => new Tankkaart(geldigheidsdatum, "123", brandstof, bestuurderid, kaartnummer)); // pin te kort
+            Assert.Throws<TankkaartException>(() => new Tankkaart(geldigheidsdatum, "12345", brandstof, bestuurderid, kaartnummer)); // pin te lang
+            Assert.Throws<TankkaartException>(() => new Tankkaart(geldigheidsdatum, null, brandstof, bestuurderid, kaartnummer)); // pin = null
         }
 
         [Fact]
@@ -37,7 +37,7 @@ namespace UnitTests {
             string brandstof = "diesel";
             int bestuurderid = 1;
 
-            Tankkaart t = new Tankkaart(kaartnummer,geldigheidsdatum,pin,brandstof,bestuurderid);
+            Tankkaart t = new Tankkaart(geldigheidsdatum,pin,brandstof,bestuurderid, kaartnummer);
 
             Assert.Throws<TankkaartException>(() => t.UpdateGeldigheidsdatum(geldigheidsdatum));
             Assert.Throws<TankkaartException>(() => t.UpdateGeldigheidsdatum(new DateTime(2021,12,30))) ;
@@ -55,7 +55,7 @@ namespace UnitTests {
             string brandstof = "diesel";
             int bestuurderid = 1;
 
-            Tankkaart t = new Tankkaart(kaartnummer, geldigheidsdatum, pin, brandstof, bestuurderid);
+            Tankkaart t = new Tankkaart(geldigheidsdatum, pin, brandstof, bestuurderid, kaartnummer);
 
             Assert.Throws<TankkaartException>(() => t.UpdatePincode(pin));
             Assert.Throws<TankkaartException>(() => t.UpdatePincode("12"));
@@ -75,7 +75,7 @@ namespace UnitTests {
             string brandstof = "diesel";
             int bestuurderid = 1;
 
-            Tankkaart t = new Tankkaart(kaartnummer, geldigheidsdatum, pin, brandstof, bestuurderid);
+            Tankkaart t = new Tankkaart(geldigheidsdatum, pin, brandstof, bestuurderid, kaartnummer);
         }
 
         [Fact]
@@ -86,7 +86,7 @@ namespace UnitTests {
             string brandstof = "diesel";
             int bestuurderid = 1;
 
-            Tankkaart t = new Tankkaart(kaartnummer, geldigheidsdatum, pin, brandstof, bestuurderid);
+            Tankkaart t = new Tankkaart(geldigheidsdatum, pin, brandstof, bestuurderid, kaartnummer);
             /*
             Assert.Throws<TankkaartException>(() => t.UpdateBestuurderid(-3));
 

@@ -60,11 +60,11 @@ namespace BusinessLayer.Services {
                 throw;
             }
         }
-        public List<Bestuurder> FetchBestuurders(string naam, string voornaam)
+        public List<Bestuurder> FetchBestuurders(string naam, string voornaam, string geboortedatum)
         {
             try
             {
-                return repo.FetchBestuurders(naam, voornaam);
+                return repo.FetchBestuurders(naam, voornaam, geboortedatum);
             }
             catch (Exception)
             {

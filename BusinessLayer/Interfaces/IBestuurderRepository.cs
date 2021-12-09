@@ -14,7 +14,7 @@ namespace BusinessLayer.Interfaces
         void CreateBestuurder(Bestuurder bestuurder);
         void DeleteBestuurder(int id);
         void UpdateBestuurder(Bestuurder bestuurder, int id);
-        List<Bestuurder> FetchBestuurders(string naam, string voornaam);
+        List<Bestuurder> FetchBestuurders(string naam, string voornaam, string geboortedatum);
         Bestuurder ToonDetails(int id);
     }
 }

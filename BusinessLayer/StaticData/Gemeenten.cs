@@ -8,10 +8,10 @@ namespace BusinessLayer.StaticData
 {
     public static class Gemeenten
     {
-        public const string wv = "West-Vlaanderen";
-        public const string ov = "Oost-Vlaanderen";
-        public const string lm = "Limburg";
-        public const string an = "Antwerpen";
-        public const string vb = "Vlaams-Brabant";
+        public const string wv = "Antwerpen";
+        public const string ov = "Ieper";
+        public const string lm = "Gent";
+        public const string an = "Halle";
+        public const string vb = "Knokke";
     }
 }
