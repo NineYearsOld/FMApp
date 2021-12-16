@@ -79,7 +79,11 @@ namespace UI
         private bool CheckFieldState()
         {
             bool filledFields = false;
-            if (lbl_Rijbewijzen.Content != null && tbk_Naam.Text != null && tbk_Voornaam.Text != null && tbk_Rijksregnr.Text != null && dpk_gebDatum.SelectedDate != null)
+            string naam = lbl_Rijbewijzen.Content.ToString();
+            string voornaam = tbk_Voornaam.Text;
+            string rijksreg = tbk_Rijksregnr.Text;
+            
+            if (!string.IsNullOrWhiteSpace(naam) && !string.IsNullOrWhiteSpace(voornaam) && !string.IsNullOrWhiteSpace(rijksreg) && dpk_gebDatum.SelectedDate != null)
             {
                 filledFields = true;
             }
