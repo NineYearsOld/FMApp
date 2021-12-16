@@ -4,11 +4,10 @@ using BusinessLayer.StaticData;
 using DataAccessLayer.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows;
+using System.Text.RegularExpressions;using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -17,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Timers;
 
 namespace UI
 {
@@ -37,6 +37,7 @@ namespace UI
             return bs;
         }
         HashSet<string> rijbewijzen = new HashSet<string>();
+        ObservableCollection<Bestuurder> bestuurders;
         private void InputValidation(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
@@ -44,15 +45,26 @@ namespace UI
         }
         public void FillCmbBoxes()
         {
-            cmb_Rijbewijs.ItemsSource = Enum.GetValues(typeof(Rijbewijzen));
-            var gems = typeof(Gemeenten).GetFields()
-                .Select(f => f.GetValue(f) as string);
-            cmb_Gemeente.ItemsSource = gems;
+            cmb_Rijbewijs.ItemsSource = Enum.GetValues(typeof(Rijbewijzen));            
+        }
+        private string FillDetails(Bestuurder b)
+        {
+            string postcode = null;
+            if (b.Postcode != null)
+            {
+                postcode = b.Postcode.ToString();
+            }
+            string result = 
+                $"{b.Naam} {b.Voornaam}\ngeboortedatum: {b.GeboorteDatum.ToShortDateString()}\nrijksregisternummer: {b.RijksregisterNummer}\nrijbewijs: {b.Rijbewijs}\nadres: " 
+                + (string.IsNullOrWhiteSpace(b.Huisnummer) ? "" : b.Huisnummer + ", ") 
+                + (string.IsNullOrWhiteSpace(b.Straat) ? "" : b.Straat + ", ") + b.Gemeente 
+                + (string.IsNullOrWhiteSpace(postcode) ? "" : "(" + b.Postcode + ")");
+            return result;
         }
         private void ClearFields()
         {
-            tbl_BestuurderDetails.Text = null;
-            cmb_Gemeente.SelectedItem = null;
+            lbl_BestuurderDetails.Content = null;
+            tbk_Gemeente.Text = null;
             cmb_Rijbewijs.SelectedItem = null;
             tbk_Huisnummer.Text = null;
             tbk_Naam.Text = null;
@@ -63,6 +75,15 @@ namespace UI
             lbl_Rijbewijzen.Content = null;
             dpk_gebDatum.SelectedDate = null;
             rijbewijzen.Clear();
+        }
+        private bool CheckFieldState()
+        {
+            bool filledFields = false;
+            if (lbl_Rijbewijzen.Content != null && tbk_Naam.Text != null && tbk_Voornaam.Text != null && tbk_Rijksregnr.Text != null && dpk_gebDatum.SelectedDate != null)
+            {
+                filledFields = true;
+            }
+            return filledFields;
         }
         private static int? TryParseNullable(string val)
         {
@@ -102,105 +123,77 @@ namespace UI
         {
             InputValidation(sender, e);
         }
-
         private void btn_BestuurderToevoegen_Click(object sender, RoutedEventArgs e)
         {
-            int id = BestuurderService().CreateBestuurder(tbk_Naam.Text, tbk_Voornaam.Text, (DateTime)dpk_gebDatum.SelectedDate, lbl_Rijbewijzen.Content.ToString(), tbk_Rijksregnr.Text, cmb_Gemeente.Text, tbk_Straat.Text, tbk_Huisnummer.Text, TryParseNullable(tbk_Postcode.Text)).Id;
-            ClearFields();
-            Bestuurder b = BestuurderService().ToonDetails(id);
-            tbk_Id.Text = id.ToString();
-            tbl_BestuurderDetails.Text = $"{b.Naam} {b.Voornaam}\n{b.GeboorteDatum.ToShortDateString()}\nrijksregisternummer: {b.RijksregisterNummer}\nrijbewijs: {b.Rijbewijs}\ngemeente: {b.Gemeente}\nstraat: {b.Straat}\nhuisnummer: {b.Huisnummer}\npostcode: {b.Postcode}";
+            if (CheckFieldState())
+            {
+                if (!BestuurderService().ExistsBestuurder(0, tbk_Rijksregnr.Text))
+                {
+                    int id = BestuurderService().CreateBestuurder(tbk_Naam.Text, tbk_Voornaam.Text, (DateTime)dpk_gebDatum.SelectedDate, lbl_Rijbewijzen.Content.ToString(), tbk_Rijksregnr.Text, tbk_Gemeente.Text, tbk_Straat.Text, tbk_Huisnummer.Text, TryParseNullable(tbk_Postcode.Text)).Id;
+                    Bestuurder b = BestuurderService().ToonDetails(id);
+                    lbl_BestuurderDetails.Content = FillDetails(b);
+                    bestuurders.Add(b);
+                    lsb_BestuurdersLijst.SelectedItem = null;   
+                }
+                else lbl_BestuurderDetails.Content = "Rijksregisternummer bestaat al in de databank";
+
+            }
+            else lbl_BestuurderDetails.Content = "Gelieve alle verreiste velden in te vullen.";
         }
 
         private void tbk_Id_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             InputValidation(sender, e);
         }
-
-        private void btnIdUp_Click(object sender, RoutedEventArgs e)
-        {
-            int.TryParse(tbk_Id.Text, out int count);
-            count++;
-            tbk_Id.Text = count.ToString("0.##");
-        }
-
-        private void btnIdDown_Click(object sender, RoutedEventArgs e)
-        {
-            int.TryParse(tbk_Id.Text, out int count);
-            if (count < 1)
-            {
-                count = 0;
-            }
-            else count--;
-            tbk_Id.Text = count.ToString("0.##");
-        }
-
         private void btn_BestuurderAanpassen_Click(object sender, RoutedEventArgs e)
         {
-            int? id = TryParseNullable(tbk_Id.Text);
-            if (id == null)
+            Bestuurder bestuurder = (Bestuurder)lsb_BestuurdersLijst.SelectedItem;
+            if (bestuurder == null)
             {
-                MessageBox.Show("Gelieve een id in te geven");
-            }
-            else if (!BestuurderService().ExistsBestuurder((int)id))
-            {
-                tbl_BestuurderDetails.Text = "Bestuurder id werd niet gevonden.";
+                lbl_BestuurderDetails.Content = "Gelieve een bestuurder te kiezen";
             }
             else
             {
-                Bestuurder b = new Bestuurder(tbk_Naam.Text, tbk_Voornaam.Text, (DateTime)dpk_gebDatum.SelectedDate, tbk_Rijksregnr.Text, lbl_Rijbewijzen.Content.ToString(), cmb_Gemeente.Text, tbk_Straat.Text, tbk_Huisnummer.Text, TryParseNullable(tbk_Postcode.Text));
-                BestuurderService().UpdateBestuurder(b, (int)id);
-                tbl_BestuurderDetails.Text = null;
-                tbl_BestuurderDetails.Text = $"{tbk_Naam.Text} {tbk_Voornaam.Text}\n{b.GeboorteDatum.ToShortDateString()}\nrijksregisternummer: {b.RijksregisterNummer}\nrijbewijs: {b.Rijbewijs}\ngemeente: {b.Gemeente}\nstraat: {b.Straat}\nhuisnummer: {b.Huisnummer}\npostcode: {b.Postcode}";
+                Bestuurder b = new Bestuurder(tbk_Naam.Text, tbk_Voornaam.Text, (DateTime)dpk_gebDatum.SelectedDate, tbk_Rijksregnr.Text, lbl_Rijbewijzen.Content.ToString(), tbk_Gemeente.Text, tbk_Straat.Text, tbk_Huisnummer.Text, TryParseNullable(tbk_Postcode.Text));
+                BestuurderService().UpdateBestuurder(b, bestuurder.Id);
+
+                lbl_BestuurderDetails.Content = FillDetails(b);
             }
         }
 
         private void btn_BestuurderVerwijderen_Click(object sender, RoutedEventArgs e)
         {
-            int? id = TryParseNullable(tbk_Id.Text);
-            if (id == null)
+            Bestuurder bestuurder = (Bestuurder)lsb_BestuurdersLijst.SelectedItem;
+            if (bestuurder == null)
             {
-                MessageBox.Show("Gelieve een id in te geven.");
-            }
-            else if (!BestuurderService().ExistsBestuurder((int)id))
-            {
-                tbl_BestuurderDetails.Text = "Bestuurder id werd niet gevonden.";
+                lbl_BestuurderDetails.Content = "Gelieve een bestuurder te kiezen.";
             }
             else
             {
-                BestuurderService().DeleteBestuurder((int)id);
-                tbl_BestuurderDetails.Text = "Bestuurder succesvol verwijderd!";
-                tbk_Id.Text = null;
+                BestuurderService().DeleteBestuurder(bestuurder.Id);
+                ClearFields();
+                bestuurders.RemoveAt(bestuurders.Count - 1);
+                lsb_BestuurdersLijst.SelectedItem = null;
+                lbl_BestuurderDetails.Content = "Bestuurder succesvol verwijderd!";
             }
         }
 
         private void btn_ToonDetails_Click(object sender, RoutedEventArgs e)
         {
+            lbl_BestuurderDetails.Content = null;
             DateTime date;
             string textDate = string.Empty;
-            if (dpk_gebDatum.SelectedDate != null)
+            if (dpk_ZoekenOpGeboortedatum.SelectedDate != null)
             {
                 date = (DateTime)dpk_gebDatum.SelectedDate;
                 textDate = date.ToString("yyyy-MM-dd");
             }
-            List<Bestuurder> bestuurders = BestuurderService().FetchBestuurders(tbk_Naam.Text, tbk_Voornaam.Text, textDate);
+            bestuurders = BestuurderService().FetchBestuurders(tbk_ZoekenOpNaam.Text, tbk_ZoekenOpVoornaam.Text, textDate);
+            if (bestuurders.Count == 0)
+            {
+                lbl_BestuurderDetails.Content = "Geen overeenkomende resultaten gevonden"; 
+            }
             lsb_BestuurdersLijst.ItemsSource = bestuurders;
-            /*
-            int? id = TryParseNullable(tbk_Id.Text);
-            if (id == null)
-            {
-                MessageBox.Show("Gelieve een id in te geven");
-            }
-            else if (!BestuurderService().ExistsBestuurder((int)id))
-            {
-                tbl_BestuurderDetails.Text = "Bestuurder id werd niet gevonden.";
-            }
-            else
-            {
-                Bestuurder b = BestuurderService().ToonDetails((int)id);
-                tbl_BestuurderDetails.Text = $"{b.Naam} {b.Voornaam}\n{b.GeboorteDatum.ToShortDateString()}\nrijksregisternummer: {b.RijksregisterNummer}\nrijbewijs: {b.Rijbewijs}\ngemeente: {b.Gemeente}\nstraat: {b.Straat}\nhuisnummer: {b.Huisnummer}\npostcode: {b.Postcode}";
-            }
-            */
         }
 
         private void btn_Forward_Click(object sender, RoutedEventArgs e)
@@ -214,17 +207,17 @@ namespace UI
             if (lsb_BestuurdersLijst.SelectedIndex>-1)
             {
                 Bestuurder b = (Bestuurder)lsb_BestuurdersLijst.SelectedItem;
-                lbl_BestuurderDetails.Content = tbl_BestuurderDetails.Text = $"{b.Naam} {b.Voornaam}\n{b.GeboorteDatum.ToShortDateString()}\nrijksregisternummer: {b.RijksregisterNummer}\nrijbewijs: {b.Rijbewijs}\ngemeente: {b.Gemeente}\nstraat: {b.Straat}\nhuisnummer: {b.Huisnummer}\npostcode: {b.Postcode}";
+                lbl_BestuurderDetails.Content = FillDetails(b);
                 rijbewijzen = b.Rijbewijs.Split("; ").ToHashSet();
                 lbl_Rijbewijzen.Content = b.Rijbewijs;
                 tbk_Naam.Text = b.Naam;
                 tbk_Voornaam.Text = b.Voornaam;
                 tbk_Huisnummer.Text = b.Huisnummer;
-                cmb_Gemeente.SelectedItem = b.Gemeente;
+                tbk_Straat.Text = b.Straat;
+                tbk_Gemeente.Text = b.Gemeente;
                 tbk_Postcode.Text = b.Postcode.ToString();
                 tbk_Rijksregnr.Text = b.RijksregisterNummer;
                 dpk_gebDatum.SelectedDate = b.GeboorteDatum;
-                tbk_Id.Text = b.Id.ToString();
             }
         }
     }

@@ -1,5 +1,5 @@
 ﻿using BusinessLayer.Entities;
-using BusinessLayer.Repositories;
+using DataAccessLayer.Repositories;
 using BusinessLayer.Services;
 using BusinessLayer.StaticData;
 using System;

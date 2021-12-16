@@ -6,6 +6,7 @@ using System.Linq;
 using BusinessLayer.Entities;
 using BusinessLayer.Interfaces;
 using System.Collections;
+using System.Collections.ObjectModel;
 
 namespace DataAccessLayer.Repositories {
     public class BestuurderRepository: IBestuurderRepository {
@@ -20,9 +21,13 @@ namespace DataAccessLayer.Repositories {
             return connection;
         }
 
-        public bool ExistsBestuurder(int id)
+        public bool ExistsBestuurder(int id, string rijksreg = "")
         {
-            string query = "select count(*) from dbo.bestuurders where id =@id";
+            string query = string.Empty;
+            if (!string.IsNullOrWhiteSpace(rijksreg))
+            {
+                query = "select count(*) from dbo.bestuurders where rijksregisternummer =@rijksregisternummer"; ;
+            } else query = "select count(*) from dbo.bestuurders where id =@id";
             SqlConnection connection = getConnection();
             using (SqlCommand command = new SqlCommand(query, connection))
             {
@@ -30,6 +35,7 @@ namespace DataAccessLayer.Repositories {
                 {
                     connection.Open();
                     command.Parameters.AddWithValue("@id", id);
+                    command.Parameters.AddWithValue("@rijksregisternummer", rijksreg);
                     int qr = (int)command.ExecuteScalar();
                     if (qr > 0)
                     {
@@ -193,9 +199,9 @@ namespace DataAccessLayer.Repositories {
             else throw new Exception("Bestuurder id bestaat niet.");
         }
 
-        public List<Bestuurder> FetchBestuurders(string naam, string voornaam, string geboortedatum)
+        public ObservableCollection<Bestuurder> FetchBestuurders(string naam, string voornaam, string geboortedatum)
         {
-            List<Bestuurder> bestuurders = new List<Bestuurder>();
+            ObservableCollection<Bestuurder> bestuurders = new ObservableCollection<Bestuurder>();
 
             string query = "";
             string queryNaam = "select * from dbo.bestuurders where naam like @naam";
@@ -268,7 +274,7 @@ namespace DataAccessLayer.Repositories {
         {
             if (ExistsBestuurder(id))
             {
-                string query = "select naam, voornaam, geboortedatum, rijksregisternummer, rijbewijs, gemeente, straat, huisnummer, postcode from dbo.bestuurders where id=@id";
+                string query = "select id, naam, voornaam, geboortedatum, rijksregisternummer, rijbewijs, gemeente, straat, huisnummer, postcode from dbo.bestuurders where id=@id";
                 SqlConnection connection = getConnection();
                 Bestuurder bestuurder;
                 using (SqlCommand command = new SqlCommand(query, connection))

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BusinessLayer.Utilities;
 using System.Collections;
+using System.Collections.ObjectModel;
 
 namespace BusinessLayer.Services {
     public class BestuurderService {
@@ -15,9 +16,9 @@ namespace BusinessLayer.Services {
         public BestuurderService(IBestuurderRepository repo) {
             this.repo = repo;
         }
-        public bool ExistsBestuurder(int id)
+        public bool ExistsBestuurder(int id, string rijksreg = "")
         {
-            if (repo.ExistsBestuurder(id))
+            if (repo.ExistsBestuurder(id, rijksreg))
             {
                 return true;
             }
@@ -60,7 +61,7 @@ namespace BusinessLayer.Services {
                 throw;
             }
         }
-        public List<Bestuurder> FetchBestuurders(string naam, string voornaam, string geboortedatum)
+        public ObservableCollection<Bestuurder> FetchBestuurders(string naam, string voornaam, string geboortedatum)
         {
             try
             {

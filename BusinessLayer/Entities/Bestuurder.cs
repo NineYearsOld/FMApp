@@ -147,7 +147,7 @@ namespace BusinessLayer.Entities {
         }
         public override string ToString()
         {
-            return Naam + " " + Voornaam + " " + GeboorteDatum;
+            return Naam + " " + Voornaam + " " + GeboorteDatum.ToString("dd/MM/yyyy");
         }
     }
 }
