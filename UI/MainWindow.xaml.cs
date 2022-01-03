@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UI.bestuurder;
 
 namespace UI
 {
@@ -25,31 +26,38 @@ namespace UI
         public MainWindow()
         {
             InitializeComponent();
+
+
+        }
+        BestuurderPage bp = new BestuurderPage();
+        VoertuigPage vp = new VoertuigPage();
+        TankkaartPage tp = new TankkaartPage();
+        private void LoadPages()
+        {
+            Main.Content = bp;
         }
 
         private void btn_BestuurdersBeheer_Click(object sender, RoutedEventArgs e)
         {
-            BestuurderPage bp = new BestuurderPage();
-            bp.FillCmbBoxes();
-            Main.Content = bp;
+            BestuurderMaken bm = new BestuurderMaken();
+            bm.Owner = this;
+            bm.ShowDialog();
         }
 
         private void btn_VoertuigenBeheer_Click(object sender, RoutedEventArgs e)
         {
-            VoertuigPage vp = new VoertuigPage();
             Main.Content = vp;
         }
 
         private void btn_TankkaartenBeheer_Click(object sender, RoutedEventArgs e)
         {
-            TankkaartPage tp = new TankkaartPage();
             tp.FillCmbBox();
             Main.Content = tp;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            btn_BestuurdersBeheer_Click(sender, e);
+            LoadPages();
         }
     }
 }

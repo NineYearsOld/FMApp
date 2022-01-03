@@ -29,5 +29,15 @@ namespace DataAccessLayer
             else p = (int)reader[attribute];
             return p;
         }
+        public static DateTime? GetNullableDateTime(this IDataReader reader, string attribute)
+        {
+            DateTime? d;
+            if (reader.IsDBNull(reader.GetOrdinal(attribute)))
+            {
+                d = null;
+            }
+            else d = (DateTime)reader[attribute];
+            return d;
+        }
     }
 }

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UI.bestuurder;
 
 namespace UI
 {
@@ -21,6 +22,7 @@ namespace UI
     public partial class VoertuigPage : Page
     {
         private BestuurderPage BestuurderPage;
+        private TankkaartPage TankkaartPage;
         public VoertuigPage(BestuurderPage bp = null)
         {
             InitializeComponent();
@@ -31,16 +33,18 @@ namespace UI
             if (BestuurderPage == null)
             {
                 BestuurderPage = new BestuurderPage();
-                BestuurderPage.FillCmbBoxes();
             }
             NavigationService.Navigate(BestuurderPage);
         }
 
         private void btn_Forward_Click(object sender, RoutedEventArgs e)
         {
-            TankkaartPage tp = new TankkaartPage(this);
-            tp.FillCmbBox();
-            NavigationService.Navigate(tp);
+            if (TankkaartPage == null)
+            {
+                TankkaartPage = new TankkaartPage(this);
+                TankkaartPage.FillCmbBox();
+            }
+            NavigationService.Navigate(TankkaartPage);
         }
     }
 }
