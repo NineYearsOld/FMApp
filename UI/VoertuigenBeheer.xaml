@@ -5,11 +5,58 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UI"
         mc:Ignorable="d"
-        Title="VoertuigenBeheer" Height="450" Width="800"
+        Title="VoertuigenBeheer" Height="550" Width="800" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
 
     <Grid>
-        <Button x:Name="btn_Back" Content="Terug" HorizontalAlignment="Left" Margin="56,41,0,0" VerticalAlignment="Top" Click="btn_Back_Click"/>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Margin="20" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Chassisnummer*"  FontSize="11" Margin="0,0,0,14"/>
+            <TextBlock Text="Nummerplaat*"  FontSize="11" Margin="0,0,0,14"/>
+            <TextBlock Text="Merk*"  FontSize="11" Margin="0,0,0,14"/>
+            <TextBlock Text="Model*"  FontSize="11" Margin="0,0,0,14"/>
+            <TextBlock Text="Type wagen"  FontSize="11" Margin="0,0,0,14"/>
+            <TextBlock Text="Kleur"  FontSize="11" Margin="0,0,0,14"/>
+            <TextBlock Text="Aantal Deuren"  FontSize="11" Margin="0,0,0,14"/>
+            <TextBlock Text="Brandstoffen"  FontSize="11" Margin="0,0,0,14"/>
+            <TextBlock Text="Bestuurder Naam"  FontSize="11" Margin="0,0,0,14"/>
+            <TextBlock Text="Bestuurder Voornaam"  FontSize="11" Margin="0,0,0,14"/>
+            <TextBlock Text="Bestuurder"  FontSize="11" Margin="0,35,0,14"/>
+        </StackPanel>
+        <StackPanel Name="sp2" Margin="20" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <TextBox Name="tb" Width="250" Margin="0,0,0,10"/>
+            <TextBox Width="250" Margin="0,0,0,11"/>
+            <TextBox Width="250" Margin="0,0,0,11"/>
+            <TextBox Width="250" Margin="0,0,0,11"/>
+            <TextBox Width="250" Margin="0,0,0,11"/>
+            <TextBox Width="250" Margin="0,0,0,11"/>
+            <TextBox Width="250" Margin="0,0,0,11"/>
+            <TextBox Width="250" Margin="0,0,0,11"/>
+            <TextBox Name="Naam" Width="250" Margin="0,0,0,11"/>
+            <TextBox Name="Voornaam" Width="250" Margin="0,0,0,11"/>
+            <Button Name="ZoekBestuurder" Content="Zoek Bestuurder" Margin="0,0,0,10" Click="ZoekBestuurder_Click"/>
+            <ComboBox Name="cb" Margin="0,0,0,10"/>
+            <Button Name="Aanmaken" Content="Voertuig Aanmaken" Margin="0,0,0,10" Click="Aanmaken_Click"/>
+            <Button Name="Updaten" Content="Voertuig Updaten" Margin="0,0,0,10" Visibility="Hidden" Click="Updaten_Click"/>
+            <Button Name="Verwijderen" Content="Voertuig Verwijderen" Visibility="Hidden" Click="Verwijderen_Click"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Zoeken"  FontSize="11" Margin="0,0,0,11"/>
+            <TextBlock Text="Nummerplaat"  FontSize="11" Margin="0,0,0,14"/>
+            <TextBlock Text="Merk"  FontSize="11" Margin="0,0,0,14"/>
+            <TextBlock Text="Model"  FontSize="11" Margin="0,0,0,11"/>
+        </StackPanel>
+        <StackPanel Name="sp4" Grid.Column="1" Margin="20" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <TextBox Width="250" Margin="0,25,0,11"/>
+            <TextBox Width="250" Margin="0,0,0,11"/>
+            <TextBox Width="250" Margin="0,0,0,11"/>
+            <Button Name="Zoek" Content="Zoek" Click="Zoek_Click"/>
+        </StackPanel>
+        <TextBlock Name="Output" Grid.Column="1" Margin="20,160,20,50"/>
+        <Button Name="Clear" Width="75" Height="30" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Content="Clear" FontSize="11" Margin="20" Click="Clear_Click"/>
+        <Button Name="Back" Content="Terug" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="20" Width="50" Height="25" Click="Back_Click"/>
     </Grid>
 </Window>
