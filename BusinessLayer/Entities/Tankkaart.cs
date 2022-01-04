@@ -22,7 +22,7 @@ namespace BusinessLayer.Entities {
         public string Brandstoffen { get; private set; }
         public int BestuurderId { get; set; }
         public DateTime? UpdateGeldigheidsdatum(DateTime? geldigheid) {
-            if (DateTime.Now < geldigheid && GeldigheidsDatum < geldigheid || geldigheid == null) {
+            if (DateTime.Now < geldigheid || geldigheid == null) {
                 GeldigheidsDatum = geldigheid;
                 return geldigheid;
             }

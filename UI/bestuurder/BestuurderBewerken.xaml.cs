@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -29,14 +30,14 @@ namespace UI.bestuurder
             InitializeComponent();
             bestuurder = b;
             FillWindow(b);
-            FillCmbBoxes();
         }
-        private Bestuurder bestuurder;
+        public Bestuurder bestuurder;
+        public string ass = "ass";
         HashSet<string> rijbewijzen = new HashSet<string>();
 
         private void FillWindow(Bestuurder b)
         {
-            lbl_Rijbewijzen.Content = b.Rijbewijs;
+            tbl_Rijbewijzen.Text = b.Rijbewijs;
             tbk_Naam.Text = b.Naam;
             tbk_Voornaam.Text = b.Voornaam;
             tbk_Huisnummer.Text = b.Huisnummer;
@@ -45,10 +46,9 @@ namespace UI.bestuurder
             tbk_Postcode.Text = b.Postcode.ToString();
             tbk_Rijksregnr.Text = b.RijksregisterNummer;
             dpk_gebDatum.SelectedDate = b.GeboorteDatum;
-        }
-        public void FillCmbBoxes()
-        {
             cmb_Rijbewijs.ItemsSource = Enum.GetValues(typeof(Rijbewijzen));
+            rijbewijzen = b.Rijbewijs.Split("; ").ToHashSet();
+
         }
         private static int? TryParseNullable(string val)
         {
@@ -80,15 +80,18 @@ namespace UI.bestuurder
 
         private void btn_BestuurderAanpassen_Click(object sender, RoutedEventArgs e)
         {
-            Bestuurder b = new Bestuurder(tbk_Naam.Text, tbk_Voornaam.Text, (DateTime)dpk_gebDatum.SelectedDate, tbk_Rijksregnr.Text, lbl_Rijbewijzen.Content.ToString(), tbk_Gemeente.Text, tbk_Straat.Text, tbk_Huisnummer.Text, TryParseNullable(tbk_Postcode.Text));
-            Connection.Bestuurder().UpdateBestuurder(b, bestuurder.Id);
-            lbl_BestuurderDetails.Content = FillDetails(b);
+            int id = bestuurder.Id;
+            bestuurder = new Bestuurder(tbk_Naam.Text, tbk_Voornaam.Text, (DateTime)dpk_gebDatum.SelectedDate, tbk_Rijksregnr.Text, tbl_Rijbewijzen.Text.ToString(), tbk_Gemeente.Text, tbk_Straat.Text, tbk_Huisnummer.Text, TryParseNullable(tbk_Postcode.Text));
+            bestuurder.Id = id;
+            Connection.Bestuurder().UpdateBestuurder(bestuurder, id);
+            lbl_BestuurderDetails.Content = FillDetails(bestuurder);
             btn_Annuleren.Content = "Ok";
             btn_BestuurderAanpassen.Visibility = Visibility.Hidden;
         }
 
         private void btn_Annuleren_Click(object sender, RoutedEventArgs e)
         {
+            DialogResult = true;
             this.Close();
         }
         private void tbk_Postcode_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -107,7 +110,7 @@ namespace UI.bestuurder
         private void btn_RijbewijsToevoegen_Click(object sender, RoutedEventArgs e)
         {
             rijbewijzen.Add(cmb_Rijbewijs.SelectedValue.ToString());
-            lbl_Rijbewijzen.Content = string.Join("; ", rijbewijzen);
+            tbl_Rijbewijzen.Text = string.Join("; ", rijbewijzen);
             btn_RijbewijsToevoegen.IsEnabled = false;
             btn_RijbewijzenWissen.IsEnabled = true;
         }
@@ -125,7 +128,7 @@ namespace UI.bestuurder
         private void btn_RijbewijzenWissen_Click(object sender, RoutedEventArgs e)
         {
             rijbewijzen.Clear();
-            lbl_Rijbewijzen.Content = null;
+            tbl_Rijbewijzen.Text = null;
             btn_RijbewijsToevoegen.IsEnabled = true;
             btn_RijbewijzenWissen.IsEnabled = false;
         }

@@ -32,6 +32,8 @@ namespace BusinessLayer.Entities {
         public DateTime GeboorteDatum { get; private set; }
         public string RijksregisterNummer { get; private set; }
         public string Rijbewijs { get; private set; }
+        public Voertuig Voertuig { get; set; }
+        public Tankkaart Tankkaart { get; set; }
 
         // Update functies hier om private setters te houden
         public void UpdateNaam(string naam)
@@ -143,6 +145,17 @@ namespace BusinessLayer.Entities {
             else
             {
                 throw new BestuurderException("Een rijbewijs is verplicht.");
+            }
+        }
+        public void UpdateVoertuig(Voertuig voertuig)
+        {
+            if (voertuig != null)
+            {
+                Voertuig = voertuig;
+            }
+            else
+            {
+                throw new BestuurderException("Een Voertuig is verplicht.");
             }
         }
         public override string ToString()

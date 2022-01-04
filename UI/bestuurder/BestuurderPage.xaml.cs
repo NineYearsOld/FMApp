@@ -55,13 +55,17 @@ namespace UI.bestuurder
         {
             Bestuurder bestuurder = (Bestuurder)lsb_BestuurdersLijst.SelectedItem;
             BestuurderBewerken bw = new BestuurderBewerken(bestuurder);
-            bw.ShowDialog();
-
+            if (bw.ShowDialog() == true)
+            {
+                bestuurders[lsb_BestuurdersLijst.SelectedIndex] = bw.bestuurder;
+                lsb_BestuurdersLijst.SelectedItem = bw.bestuurder;
+                lbl_BestuurderDetails.Content = FillDetails(bw.bestuurder);
+            }
         }
 
         private void btn_BestuurderVerwijderen_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Bent u zeker ?", "Bestuurder Verwijderen", System.Windows.MessageBoxButton.YesNo);
+            MessageBoxResult messageBoxResult = MessageBox.Show("Bent u zeker ?", "Bestuurder Verwijderen", System.Windows.MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
             {
                 Bestuurder bestuurder = (Bestuurder)lsb_BestuurdersLijst.SelectedItem;
@@ -76,11 +80,10 @@ namespace UI.bestuurder
 
         private void btn_ToonDetails_Click(object sender, RoutedEventArgs e)
         {
-            Bestuurder b = (Bestuurder)lsb_BestuurdersLijst.SelectedItem;
-            int id = b.Id;
-            Details details = Connection.Bestuurder().ToonDetails(id);
+            int id = ((Bestuurder)lsb_BestuurdersLijst.SelectedItem).Id;
+            Bestuurder b = Connection.Bestuurder().ToonDetails(id);
+            BestuurderDetails bestuurderDetails = new BestuurderDetails(b);
 
-            BestuurderDetails bestuurderDetails = new BestuurderDetails(details);
             bestuurderDetails.ShowDialog();
         }
 

@@ -298,13 +298,14 @@ namespace DataAccessLayer.Repositories {
             else throw new Exception("Bestuurder id bestaat niet");
         }
 
-        public Details ToonDetails(int id)
+        public Bestuurder ToonDetails(int id)
         {
             if (ExistsBestuurder(id))
             {
                 string query = "select * from bestuurders b left join voertuigen v on v.bestuurderid = b.id left join tankkaarten t on t.Bestuurderid = b.id where id=@id";
                 SqlConnection connection = getConnection();
-                Details details;
+                Bestuurder bestuurder;
+
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     try
@@ -313,11 +314,9 @@ namespace DataAccessLayer.Repositories {
                         command.Parameters.AddWithValue("@id", (int)id);
                         IDataReader reader = command.ExecuteReader();
                         reader.Read();
-                        Bestuurder bestuurder = new Bestuurder((string)reader["naam"], (string)reader["voornaam"], (DateTime)reader["geboortedatum"], (string)reader["rijksregisternummer"], (string)reader["rijbewijs"], reader.GetNullableString("gemeente"), reader.GetNullableString("straat"), reader.GetNullableString("huisnummer"), reader.GetNullableInt("postcode"));
-                        Voertuig voertuig = new Voertuig(reader.GetNullableString("merk"), reader.GetNullableString("model"), reader.GetNullableString("chassisnummer"), reader.GetNullableString("nummerplaat"), reader.GetNullableString("brandstof"), reader.GetNullableString("typewagen"), reader.GetNullableString("kleur"), reader.GetNullableInt("aantaldeuren"), id);
-                        Tankkaart tankkaart = new Tankkaart(reader.GetNullableDateTime("geldigheidsdatum"), reader.GetNullableString("pincode"), reader.GetNullableString("brandstof"), id);
-
-                        details = new Details(bestuurder, voertuig, tankkaart);
+                        bestuurder = new Bestuurder((string)reader["naam"], (string)reader["voornaam"], (DateTime)reader["geboortedatum"], (string)reader["rijksregisternummer"], (string)reader["rijbewijs"], reader.GetNullableString("gemeente"), reader.GetNullableString("straat"), reader.GetNullableString("huisnummer"), reader.GetNullableInt("postcode"));
+                        bestuurder.Voertuig = new Voertuig(reader.GetNullableString("merk"), reader.GetNullableString("model"), reader.GetNullableString("chassisnummer"), reader.GetNullableString("nummerplaat"), reader.GetNullableString("brandstof"), reader.GetNullableString("typewagen"), reader.GetNullableString("kleur"), reader.GetNullableInt("aantaldeuren"), id);
+                        bestuurder.Tankkaart = new Tankkaart(reader.GetNullableDateTime("geldigheidsdatum"), reader.GetNullableString("pincode"), reader.GetNullableString("brandstof"), id, reader.GetNullableInt("kaartnummer"));
                     }
                     catch (Exception)
                     {
@@ -325,7 +324,7 @@ namespace DataAccessLayer.Repositories {
                         throw;
                     }
 
-                    return details;
+                    return bestuurder;
                 }
             }
             else throw new Exception("Bestuurder id bestaat niet");

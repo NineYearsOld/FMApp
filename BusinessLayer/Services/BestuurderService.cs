@@ -83,7 +83,7 @@ namespace BusinessLayer.Services {
                 throw;
             }
         }
-        public Details ToonDetails(int id)
+        public Bestuurder ToonDetails(int id)
         {
             try
             {

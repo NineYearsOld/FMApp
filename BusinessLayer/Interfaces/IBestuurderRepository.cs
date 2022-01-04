@@ -17,6 +17,6 @@ namespace BusinessLayer.Interfaces
         void UpdateBestuurder(Bestuurder bestuurder, int id);
         ObservableCollection<Bestuurder> FetchBestuurders(string naam, string voornaam, string geboortedatum);
         Bestuurder ToonBestuurder(int id);
-        Details ToonDetails(int id);
+        Bestuurder ToonDetails(int id);
     }
 }
