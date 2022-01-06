@@ -270,34 +270,6 @@ namespace DataAccessLayer.Repositories {
             return bestuurders;
         }
 
-        public Bestuurder ToonBestuurder(int id)
-        {
-            if (ExistsBestuurder(id))
-            {
-                string query = "select * from bestuurders b left join voertuigen v on v.bestuurderid = b.id left join tankkaarten t on t.Bestuurderid = b.id where id=@id";
-                SqlConnection connection = getConnection();
-                Bestuurder bestuurder;
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    try
-                    {
-                        connection.Open();
-                        command.Parameters.AddWithValue("@id", (int)id);
-                        IDataReader reader = command.ExecuteReader();
-                        reader.Read();
-                        bestuurder = new Bestuurder((string)reader["naam"], (string)reader["voornaam"], (DateTime)reader["geboortedatum"], (string)reader["rijksregisternummer"], (string)reader["rijbewijs"], reader.GetNullableString("gemeente"), reader.GetNullableString("straat"), reader.GetNullableString("huisnummer"), reader.GetNullableInt("postcode"));
-                    }
-                    catch (Exception)
-                    {
-
-                        throw;
-                    }
-                }
-                return bestuurder;
-            }
-            else throw new Exception("Bestuurder id bestaat niet");
-        }
-
         public Details ToonDetails(int id)
         {
             if (ExistsBestuurder(id))

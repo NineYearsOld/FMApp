@@ -77,7 +77,7 @@ namespace UI.bestuurder
                 if (!Connection.Bestuurder().ExistsBestuurder(0, tbk_Rijksregnr.Text))
                 {
                     int id = Connection.Bestuurder().CreateBestuurder(tbk_Naam.Text, tbk_Voornaam.Text, (DateTime)dpk_gebDatum.SelectedDate, lbl_Rijbewijzen.Content.ToString(), tbk_Rijksregnr.Text, tbk_Gemeente.Text, tbk_Straat.Text, tbk_Huisnummer.Text, TryParseNullable(tbk_Postcode.Text)).Id;
-                    b = Connection.Bestuurder().ToonBestuurder(id);
+
                     b.Id = id;
                     lbl_BestuurderDetails.Content = FillDetails(b);
                     btn_BestuurderToevoegen.Visibility = Visibility.Hidden;
