@@ -20,7 +20,7 @@ namespace UnitTests.Repositories {
             Assert.IsType<SqlConnection>(c);
             Assert.Equal(conn, c.ConnectionString);
         }
-
+        /*
         [Fact]
         public void TestBestaatTankkaart() {
             var tr = new TankkaartRepository(conn);
@@ -46,7 +46,7 @@ namespace UnitTests.Repositories {
             tr.DeleteTankkaart(1);
             Assert.False(tr.BestaatTankkaart(1));
         }
-
+        */
         [Fact]
         public void TestUpdateTankkaart() {
             var tr = new TankkaartRepository(conn);

@@ -26,12 +26,13 @@ namespace ConsoleTestApp
             string voornaam = Console.ReadLine();
             Console.WriteLine("Input geboortedatum");
             string gb = Console.ReadLine();
-
+            /*
             List<Bestuurder> bss = BestuurderService().FetchBestuurders(naam, voornaam, gb);
             foreach (Bestuurder bs in bss)
             {
                 Console.WriteLine(bs.Id);
             }
+            */
         }
     }
 }
