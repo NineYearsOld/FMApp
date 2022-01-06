@@ -20,45 +20,72 @@ namespace UI.bestuurder
     /// </summary>
     public partial class BestuurderDetails : Window
     {
-        public BestuurderDetails(Details d)
+        public BestuurderDetails(Bestuurder b)
         {
             InitializeComponent();
-            ToonDetails(d);
+            ToonDetails(b);
         }
-        private void ToonDetails(Details d)
+        private void ToonDetails(Bestuurder b)
         {
             string postcode = null;
             string aantalDeuren = null;
-            if (d.Bestuurder.Postcode != null)
+            if (b.Postcode != null)
             {
-                postcode = d.Bestuurder.Postcode.ToString();
+                postcode = b.Postcode.ToString();
             }
-            if (d.Voertuig.AantalDeuren != null)
+            if (b.Voertuig.AantalDeuren != null)
             {
-                aantalDeuren = d.Voertuig.AantalDeuren.ToString();
+                aantalDeuren = b.Voertuig.AantalDeuren.ToString();
             }
             string result =
-                $"Bestuurder:\nnaam: {d.Bestuurder.Naam} voornaam: {d.Bestuurder.Voornaam}\ngeboortedatum: {d.Bestuurder.GeboorteDatum.ToShortDateString()}\nrijksregisternummer: {d.Bestuurder.RijksregisterNummer}\nrijbewijs: {d.Bestuurder.Rijbewijs}\nadres: "
-                + (string.IsNullOrWhiteSpace(d.Bestuurder.Huisnummer) ? "n/a huisnr, " : d.Bestuurder.Huisnummer + ", ")
-                + (string.IsNullOrWhiteSpace(d.Bestuurder.Straat) ? "n/a straat, " : d.Bestuurder.Straat + ", ")
-                + (string.IsNullOrWhiteSpace(d.Bestuurder.Gemeente) ? "n/a gemeente" : d.Bestuurder.Gemeente + ", ")
-                + (string.IsNullOrWhiteSpace(postcode) ? "n/a postcode" : "(" + d.Bestuurder.Postcode + ")");
-            string resultV =
-                "Voertuig: " + (string.IsNullOrWhiteSpace(d.Voertuig.Merk) ? "\nn/a merk" : "\nMerk: " + d.Voertuig.Merk + ",")
-                + (string.IsNullOrWhiteSpace(d.Voertuig.Model) ? "\nn/a model" : "\nModel: " + d.Voertuig.Model + ",")
-                + (string.IsNullOrWhiteSpace(d.Voertuig.TypeWagen) ? "\nn/a carrosserie" : "\nCarrosserie: " + d.Voertuig.TypeWagen + ",")
-                + (string.IsNullOrWhiteSpace(aantalDeuren) ? "\nn/a aantal deuren" : "\nAantal deuren" + d.Voertuig.AantalDeuren + ", ")
-                + (string.IsNullOrWhiteSpace(d.Voertuig.Brandstoffen) ? "\nn/a brandstof" : "\nBrandstof" + d.Voertuig.Brandstoffen + ",")
-                + (string.IsNullOrWhiteSpace(d.Voertuig.ChassisNummer) ? "\nn/a chassisnummer" : "\nChassisnummer" + d.Voertuig.ChassisNummer + ",")
-                + (string.IsNullOrWhiteSpace(d.Voertuig.Kleur) ? "\nn/a kleur" : "\nKleur " + d.Voertuig.Kleur + ",")
-                + (string.IsNullOrWhiteSpace(d.Voertuig.Nummerplaat) ? "\nn/a nummerplaat" : "\nNummerplaat: " + d.Voertuig.Nummerplaat + ",");
-            string resultT;
-            if (d.Voertuig != null)
+                $"{b.Naam} {b.Voornaam}\ngeboortedatum: {b.GeboorteDatum.ToShortDateString()}\nrijksregisternummer: {b.RijksregisterNummer}\nrijbewijs: {b.Rijbewijs}\nadres: "
+                + (string.IsNullOrWhiteSpace(b.Huisnummer) ? "n/a huisnr, " : b.Huisnummer + ", ")
+                + (string.IsNullOrWhiteSpace(b.Straat) ? "n/a straat, " : b.Straat + ", ")
+                + (string.IsNullOrWhiteSpace(b.Gemeente) ? "n/a gemeente, " : b.Gemeente + ", ")
+                + (string.IsNullOrWhiteSpace(postcode) ? "n/a postcode" : "(" + b.Postcode + ")");
+            if (b.Voertuig.ChassisNummer != null)
             {
-                result += resultV;
+                result +=
+                    "\n\nVoertuig: " + (string.IsNullOrWhiteSpace(b.Voertuig.Merk) ? "\nn/a merk" : "\nMerk: " + b.Voertuig.Merk + ",")
+                    + (string.IsNullOrWhiteSpace(b.Voertuig.Model) ? "\nn/a model" : "\nModel: " + b.Voertuig.Model + ",")
+                    + (string.IsNullOrWhiteSpace(b.Voertuig.TypeWagen) ? "\nn/a carrosserie" : "\nCarrosserie: " + b.Voertuig.TypeWagen + ",")
+                    + (string.IsNullOrWhiteSpace(aantalDeuren) ? "\nn/a aantal deuren" : "\nAantal deuren" + b.Voertuig.AantalDeuren + ", ")
+                    + (string.IsNullOrWhiteSpace(b.Voertuig.Brandstoffen) ? "\nn/a brandstof" : "\nBrandstof" + b.Voertuig.Brandstoffen + ",")
+                    + (string.IsNullOrWhiteSpace(b.Voertuig.ChassisNummer) ? "\nn/a chassisnummer" : "\nChassisnummer" + b.Voertuig.ChassisNummer + ",")
+                    + (string.IsNullOrWhiteSpace(b.Voertuig.Kleur) ? "\nn/a kleur" : "\nKleur " + b.Voertuig.Kleur + ",")
+                    + (string.IsNullOrWhiteSpace(b.Voertuig.Nummerplaat) ? "\nn/a nummerplaat" : "\nNummerplaat: " + b.Voertuig.Nummerplaat + ",");
+            }
+            else
+            {
+                result += "\n\nGeen geassocieerde voertuig.";
+            }
+            if (b.Tankkaart.KaartNummer != null)
+            {
+                result +=
+                    "\n\nTankkaart: " + "\nkaartnummer: " + b.Tankkaart.KaartNummer
+                    + (string.IsNullOrWhiteSpace(b.Tankkaart.Brandstoffen) ? "\nn/a brandstoffen" : "\nbrandstoffen: " + b.Tankkaart.Brandstoffen)
+                    + "\nkaartnummer: " + b.Tankkaart.KaartNummer
+                    + (string.IsNullOrWhiteSpace(b.Tankkaart.Pincode) ? "\nn/a pincode" : "\npincode: " + b.Tankkaart.Pincode);
+
+            }
+            else
+            {
+                result += "\n\nGeen geassocieerde tankkaart gevonden.";
+
             }
 
             lbl_Details.Content = result;
+        }
+
+        private void btn_Ok_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btn_Bewerk_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
+            this.Close();
         }
     }
 }

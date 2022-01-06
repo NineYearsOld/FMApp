@@ -6,32 +6,56 @@
         xmlns:local="clr-namespace:UI.bestuurder"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="BestuurderBewerken" Height="372" Width="620">
-    <Grid>
-        <Label x:Name="lbl_BestuurderDetails" HorizontalAlignment="Left" Margin="338,28,0,0" VerticalAlignment="Top" Height="243" Width="242" BorderThickness="1,1,1,1" BorderBrush="LightSlateGray" x:FieldModifier="public"/>
-        <Button x:Name="btn_BestuurderAanpassen" Content="Aanpassen" HorizontalAlignment="Left" Margin="230,299,0,0" VerticalAlignment="Top" Click="btn_BestuurderAanpassen_Click"/>
-        <Button x:Name="btn_Annuleren" Content="Annuleren" HorizontalAlignment="Left" Margin="521,299,0,0" Width="60" VerticalAlignment="Top" Click="btn_Annuleren_Click"/>
-        <TextBox x:Name="tbk_Naam" HorizontalAlignment="Left" Margin="136,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="164"/>
-        <TextBox x:Name="tbk_Voornaam" HorizontalAlignment="Left" Margin="136,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="164"/>
-        <TextBox x:Name="tbk_Huisnummer" HorizontalAlignment="Left" Margin="136,132,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="164"/>
-        <TextBox x:Name="tbk_Straat" HorizontalAlignment="Left" Margin="136,155,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="164"/>
-        <ComboBox x:Name="cmb_Rijbewijs" HorizontalAlignment="Left" Margin="136,28,0,0" VerticalAlignment="Top" Width="113" SelectionChanged="cmb_Rijbewijs_SelectionChanged"/>
-        <TextBox x:Name="tbk_Postcode" HorizontalAlignment="Left" Margin="136,201,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="164" MaxLength="4" PreviewTextInput="tbk_Postcode_PreviewTextInput"/>
-        <TextBox x:Name="tbk_Rijksregnr" HorizontalAlignment="Left" Margin="136,224,0,0" Text="00120200152" TextWrapping="Wrap" VerticalAlignment="Top" Width="164" MaxLength="11" PreviewTextInput="tbk_Rijksregnr_PreviewTextInput"/>
-        <DatePicker SelectedDateFormat="Short" Language="nl-be" x:Name="dpk_gebDatum" HorizontalAlignment="Left" Margin="135,247,0,0" VerticalAlignment="Top" Width="164"/>
-        <TextBlock HorizontalAlignment="Left" Margin="45,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="47"><Run Language="nl-be" Text="Rijbewijs"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="43,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="32"><Run Language="nl-be" Text="Naam"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="43,133,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70"><Run Language="nl-be" Text="Huisnummer"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="43,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55"><Run Language="nl-be" Text="Voornaam"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="43,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="31"><Run Language="nl-be" Text="Straat"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="43,181,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55"><Run Language="nl-be" Text="Gemeente"/><LineBreak/><Run Language="nl-be"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="43,202,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="49"><Run Language="nl-be" Text="Postcode"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="43,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Rijksregnr" Width="53"/>
-        <TextBlock HorizontalAlignment="Left" Margin="43,251,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="87"><Run Language="fr-be" Text="Geboortedatum"/></TextBlock>
-        <Button x:Name="btn_RijbewijsToevoegen" Content="+" HorizontalAlignment="Left" Margin="254,28,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.363,-0.048" Height="22" Width="46" VerticalContentAlignment="Top" IsEnabled="False" Click="btn_RijbewijsToevoegen_Click"/>
-        <Label x:Name="lbl_Rijbewijzen" HorizontalAlignment="Left" Margin="136,55,0,0" VerticalAlignment="Top" Width="113" BorderThickness="1,1,1,1" BorderBrush="LightSlateGray" Height="28"/>
-        <Button x:Name="btn_RijbewijzenWissen" Content="Wissen" HorizontalAlignment="Left" Margin="254,55,0,0" VerticalAlignment="Top" Width="45" Height="28" IsEnabled="False" Click="btn_RijbewijzenWissen_Click"/>
-        <TextBox x:Name="tbk_Gemeente" HorizontalAlignment="Left" Margin="136,178,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="164"/>
+        Title="BestuurderBewerken" Height="364" Width="620">
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="47"><Run Language="nl-be" Text="Rijbewijs"/></TextBlock>
+        <TextBlock Grid.Row="2" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="32"><Run Language="nl-be" Text="Naam"/></TextBlock>
+        <TextBlock Grid.Row="3" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="55"><Run Language="nl-be" Text="Voornaam"/></TextBlock>
+        <TextBlock Grid.Row="4" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="70"><Run Language="nl-be" Text="Huisnummer"/></TextBlock>
+        <TextBlock Grid.Row="5" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="31"><Run Language="nl-be" Text="Straat"/></TextBlock>
+        <TextBlock Grid.Row="6" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="55"><Run Language="nl-be" Text="Gemeente"/><LineBreak/><Run Language="nl-be"/></TextBlock>
+        <TextBlock Grid.Row="7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="49"><Run Language="nl-be" Text="Postcode"/></TextBlock>
+        <TextBlock Grid.Row="8" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Text="Rijksregnr" Width="53"/>
+        <TextBlock Grid.Row="9" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="87"><Run Language="fr-be" Text="Geboortedatum"/></TextBlock>
+
+        <ComboBox Grid.Row="0" x:Name="cmb_Rijbewijs" HorizontalAlignment="Right" VerticalAlignment="Top" Width="132" SelectionChanged="cmb_Rijbewijs_SelectionChanged" Margin="0,0,32,0"/>
+        <Button x:Name="btn_RijbewijsToevoegen" Content="+" HorizontalAlignment="Right" VerticalAlignment="Top" Height="22" Width="34" IsEnabled="False" Click="btn_RijbewijsToevoegen_Click"/>
+        <Label Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="98" BorderThickness="1,1,1,1" BorderBrush="LightSlateGray" Height="22" Margin="0,0,66,0">
+            <TextBlock x:Name="tbl_Rijbewijzen" VerticalAlignment="Center"/>
+        </Label>
+        <Button Grid.Row="1" x:Name="btn_RijbewijzenWissen" Content="Wissen" HorizontalAlignment="Right" VerticalAlignment="Top" Width="67" Height="22" IsEnabled="False" Click="btn_RijbewijzenWissen_Click"/>
+        <TextBox Grid.Row="2" x:Name="tbk_Naam" HorizontalAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Top" Width="164"/>
+        <TextBox Grid.Row="3" x:Name="tbk_Voornaam" HorizontalAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Top" Width="164"/>
+        <TextBox Grid.Row="4" x:Name="tbk_Huisnummer" HorizontalAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Top" Width="164"/>
+        <TextBox Grid.Row="5" x:Name="tbk_Straat" HorizontalAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Top" Width="164"/>
+        <TextBox Grid.Row="6" x:Name="tbk_Gemeente" HorizontalAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Top" Width="164"/>
+        <TextBox Grid.Row="7" x:Name="tbk_Postcode" HorizontalAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Top" Width="164" MaxLength="4" PreviewTextInput="tbk_Postcode_PreviewTextInput"/>
+        <TextBox Grid.Row="8" x:Name="tbk_Rijksregnr" HorizontalAlignment="Right" Text="00120200152" TextWrapping="Wrap" VerticalAlignment="Top" Width="164" MaxLength="11" PreviewTextInput="tbk_Rijksregnr_PreviewTextInput"/>
+        <DatePicker Grid.Row="9" SelectedDateFormat="Short" Language="nl-be" x:Name="dpk_gebDatum" HorizontalAlignment="Right" VerticalAlignment="Top" Width="164"/>
+        <Button Grid.Row="10" x:Name="btn_BestuurderAanpassen" Content="Aanpassen" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="btn_BestuurderAanpassen_Click"/>
+
+        <Label  Grid.Column="1" Grid.Row="0" Grid.RowSpan="6" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="280" BorderThickness="1,1,1,1" BorderBrush="LightSlateGray">
+            <TextBlock x:Name="tbl_BestuurderDetails" TextWrapping="WrapWithOverflow" x:FieldModifier="public"/>
+        </Label>
+        <Button Grid.Column="1" Grid.Row="10" x:Name="btn_Annuleren" Content="Annuleren" HorizontalAlignment="Right" Width="60" VerticalAlignment="Bottom" Click="btn_Annuleren_Click"/>
 
     </Grid>
 </Window>

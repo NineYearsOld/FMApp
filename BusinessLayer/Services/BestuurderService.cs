@@ -75,8 +75,15 @@ namespace BusinessLayer.Services {
         }
 
 
-        
-        public Details ToonDetails(int id)
+        public Bestuurder ToonBestuurder(int id) {
+            try {
+                return repo.ToonBestuurder(id);
+            } catch (Exception) {
+
+                throw;
+            }
+        }
+        public Bestuurder ToonDetails(int id)
         {
             try
             {

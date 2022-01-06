@@ -8,28 +8,30 @@
       Height="450" Width="800"
       Title="BestuurderPage">
 
-    <Grid>
-        <Button FontFamily="Marlett" x:Name="btn_back" Content="3" HorizontalAlignment="Left" Margin="698,391,0,0" VerticalAlignment="Top" IsEnabled="False"/>
-        <Label x:Name="lbl_BestuurderDetails" HorizontalAlignment="Left" Margin="40,146,0,0" VerticalAlignment="Top" Height="222" Width="294" BorderThickness="1,1,1,1" BorderBrush="LightSlateGray" x:FieldModifier="public"/>
-        <Button FontFamily="Marlett" x:Name="btn_Forward" Content="4" HorizontalAlignment="Left" Margin="714,391,0,0" VerticalAlignment="Top" ToolTip="Naar voertuigbeheer." Click="btn_Forward_Click"/>
-        <ListBox x:Name="lsb_BestuurdersLijst" Margin="362,20,70,82" SelectionChanged="lsb_BestuurdersLijst_SelectionChanged" x:FieldModifier="public">
-            <ListBox.Resources>
-                <ContextMenu x:Key="lsbCtxMenu">
-                    <MenuItem Header="Toon Details" Click="btn_ToonDetails_Click"/>
-                    <MenuItem Header="Bewerk" Click="btn_BestuurderAanpassen_Click"/>
-                    <Separator/>
-                    <MenuItem Header="Verwijder" Click="btn_BestuurderVerwijderen_Click"/>
-                </ContextMenu>
-            </ListBox.Resources>
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="ContextMenu" Value="{StaticResource lsbCtxMenu}"/>
-                </Style>
-            </ListBox.ItemContainerStyle>
-        </ListBox>
-        <Label Content="Bestuurder zoeken" HorizontalAlignment="Left" Margin="56,24,0,0" VerticalAlignment="Top" Height="24" Width="108"/>
-        <DatePicker x:Name="dpk_ZoekenOpGeboortedatum" HorizontalAlignment="Left" Margin="176,56,0,0" VerticalAlignment="Top" Width="138"/>
-        <TextBox x:Name="tbk_ZoekenOpNaam" HorizontalAlignment="Left" Margin="60,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="112">
+    <Grid Margin="50">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="25"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="0.5*"/>
+        </Grid.RowDefinitions>
+        
+        <Button Grid.Column="4" Grid.Row="6" FontFamily="Marlett" x:Name="btn_back" Content="3" HorizontalAlignment="Right" VerticalAlignment="Center" IsEnabled="False"/>
+        <Button Grid.Column="5" Grid.Row="6" FontFamily="Marlett" x:Name="btn_Forward" Content="4" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Naar voertuigbeheer." Click="btn_Forward_Click"/>
+        
+        <Label Content="Bestuurder zoeken" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10"/>
+        <TextBox Grid.Column="0" Grid.Row="1" Margin="2" x:Name="tbk_ZoekenOpNaam"  TextWrapping="WrapWithOverflow" HorizontalAlignment="Right" Width="125">
             <TextBox.Style>
                 <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                     <Style.Resources>
@@ -53,7 +55,7 @@
                 </Style>
             </TextBox.Style>
         </TextBox>
-        <TextBox x:Name="tbk_ZoekenOpVoornaam" HorizontalAlignment="Left" Margin="60,78,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="112" Height="18">
+        <TextBox Grid.Row="2" Margin="2" x:Name="tbk_ZoekenOpVoornaam" HorizontalAlignment="Right" TextWrapping="WrapWithOverflow" Width="125">
             <TextBox.Style>
                 <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                     <Style.Resources>
@@ -77,7 +79,42 @@
                 </Style>
             </TextBox.Style>
         </TextBox>
-        <Button Content="Toon overeenkomende" HorizontalAlignment="Left" Margin="188,100,0,0" VerticalAlignment="Top" Width="126" Click="btn_ToonOvereenkomende_Click"/>
-        <Border BorderThickness="1" BorderBrush="LightSlateGray" Margin="40,20,466,324"/>
+
+        <DatePicker Grid.Row="3" Margin="2" x:Name="dpk_ZoekenOpGeboortedatum" HorizontalAlignment="Right" VerticalAlignment="Top" Width="125" Height="24">
+            <DatePicker.Resources>
+                <Style TargetType="DatePickerTextBox">
+                    <Setter Property="Text" Value="Geboortedatum"/>
+                </Style>
+            </DatePicker.Resources>
+        </DatePicker>
+        <Button Grid.Column="2" Grid.Row="3" Margin="2" Content="Toon overeenkomende" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Height="24" Click="btn_ToonOvereenkomende_Click"/>
+        
+        <Border Grid.Row="0" Grid.RowSpan="4" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="LightSlateGray"/>
+        <Label Grid.Row="5" Grid.ColumnSpan="3" BorderThickness="1,1,1,1" BorderBrush="LightSlateGray">
+            <TextBlock x:Name="tbl_BestuurderDetails" x:FieldModifier="public"/>
+        </Label>
+        <Button Grid.Row="5" Grid.Column="2" Visibility="Hidden"  x:Name="btnOpties" VerticalAlignment="Bottom" HorizontalAlignment="Right" Content="Toon details" Margin="10" Click="btnOpties_Click" />
+
+        <CheckBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" x:Name="ckb_ExacteNaam"/>
+        <Label Grid.Column="2" Grid.Row="1" Content="zoeken op exacte term"/>
+        <CheckBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" x:Name="cbk_ExacteVoornaam"/>
+        <Label Grid.Column="2" Grid.Row="2" Content="zoeken op exacte term"/>
+
+
+        <ListBox Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="6" x:Name="lsb_BestuurdersLijst" SelectionChanged="lsb_BestuurdersLijst_SelectionChanged" x:FieldModifier="public">
+            <ListBox.Resources>
+                <ContextMenu x:Key="lsbCtxMenu">
+                    <MenuItem Header="Toon Details" Click="btn_ToonDetails_Click"/>
+                    <MenuItem Header="Bewerk" Click="btn_BestuurderAanpassen_Click"/>
+                    <Separator/>
+                    <MenuItem Header="Verwijder" Click="btn_BestuurderVerwijderen_Click"/>
+                </ContextMenu>
+            </ListBox.Resources>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="ContextMenu" Value="{StaticResource lsbCtxMenu}"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
     </Grid>
 </Page>

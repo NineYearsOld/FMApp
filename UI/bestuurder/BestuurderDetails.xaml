@@ -6,8 +6,14 @@
         xmlns:local="clr-namespace:UI.bestuurder"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="BestuurderDetails" Height="450" Width="800">
-    <Grid>
-        <Label x:Name="lbl_Details"/>
+        Title="BestuurderDetails" Height="450" Width="450">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" x:Name="lbl_Details"/>
+        <Button Grid.Row="1" Content="Bewerk" HorizontalAlignment="Left" Width="80" Click="btn_Bewerk_Click"/>
+        <Button Grid.Row="1" Content="Ok" HorizontalAlignment="Right" Width="80" Click="btn_Ok_Click"/>
     </Grid>
 </Window>

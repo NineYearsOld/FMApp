@@ -12,7 +12,7 @@
         <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Nieuw">
-                        <MenuItem Header="Bestuurder" Click="btn_BestuurdersBeheer_Click"/>
+                        <MenuItem Header="Bestuurder" Click="btn_BestuurderMaken_Click"/>
                         <MenuItem Header="Voertuig" Click="btn_VoertuigenBeheer_Click"/>
                         <MenuItem Header="Tankkaart" Click="btn_TankkaartenBeheer_Click"/>
             </MenuItem>
@@ -22,7 +22,7 @@
                     <MenuItem Header="Tankkaart"/>
             </MenuItem>
         </Menu>
-        <Frame x:Name="Main" Margin="0,20,0,0" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="Main" NavigationUIVisibility="Hidden"/>
     </DockPanel>
     </Grid>
 
