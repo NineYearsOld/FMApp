@@ -124,7 +124,7 @@ namespace BusinessLayer.Entities {
 
         public void UpdateRijksregisternummer(string rijksregisternummer)
         {
-            if (!string.IsNullOrWhiteSpace(rijksregisternummer) && RijksregisterNummer != rijksregisternummer /*&& Controls.ValidatieRijkregisternummer(rijksregisternummer)*/)
+            if (RijksregisterNummer != rijksregisternummer /*&& Controls.ValidatieRijkregisternummer(rijksregisternummer)*/)
             {
                 RijksregisterNummer = rijksregisternummer;
             }
@@ -144,6 +144,10 @@ namespace BusinessLayer.Entities {
             {
                 throw new BestuurderException("Een rijbewijs is verplicht.");
             }
+        }
+        public override string ToString()
+        {
+            return Naam + " " + Voornaam + " " + GeboorteDatum.ToString("dd/MM/yyyy");
         }
     }
 }

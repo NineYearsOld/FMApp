@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLayer.Utilities;
+using System.Collections;
+using System.Collections.ObjectModel;
 
 namespace BusinessLayer.Services {
     public class BestuurderService {
@@ -14,9 +16,9 @@ namespace BusinessLayer.Services {
         public BestuurderService(IBestuurderRepository repo) {
             this.repo = repo;
         }
-        public bool ExistsBestuurder(int id)
+        public bool ExistsBestuurder(int id, string rijksreg = "")
         {
-            if (repo.ExistsBestuurder(id))
+            if (repo.ExistsBestuurder(id, rijksreg))
             {
                 return true;
             }
@@ -59,14 +61,39 @@ namespace BusinessLayer.Services {
                 throw;
             }
         }
+        public ObservableCollection<Bestuurder> FetchBestuurders(string naam, string voornaam, string geboortedatum)
+        {
+            try
+            {
+                return repo.FetchBestuurders(naam, voornaam, geboortedatum);
+            }
+            catch (Exception)
+            {
 
-        public Bestuurder ToonDetails(int id) {
+                throw;
+            }
+        }
+
+
+        public Bestuurder ToonBestuurder(int id) {
             try {
-                return repo.ToonDetails(id);
+                return repo.ToonBestuurder(id);
             } catch (Exception) {
 
                 throw;
             }
         }
+        public Details ToonDetails(int id)
+        {
+            try
+            {
+                return repo.ToonDetails(id);
+            }
+            catch (Exception)
+            {
+                    throw;
+            }
+        }
+
     }
 }

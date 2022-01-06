@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using BusinessLayer.Entities;
 using BusinessLayer.Interfaces;
+using System.Collections;
+using System.Collections.ObjectModel;
 
 namespace DataAccessLayer.Repositories {
     public class BestuurderRepository: IBestuurderRepository {
@@ -19,9 +21,13 @@ namespace DataAccessLayer.Repositories {
             return connection;
         }
 
-        public bool ExistsBestuurder(int id)
+        public bool ExistsBestuurder(int id, string rijksreg = "")
         {
-            string query = "select count(*) from dbo.bestuurders where id =@id";
+            string query = string.Empty;
+            if (!string.IsNullOrWhiteSpace(rijksreg))
+            {
+                query = "select count(*) from dbo.bestuurders where rijksregisternummer =@rijksregisternummer"; ;
+            } else query = "select count(*) from dbo.bestuurders where id =@id";
             SqlConnection connection = getConnection();
             using (SqlCommand command = new SqlCommand(query, connection))
             {
@@ -29,6 +35,7 @@ namespace DataAccessLayer.Repositories {
                 {
                     connection.Open();
                     command.Parameters.AddWithValue("@id", id);
+                    command.Parameters.AddWithValue("@rijksregisternummer", rijksreg);
                     int qr = (int)command.ExecuteScalar();
                     if (qr > 0)
                     {
@@ -140,7 +147,6 @@ namespace DataAccessLayer.Repositories {
             if (ExistsBestuurder(id))
             {
                 string query = "update dbo.bestuurders set naam=@naam, voornaam = @voornaam, postcode = @postcode, gemeente = @gemeente, straat = @straat, huisnummer = @huisnummer, geboortedatum = @geboortedatum, rijksregisternummer = @rijksregisternummer, rijbewijs = @rijbewijs where id=@id";
-                query += " select scope_identity()";
                 SqlConnection connection = getConnection();
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -193,11 +199,82 @@ namespace DataAccessLayer.Repositories {
             else throw new Exception("Bestuurder id bestaat niet.");
         }
 
-        public Bestuurder ToonDetails(int id)
+        public ObservableCollection<Bestuurder> FetchBestuurders(string naam, string voornaam, string geboortedatum)
+        {
+            ObservableCollection<Bestuurder> bestuurders = new ObservableCollection<Bestuurder>();
+
+            string query = "";
+            string queryNaam = "select * from dbo.bestuurders where naam like @naam";
+            string queryVoornaam = "select * from dbo.bestuurders where voornaam like @voornaam";
+            string queryWithVoornaam = " and voornaam like @voornaam";
+            string queryWithGeboortedatum = " and geboortedatum like @geboortedatum";
+            string queryGeboorteDatum = "select * from dbo.bestuurders where geboortedatum like @geboortedatum";
+
+            SqlConnection connection = getConnection();
+
+            if (!string.IsNullOrWhiteSpace(naam) && !string.IsNullOrWhiteSpace(voornaam) && !string.IsNullOrWhiteSpace(geboortedatum))
+            {
+                query = queryNaam + queryWithVoornaam + queryWithGeboortedatum;
+            }
+            else if (!string.IsNullOrWhiteSpace(naam) && !string.IsNullOrWhiteSpace(voornaam))
+            {
+                query = queryNaam + queryWithVoornaam;
+            }
+            else if (!string.IsNullOrWhiteSpace(naam) && !string.IsNullOrWhiteSpace(geboortedatum))
+            {
+                query = queryNaam + queryWithGeboortedatum;
+            }
+            else if (!string.IsNullOrWhiteSpace(voornaam) && !string.IsNullOrWhiteSpace(geboortedatum))
+            {
+                query = queryVoornaam + queryWithGeboortedatum;
+            }
+            else if (!string.IsNullOrWhiteSpace(naam))
+            {
+                query = queryNaam;
+            }
+            else if (!string.IsNullOrWhiteSpace(voornaam))
+            {
+                query = queryVoornaam;
+            }
+            else if (geboortedatum != null)
+            {
+                query = queryGeboorteDatum;
+            }
+
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                try
+                {
+                    connection.Open();
+                    command.Parameters.AddWithValue("naam", naam + '%');
+                    command.Parameters.AddWithValue("voornaam", voornaam + '%');
+                    command.Parameters.AddWithValue("geboortedatum", geboortedatum);
+                    IDataReader reader = command.ExecuteReader();
+                    do
+                    {
+                        while (reader.Read())
+                        {
+                            Bestuurder bs = new Bestuurder(reader["naam"].ToString(), reader["voornaam"].ToString(), (DateTime)reader["geboortedatum"], reader["rijksregisternummer"].ToString(), reader["rijbewijs"].ToString(), reader["gemeente"].ToString(), reader["straat"].ToString(), reader["huisnummer"].ToString(), reader.GetNullableInt("postcode"));
+                            bs.Id = (int)reader["id"];
+                            bestuurders.Add(bs);
+                        }
+                    } while (reader.NextResult());
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+
+            return bestuurders;
+        }
+
+        public Bestuurder ToonBestuurder(int id)
         {
             if (ExistsBestuurder(id))
             {
-                string query = "select naam, voornaam, geboortedatum, rijksregisternummer, rijbewijs, gemeente, straat, huisnummer, postcode from dbo.bestuurders where id=@id";
+                string query = "select * from bestuurders b left join voertuigen v on v.bestuurderid = b.id left join tankkaarten t on t.Bestuurderid = b.id where id=@id";
                 SqlConnection connection = getConnection();
                 Bestuurder bestuurder;
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -217,6 +294,39 @@ namespace DataAccessLayer.Repositories {
                     }
                 }
                 return bestuurder;
+            }
+            else throw new Exception("Bestuurder id bestaat niet");
+        }
+
+        public Details ToonDetails(int id)
+        {
+            if (ExistsBestuurder(id))
+            {
+                string query = "select * from bestuurders b left join voertuigen v on v.bestuurderid = b.id left join tankkaarten t on t.Bestuurderid = b.id where id=@id";
+                SqlConnection connection = getConnection();
+                Details details;
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    try
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("@id", (int)id);
+                        IDataReader reader = command.ExecuteReader();
+                        reader.Read();
+                        Bestuurder bestuurder = new Bestuurder((string)reader["naam"], (string)reader["voornaam"], (DateTime)reader["geboortedatum"], (string)reader["rijksregisternummer"], (string)reader["rijbewijs"], reader.GetNullableString("gemeente"), reader.GetNullableString("straat"), reader.GetNullableString("huisnummer"), reader.GetNullableInt("postcode"));
+                        Voertuig voertuig = new Voertuig(reader.GetNullableString("merk"), reader.GetNullableString("model"), reader.GetNullableString("chassisnummer"), reader.GetNullableString("nummerplaat"), reader.GetNullableString("brandstof"), reader.GetNullableString("typewagen"), reader.GetNullableString("kleur"), reader.GetNullableInt("aantaldeuren"), id);
+                        Tankkaart tankkaart = new Tankkaart(reader.GetNullableDateTime("geldigheidsdatum"), reader.GetNullableString("pincode"), reader.GetNullableString("brandstof"), id);
+
+                        details = new Details(bestuurder, voertuig, tankkaart);
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+
+                    return details;
+                }
             }
             else throw new Exception("Bestuurder id bestaat niet");
         }

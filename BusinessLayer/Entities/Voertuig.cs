@@ -8,25 +8,28 @@ using BusinessLayer.Exceptions;
 
 namespace BusinessLayer.Entities {
     public class Voertuig {
-        public Voertuig(string merk, string model, string chassisNummer, string nummerplaat, Brandstoffen brandstoffen, WagenTypes typeWagen, string kleur, int aantalDeuren, int bestuurdeId)
+        public Voertuig(string merk, string model, string chassisNummer, string nummerplaat, string brandstoffen, string typeWagen, string kleur, int? aantalDeuren = null, int? bestuurdeId = null)
         {
             Merk = merk;
             Model = model;
             ChassisNummer = chassisNummer;
             Nummerplaat = nummerplaat;
             Brandstoffen = brandstoffen;
-            TypeWagen = typeWagen;           
+            TypeWagen = typeWagen;
+            Kleur = kleur;
+            AantalDeuren = aantalDeuren;
+            BestuurderId = bestuurdeId;
         }
 
         public string Merk { get; private set; }
         public string Model { get; private set; }
-        public string ChassisNummer { get; private set; }
+        public string ChassisNummer { get; set; }
         public string Nummerplaat { get; private set; }
-        public Brandstoffen Brandstoffen { get; private set; }
-        public WagenTypes TypeWagen { get; private set; }
+        public string Brandstoffen { get; private set; }
+        public string TypeWagen { get; private set; }
         public string Kleur { get; private set; }
-        public int AantalDeuren { get; private set; }
-        public int BestuurderId { get; set; }
+        public int? AantalDeuren { get; private set; }
+        public int? BestuurderId { get; set; }
 
         public void UpdateMerk(string merk) {
             if (!string.IsNullOrWhiteSpace(merk) && Merk != merk)

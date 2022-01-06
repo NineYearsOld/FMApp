@@ -1,0 +1,21 @@
+﻿<Page x:Class="UI.TankkaartPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:UI"
+      mc:Ignorable="d" 
+      Height="450" Width="800"
+      Title="TankkaartPage">
+
+    <Grid>
+        <Button FontFamily="Marlett" x:Name="btn_back" Content="3" HorizontalAlignment="Left" Margin="698,391,0,0" VerticalAlignment="Top" ToolTip="Naar voertuigbeheer." Click="btn_back_Click"/>
+        <Button FontFamily="Marlett" x:Name="btn_Forward" Content="4" HorizontalAlignment="Left" Margin="714,391,0,0" VerticalAlignment="Top" IsEnabled="False"/>
+        <DatePicker x:Name="dpk_Geldigheid" Language="nl-fr" HorizontalAlignment="Left" Margin="100,75,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tbk_Pincode" HorizontalAlignment="Left" Margin="100,104,0,0" Text="1234" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbk_BestuurderId" HorizontalAlignment="Left" Margin="100,154,0,0" Text="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="cmb_Brandstof" HorizontalAlignment="Left" Margin="100,127,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btn_TankkaartToevoegen" Content="Taankkaart maken" HorizontalAlignment="Left" Margin="110,177,0,0" VerticalAlignment="Top" Click="btn_TankkaartToevoegen_Click"/>
+
+    </Grid>
+</Page>

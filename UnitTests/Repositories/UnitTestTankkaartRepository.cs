@@ -24,7 +24,7 @@ namespace UnitTests.Repositories {
         [Fact]
         public void TestBestaatTankkaart() {
             var tr = new TankkaartRepository(conn);
-            var t1 = new Tankkaart(1,new DateTime(2022,1,1),"1234","Diesel",0);
+            var t1 = new Tankkaart(new DateTime(2022,1,1),"1234","Diesel",0, 1);
             tr.CreateTankkaart(t1);
 
             Assert.True(tr.BestaatTankkaart(1));
@@ -41,7 +41,7 @@ namespace UnitTests.Repositories {
         [Fact]
         public void TestDeleteTankkaart() {
             var tr = new TankkaartRepository(conn);
-            var t1 = new Tankkaart(1, new DateTime(2022, 1, 1), "1234", "Diesel", 0);
+            var t1 = new Tankkaart(new DateTime(2022, 1, 1), "1234", "Diesel", 0, 1);
             tr.CreateTankkaart(t1);
             tr.DeleteTankkaart(1);
             Assert.False(tr.BestaatTankkaart(1));
@@ -50,7 +50,7 @@ namespace UnitTests.Repositories {
         [Fact]
         public void TestUpdateTankkaart() {
             var tr = new TankkaartRepository(conn);
-            var t1 = new Tankkaart(1, new DateTime(2022, 1, 1), "1234", "Diesel", 0);
+            var t1 = new Tankkaart(new DateTime(2022, 1, 1), "1234", "Diesel", 0, 1);
             tr.CreateTankkaart(t1);
 
         }
@@ -58,7 +58,7 @@ namespace UnitTests.Repositories {
         [Fact]
         public void TestToonDetails() {
             var tr = new TankkaartRepository(conn);
-            var t1 = new Tankkaart(1, new DateTime(2022, 1, 1), "1234", "Diesel", 0);
+            var t1 = new Tankkaart(new DateTime(2022, 1, 1), "1234", "Diesel", 0, 1);
             tr.CreateTankkaart(t1);
             var result1 = tr.ToonDetails(1);
 

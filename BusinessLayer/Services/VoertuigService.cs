@@ -12,8 +12,19 @@ namespace BusinessLayer.Services
     public class VoertuigService
     {
         private IVoertuigRepository repo;
-
-        public void CreateVoertuig(string merk, string model, string chassisNummer, string nummerplaat, Brandstoffen brandstof, WagenTypes typeWagen, string kleur, int aantalDeuren, int bestuurderId)
+        public VoertuigService(IVoertuigRepository repo)
+        {
+            this.repo = repo;
+        }
+        public bool ExistsVoertuig(string id)
+        {
+            if (repo.ExistsVoertuig(id))
+            {
+                return true;
+            }
+            else return false;
+        }
+        public void CreateVoertuig(string merk, string model, string chassisNummer, string nummerplaat, string brandstof, string typeWagen, string kleur, int aantalDeuren, int bestuurderId)
         {
             try
             {
@@ -39,11 +50,11 @@ namespace BusinessLayer.Services
             }
         }
 
-        public void UpdateVoertuig(string chassisnummer)
+        public void UpdateVoertuig(Voertuig voertuig, string chassisnummer)
         {
             try
             {
-                repo.UpdateVoertuig(chassisnummer);
+                repo.UpdateVoertuig(voertuig, chassisnummer);
             }
             catch (Exception)
             {
