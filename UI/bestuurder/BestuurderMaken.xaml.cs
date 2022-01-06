@@ -30,7 +30,7 @@ namespace UI.bestuurder
             FillCmbBoxes();
         }
         HashSet<string> rijbewijzen = new HashSet<string>();
-        Bestuurder b;
+        public Bestuurder b;
         private void InputValidation(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
@@ -76,22 +76,22 @@ namespace UI.bestuurder
             {
                 if (!Connection.Bestuurder().ExistsBestuurder(0, tbk_Rijksregnr.Text))
                 {
-                    int id = Connection.Bestuurder().CreateBestuurder(tbk_Naam.Text, tbk_Voornaam.Text, (DateTime)dpk_gebDatum.SelectedDate, lbl_Rijbewijzen.Content.ToString(), tbk_Rijksregnr.Text, tbk_Gemeente.Text, tbk_Straat.Text, tbk_Huisnummer.Text, TryParseNullable(tbk_Postcode.Text)).Id;
+                    int id = Connection.Bestuurder().CreateBestuurder(tbk_Naam.Text, tbk_Voornaam.Text, (DateTime)dpk_gebDatum.SelectedDate, tbl_Rijbewijzen.Text.ToString(), tbk_Rijksregnr.Text, tbk_Gemeente.Text, tbk_Straat.Text, tbk_Huisnummer.Text, TryParseNullable(tbk_Postcode.Text)).Id;
                     b = Connection.Bestuurder().ToonBestuurder(id);
                     b.Id = id;
-                    lbl_BestuurderDetails.Content = FillDetails(b);
+                    tbl_BestuurderDetails.Text = FillDetails(b);
                     btn_BestuurderToevoegen.Visibility = Visibility.Hidden;
-                    btnAnnuleren.Content = "Ok";
+                    btn_Annuleren.Content = "Ok";
                 }
-                else lbl_BestuurderDetails.Content = "Rijksregisternummer bestaat al in de databank";
+                else tbl_BestuurderDetails.Text = "Rijksregisternummer bestaat al in de databank";
 
             }
-            else lbl_BestuurderDetails.Content = "Gelieve alle verreiste velden in te vullen.";
+            else tbl_BestuurderDetails.Text = "Gelieve alle verreiste velden in te vullen.";
         }
         private void btn_RijbewijsToevoegen_Click(object sender, RoutedEventArgs e)
         {
             rijbewijzen.Add(cmb_Rijbewijs.SelectedValue.ToString());
-            lbl_Rijbewijzen.Content = string.Join("; ", rijbewijzen);
+            tbl_Rijbewijzen.Text = string.Join("; ", rijbewijzen);
             btn_RijbewijsToevoegen.IsEnabled = false;
             btn_RijbewijzenWissen.IsEnabled = true;
         }
@@ -109,13 +109,13 @@ namespace UI.bestuurder
         private void btn_RijbewijzenWissen_Click(object sender, RoutedEventArgs e)
         {
             rijbewijzen.Clear();
-            lbl_Rijbewijzen.Content = null;
+            tbl_Rijbewijzen.Text = null;
             btn_RijbewijsToevoegen.IsEnabled = true;
             btn_RijbewijzenWissen.IsEnabled = false;
         }
         private void ClearFields()
         {
-            lbl_BestuurderDetails.Content = null;
+            tbl_BestuurderDetails.Text = null;
             tbk_Gemeente.Text = null;
             cmb_Rijbewijs.SelectedItem = null;
             tbk_Huisnummer.Text = null;
@@ -124,7 +124,7 @@ namespace UI.bestuurder
             tbk_Rijksregnr.Text = null;
             tbk_Straat.Text = null;
             tbk_Voornaam.Text = null;
-            lbl_Rijbewijzen.Content = null;
+            tbl_Rijbewijzen.Text = null;
             dpk_gebDatum.SelectedDate = null;
             rijbewijzen.Clear();
         }
@@ -134,9 +134,9 @@ namespace UI.bestuurder
             string naam = null;
             string voornaam = tbk_Voornaam.Text;
             string rijksreg = tbk_Rijksregnr.Text;
-            if (lbl_Rijbewijzen.Content != null)
+            if (tbl_Rijbewijzen.Text != null)
             {
-                naam = lbl_Rijbewijzen.Content.ToString();
+                naam = tbl_Rijbewijzen.Text.ToString();
             }
 
             if (!string.IsNullOrWhiteSpace(naam) && !string.IsNullOrWhiteSpace(voornaam) && !string.IsNullOrWhiteSpace(rijksreg) && dpk_gebDatum.SelectedDate != null)
@@ -150,8 +150,9 @@ namespace UI.bestuurder
             cmb_Rijbewijs.ItemsSource = Enum.GetValues(typeof(Rijbewijzen));
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void btn_Annuleren_Click(object sender, RoutedEventArgs e)
         {
+            DialogResult = true;
             this.Close();
         }
     }

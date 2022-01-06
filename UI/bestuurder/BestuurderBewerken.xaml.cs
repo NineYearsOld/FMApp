@@ -84,7 +84,7 @@ namespace UI.bestuurder
             bestuurder = new Bestuurder(tbk_Naam.Text, tbk_Voornaam.Text, (DateTime)dpk_gebDatum.SelectedDate, tbk_Rijksregnr.Text, tbl_Rijbewijzen.Text.ToString(), tbk_Gemeente.Text, tbk_Straat.Text, tbk_Huisnummer.Text, TryParseNullable(tbk_Postcode.Text));
             bestuurder.Id = id;
             Connection.Bestuurder().UpdateBestuurder(bestuurder, id);
-            lbl_BestuurderDetails.Content = FillDetails(bestuurder);
+            tbl_BestuurderDetails.Text = FillDetails(bestuurder);
             btn_Annuleren.Content = "Ok";
             btn_BestuurderAanpassen.Visibility = Visibility.Hidden;
         }

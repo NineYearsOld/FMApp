@@ -38,10 +38,10 @@ namespace UI.bestuurder
                 aantalDeuren = b.Voertuig.AantalDeuren.ToString();
             }
             string result =
-                $"Bestuurder:\nnaam: {b.Naam} voornaam: {b.Voornaam}\ngeboortedatum: {b.GeboorteDatum.ToShortDateString()}\nrijksregisternummer: {b.RijksregisterNummer}\nrijbewijs: {b.Rijbewijs}\nadres: "
+                $"{b.Naam} {b.Voornaam}\ngeboortedatum: {b.GeboorteDatum.ToShortDateString()}\nrijksregisternummer: {b.RijksregisterNummer}\nrijbewijs: {b.Rijbewijs}\nadres: "
                 + (string.IsNullOrWhiteSpace(b.Huisnummer) ? "n/a huisnr, " : b.Huisnummer + ", ")
                 + (string.IsNullOrWhiteSpace(b.Straat) ? "n/a straat, " : b.Straat + ", ")
-                + (string.IsNullOrWhiteSpace(b.Gemeente) ? "n/a gemeente" : b.Gemeente + ", ")
+                + (string.IsNullOrWhiteSpace(b.Gemeente) ? "n/a gemeente, " : b.Gemeente + ", ")
                 + (string.IsNullOrWhiteSpace(postcode) ? "n/a postcode" : "(" + b.Postcode + ")");
             if (b.Voertuig.ChassisNummer != null)
             {
@@ -77,8 +77,14 @@ namespace UI.bestuurder
             lbl_Details.Content = result;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void btn_Ok_Click(object sender, RoutedEventArgs e)
         {
+            this.Close();
+        }
+
+        private void btn_Bewerk_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
             this.Close();
         }
     }

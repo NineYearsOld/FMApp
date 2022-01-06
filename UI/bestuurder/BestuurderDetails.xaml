@@ -7,8 +7,13 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="BestuurderDetails" Height="450" Width="450">
-    <Grid>
-        <Label x:Name="lbl_Details" Margin="0,0,-29,-22"/>
-        <Button Content="Ok" HorizontalAlignment="Left" Margin="361,398,0,0" VerticalAlignment="Top" Height="26" Width="79" Click="Button_Click"/>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" x:Name="lbl_Details"/>
+        <Button Grid.Row="1" Content="Bewerk" HorizontalAlignment="Left" Width="80" Click="btn_Bewerk_Click"/>
+        <Button Grid.Row="1" Content="Ok" HorizontalAlignment="Right" Width="80" Click="btn_Ok_Click"/>
     </Grid>
 </Window>

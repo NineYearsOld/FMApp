@@ -246,8 +246,8 @@ namespace DataAccessLayer.Repositories {
                 try
                 {
                     connection.Open();
-                    command.Parameters.AddWithValue("naam", naam + '%');
-                    command.Parameters.AddWithValue("voornaam", voornaam + '%');
+                    command.Parameters.AddWithValue("naam", naam);
+                    command.Parameters.AddWithValue("voornaam", voornaam);
                     command.Parameters.AddWithValue("geboortedatum", geboortedatum);
                     IDataReader reader = command.ExecuteReader();
                     do

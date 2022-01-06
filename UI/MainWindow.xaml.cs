@@ -2,6 +2,7 @@
 using DataAccessLayer.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,11 +38,14 @@ namespace UI
             Main.Content = bp;
         }
 
-        private void btn_BestuurdersBeheer_Click(object sender, RoutedEventArgs e)
+        private void btn_BestuurderMaken_Click(object sender, RoutedEventArgs e)
         {
             BestuurderMaken bm = new BestuurderMaken();
             bm.Owner = this;
             bm.ShowDialog();
+            bp.bestuurders.Add(bm.b);
+            bp.lsb_BestuurdersLijst.ItemsSource = bp.bestuurders;
+            bp.lsb_BestuurdersLijst.SelectedItem = bm.b;
         }
 
         private void btn_VoertuigenBeheer_Click(object sender, RoutedEventArgs e)
