@@ -62,12 +62,14 @@ namespace DataAccessLayer.Repositories {
             string query = "insert into dbo.bestuurders (naam, voornaam, postcode, gemeente, straat, huisnummer, geboortedatum, rijksregisternummer, rijbewijs) values(@naam, @voornaam, @postcode, @gemeente, @straat, @huisnummer, @geboortedatum, @rijksregisternummer, @rijbewijs)";
             query += " select scope_identity()";
             SqlConnection connection = getConnection();
-            using(SqlCommand command = new SqlCommand(query, connection))
+
+            connection.Open();
+            SqlTransaction transaction = connection.BeginTransaction();
+            using(SqlCommand command = new SqlCommand(query, connection, transaction))
             {
                 //TODO: Use transactions
                 try
                 {
-                    connection.Open();
                     
                     command.Parameters.Add(new SqlParameter("@naam", SqlDbType.NVarChar));
                     command.Parameters.Add(new SqlParameter("@voornaam", SqlDbType.NVarChar));
@@ -99,15 +101,15 @@ namespace DataAccessLayer.Repositories {
                     command.Parameters["@rijbewijs"].Value = bestuurder.Rijbewijs;
 
                     bestuurder.Id = Convert.ToInt32(command.ExecuteScalar());
+                    transaction.Commit();
                 }
                 catch (Exception)
                 {
-
+                    transaction.Rollback();
                 }
                 finally
                 {
-                    connection.Close();
-                        
+                    connection.Close();                        
                 }
 
             }
@@ -118,7 +120,9 @@ namespace DataAccessLayer.Repositories {
             {
                 string query = "delete from dbo.bestuurders where id=@id";
                 SqlConnection connection = getConnection();
-                using (SqlCommand command = new SqlCommand(query, connection))
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+                using (SqlCommand command = new SqlCommand(query, connection, transaction))
                 {
                     try
                     {
@@ -126,11 +130,11 @@ namespace DataAccessLayer.Repositories {
                         command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
                         command.Parameters["@id"].Value = id;
                         command.ExecuteNonQuery();
+                        transaction.Commit();
                     }
                     catch (Exception)
                     {
-
-                        throw;
+                        transaction.Rollback();
                     }
                     finally
                     {
@@ -148,11 +152,13 @@ namespace DataAccessLayer.Repositories {
             {
                 string query = "update dbo.bestuurders set naam=@naam, voornaam = @voornaam, postcode = @postcode, gemeente = @gemeente, straat = @straat, huisnummer = @huisnummer, geboortedatum = @geboortedatum, rijksregisternummer = @rijksregisternummer, rijbewijs = @rijbewijs where id=@id";
                 SqlConnection connection = getConnection();
-                using (SqlCommand command = new SqlCommand(query, connection))
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+                using (SqlCommand command = new SqlCommand(query, connection, transaction))
                 {
                     try
                     {
-                        connection.Open();
+                        connection.BeginTransaction();
                         command.Parameters.AddWithValue("@id", (int)id);
                         command.Parameters.Add(new SqlParameter("@naam", SqlDbType.NVarChar));
                         command.Parameters.Add(new SqlParameter("@voornaam", SqlDbType.NVarChar));
@@ -187,8 +193,7 @@ namespace DataAccessLayer.Repositories {
                     }
                     catch (Exception)
                     {
-
-                        throw;
+                        transaction.Rollback();
                     }
                     finally
                     {
@@ -204,11 +209,11 @@ namespace DataAccessLayer.Repositories {
             ObservableCollection<Bestuurder> bestuurders = new ObservableCollection<Bestuurder>();
 
             string query = "";
-            string queryNaam = "select * from dbo.bestuurders where naam like @naam";
-            string queryVoornaam = "select * from dbo.bestuurders where voornaam like @voornaam";
+            string queryNaam = "select top (50) * from dbo.bestuurders where naam like @naam";
+            string queryVoornaam = "select top (50) * from dbo.bestuurders where voornaam like @voornaam";
+            string queryGeboorteDatum = "select top(50) * from dbo.bestuurders where geboortedatum like @geboortedatum";
             string queryWithVoornaam = " and voornaam like @voornaam";
             string queryWithGeboortedatum = " and geboortedatum like @geboortedatum";
-            string queryGeboorteDatum = "select * from dbo.bestuurders where geboortedatum like @geboortedatum";
 
             SqlConnection connection = getConnection();
 
@@ -262,7 +267,6 @@ namespace DataAccessLayer.Repositories {
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
             }
