@@ -81,7 +81,11 @@ namespace UI.bestuurder
         private void btn_BestuurderAanpassen_Click(object sender, RoutedEventArgs e)
         {
             int id = bestuurder.Id;
+            Tankkaart t = bestuurder.Tankkaart;
+            Voertuig v = bestuurder.Voertuig;
             bestuurder = new Bestuurder(tbk_Naam.Text, tbk_Voornaam.Text, (DateTime)dpk_gebDatum.SelectedDate, tbk_Rijksregnr.Text, tbl_Rijbewijzen.Text.ToString(), tbk_Gemeente.Text, tbk_Straat.Text, tbk_Huisnummer.Text, TryParseNullable(tbk_Postcode.Text));
+            bestuurder.Tankkaart = t;
+            bestuurder.Voertuig = v;
             bestuurder.Id = id;
             Connection.Bestuurder().UpdateBestuurder(bestuurder, id);
             tbl_BestuurderDetails.Text = FillDetails(bestuurder);
