@@ -267,7 +267,7 @@ namespace DataAccessLayer.Repositories {
                 }
                 catch (Exception)
                 {
-                    throw; 
+                    throw;
                 }
             }
 
@@ -293,7 +293,7 @@ namespace DataAccessLayer.Repositories {
                     }
                     catch (Exception)
                     {
-
+                         
                         throw;
                     }
                 }
