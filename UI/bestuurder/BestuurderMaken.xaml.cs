@@ -79,7 +79,7 @@ namespace UI.bestuurder
                     b = Connection.Bestuurder().CreateBestuurder(tbk_Naam.Text, tbk_Voornaam.Text, (DateTime)dpk_gebDatum.SelectedDate, tbl_Rijbewijzen.Text.ToString(), tbk_Rijksregnr.Text, tbk_Gemeente.Text, tbk_Straat.Text, tbk_Huisnummer.Text, TryParseNullable(tbk_Postcode.Text));
                     tbl_BestuurderDetails.Text = FillDetails(b);
                     btn_BestuurderToevoegen.Visibility = Visibility.Hidden;
-                    btn_Annuleren.Content = "Ok";
+                    btn_Decision.Content = "Ok";
                 }
                 else tbl_BestuurderDetails.Text = "Rijksregisternummer bestaat al in de databank";
 
@@ -111,21 +111,6 @@ namespace UI.bestuurder
             btn_RijbewijsToevoegen.IsEnabled = true;
             btn_RijbewijzenWissen.IsEnabled = false;
         }
-        private void ClearFields()
-        {
-            tbl_BestuurderDetails.Text = null;
-            tbk_Gemeente.Text = null;
-            cmb_Rijbewijs.SelectedItem = null;
-            tbk_Huisnummer.Text = null;
-            tbk_Naam.Text = null;
-            tbk_Postcode.Text = null;
-            tbk_Rijksregnr.Text = null;
-            tbk_Straat.Text = null;
-            tbk_Voornaam.Text = null;
-            tbl_Rijbewijzen.Text = null;
-            dpk_gebDatum.SelectedDate = null;
-            rijbewijzen.Clear();
-        }
         private bool CheckFieldState()
         {
             bool filledFields = false;
@@ -148,9 +133,12 @@ namespace UI.bestuurder
             cmb_Rijbewijs.ItemsSource = Enum.GetValues(typeof(Rijbewijzen));
         }
 
-        private void btn_Annuleren_Click(object sender, RoutedEventArgs e)
+        private void btn_Decision_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = true;
+            if (btn_Decision.Content == "Ok")
+            {
+                DialogResult = true;
+            } else DialogResult = false;
             this.Close();
         }
     }

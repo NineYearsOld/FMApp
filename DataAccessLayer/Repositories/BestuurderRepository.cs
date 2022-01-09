@@ -157,7 +157,6 @@ namespace DataAccessLayer.Repositories {
                 {
                     try
                     {
-                        connection.BeginTransaction();
                         command.Parameters.AddWithValue("@id", (int)id);
                         command.Parameters.Add(new SqlParameter("@naam", SqlDbType.NVarChar));
                         command.Parameters.Add(new SqlParameter("@voornaam", SqlDbType.NVarChar));
@@ -189,6 +188,7 @@ namespace DataAccessLayer.Repositories {
                         command.Parameters["@rijbewijs"].Value = bestuurder.Rijbewijs;
 
                         command.ExecuteScalar();
+                        transaction.Commit();
                     }
                     catch (Exception)
                     {

@@ -55,26 +55,6 @@ namespace UI.bestuurder
 
         private void btn_BestuurderAanpassen_Click(object sender, RoutedEventArgs e)
         {
-            BestuurderAanpassen();
-        }
-
-        private void btn_BestuurderVerwijderen_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBoxResult messageBoxResult = MessageBox.Show("Bent u zeker ?", "Bestuurder Verwijderen", System.Windows.MessageBoxButton.YesNo);
-            if (messageBoxResult == MessageBoxResult.Yes)
-            {
-                Bestuurder bestuurder = (Bestuurder)lsv_BestuurdersLijst.SelectedItem;
-
-                Connection.Bestuurder().DeleteBestuurder(bestuurder.Id);
-                bestuurders.RemoveAt(lsv_BestuurdersLijst.SelectedIndex);
-                lsv_BestuurdersLijst.SelectedItem = null;
-                tbl_BestuurderDetails.Text = "Bestuurder succesvol verwijderd!";
-            }
-
-        }
-
-        private void BestuurderAanpassen()
-        {
             Bestuurder bestuurder = (Bestuurder)lsv_BestuurdersLijst.SelectedItem;
             BestuurderBewerken bw = new BestuurderBewerken(bestuurder);
             if (bw.ShowDialog() == true)
@@ -85,18 +65,32 @@ namespace UI.bestuurder
             }
         }
 
-        private void ToonDetails()
+        private void btn_BestuurderVerwijderen_Click(object sender, RoutedEventArgs e)
         {
-            BestuurderDetails bestuurderDetails = new BestuurderDetails((Bestuurder)lsv_BestuurdersLijst.SelectedItem);
-
-            if (bestuurderDetails.ShowDialog() == true)
+            MessageBoxResult messageBoxResult = MessageBox.Show("Bent u zeker ?", "Bestuurder Verwijderen", System.Windows.MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
             {
-                BestuurderAanpassen();
+                Bestuurder bestuurder = (Bestuurder)lsv_BestuurdersLijst.SelectedItem;
+
+                Connection.Bestuurder().DeleteBestuurder(bestuurder.Id);
+                btnOpties.Visibility = Visibility.Hidden;
+                bestuurders.RemoveAt(lsv_BestuurdersLijst.SelectedIndex);
+                lsv_BestuurdersLijst.SelectedItem = null;
+                tbl_BestuurderDetails.Text = "Bestuurder succesvol verwijderd!";
             }
+
         }
+
         private void btn_ToonDetails_Click(object sender, RoutedEventArgs e)
         {
-            ToonDetails();
+            int index = lsv_BestuurdersLijst.SelectedIndex;
+            BestuurderDetails bd = new BestuurderDetails(bestuurders[index]);
+            if (bd.ShowDialog() == true)
+            {
+                bestuurders[index] = bd.bestuurder;
+                lsv_BestuurdersLijst.SelectedItem = bd.bestuurder;
+                tbl_BestuurderDetails.Text = FillDetails(bd.bestuurder);
+            }
         }
 
         private void btn_ToonOvereenkomende_Click(object sender, RoutedEventArgs e)
@@ -137,7 +131,7 @@ namespace UI.bestuurder
             NavigationService.Navigate(VoertuigPage);
         }
 
-        private void lsb_BestuurdersLijst_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void lsv_BestuurdersLijst_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (lsv_BestuurdersLijst.SelectedIndex>-1)
             {
@@ -145,11 +139,6 @@ namespace UI.bestuurder
                 tbl_BestuurderDetails.Text = FillDetails(b);
                 btnOpties.Visibility = Visibility.Visible;
             }
-        }
-
-        private void btnOpties_Click(object sender, RoutedEventArgs e)
-        {
-            ToonDetails();
         }
 
         private void lsv_BestuurdersLijst_Click(object sender, RoutedEventArgs e)

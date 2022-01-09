@@ -42,10 +42,12 @@ namespace UI
         {
             BestuurderMaken bm = new BestuurderMaken();
             bm.Owner = this;
-            bm.ShowDialog();
-            bp.bestuurders.Add(bm.b);
-            bp.lsv_BestuurdersLijst.ItemsSource = bp.bestuurders;
-            bp.lsv_BestuurdersLijst.SelectedItem = bm.b;
+            if (bm.ShowDialog() == true)
+            {
+                bp.bestuurders.Add(bm.b);
+                bp.lsv_BestuurdersLijst.ItemsSource = bp.bestuurders;
+                bp.lsv_BestuurdersLijst.SelectedItem = bm.b;
+            }
         }
 
         private void btn_VoertuigenBeheer_Click(object sender, RoutedEventArgs e)

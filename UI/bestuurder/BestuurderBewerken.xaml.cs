@@ -32,7 +32,6 @@ namespace UI.bestuurder
             FillWindow(b);
         }
         public Bestuurder bestuurder;
-        public string ass = "ass";
         HashSet<string> rijbewijzen = new HashSet<string>();
 
         private void FillWindow(Bestuurder b)
@@ -89,14 +88,17 @@ namespace UI.bestuurder
             bestuurder.Id = id;
             Connection.Bestuurder().UpdateBestuurder(bestuurder, id);
             tbl_BestuurderDetails.Text = FillDetails(bestuurder);
-            btn_Annuleren.Content = "Ok";
+            btn_Decision.Content = "Ok";
             btn_BestuurderAanpassen.Visibility = Visibility.Hidden;
         }
 
-        private void btn_Annuleren_Click(object sender, RoutedEventArgs e)
+        private void btn_Decision_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = true;
-            this.Close();
+            if (btn_Decision.Content == "Ok")
+            {
+                DialogResult = true;
+            }
+            else { DialogResult = false; }
         }
         private void tbk_Postcode_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
