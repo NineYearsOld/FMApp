@@ -80,7 +80,7 @@
             </TextBox.Style>
         </TextBox>
 
-        <DatePicker Grid.Row="3" Margin="2" x:Name="dpk_ZoekenOpGeboortedatum" HorizontalAlignment="Right" VerticalAlignment="Top" Width="125" Height="24">
+        <DatePicker Grid.Row="3" Margin="2" x:Name="dpk_ZoekenOpGeboortedatum" CalendarOpened="dpk_ZoekenOpGeboortedatum_CalendarOpened" HorizontalAlignment="Right" VerticalAlignment="Top" Width="125" Height="24">
             <DatePicker.Resources>
                 <Style TargetType="DatePickerTextBox">
                     <Setter Property="Text" Value="Geboortedatum"/>

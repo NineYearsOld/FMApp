@@ -16,6 +16,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using UI.utils;
 
 namespace UI.bestuurder
 {
@@ -140,6 +141,11 @@ namespace UI.bestuurder
                 DialogResult = true;
             } else DialogResult = false;
             this.Close();
+        }
+
+        private void dpk_gebDatum_CalendarOpened(object sender, RoutedEventArgs e)
+        {
+            Tools.DatePickerOptions(sender, e);
         }
     }
 }

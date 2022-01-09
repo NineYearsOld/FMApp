@@ -17,6 +17,7 @@ using BusinessLayer.Entities;
 using BusinessLayer.Services;
 using BusinessLayer.StaticData;
 using DataAccessLayer.Repositories;
+using UI.utils;
 
 namespace UI.bestuurder
 {
@@ -137,6 +138,11 @@ namespace UI.bestuurder
             tbl_Rijbewijzen.Text = null;
             btn_RijbewijsToevoegen.IsEnabled = true;
             btn_RijbewijzenWissen.IsEnabled = false;
+        }
+
+        private void dpk_gebDatum_CalendarOpened(object sender, RoutedEventArgs e)
+        {
+            Tools.DatePickerOptions(sender, e);
         }
     }
 }

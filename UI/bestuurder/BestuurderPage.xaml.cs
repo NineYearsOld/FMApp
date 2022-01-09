@@ -19,6 +19,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Timers;
 using System.ComponentModel;
+using UI.utils;
 
 namespace UI.bestuurder
 {
@@ -196,12 +197,16 @@ namespace UI.bestuurder
         private void Sort(string sortBy, ListSortDirection direction)
         {
             ICollectionView dataView =
-              CollectionViewSource.GetDefaultView(bestuurders);
-
+            CollectionViewSource.GetDefaultView(bestuurders);
             dataView.SortDescriptions.Clear();
             SortDescription sd = new SortDescription(sortBy, direction);
             dataView.SortDescriptions.Add(sd);
             dataView.Refresh();
+        }
+
+        private void dpk_ZoekenOpGeboortedatum_CalendarOpened(object sender, RoutedEventArgs e)
+        {
+            Tools.DatePickerOptions(sender, e);
         }
     }
 }
