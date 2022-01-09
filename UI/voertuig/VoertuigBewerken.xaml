@@ -1,0 +1,33 @@
+﻿<Window x:Class="UI.voertuig.VoertuigBewerken"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UI.voertuig"
+        mc:Ignorable="d"
+        Title="VoertuigBewerken" Height="450" Width="800">
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Nummerplaat" FontSize="14"/>
+        <TextBlock Text="Kleur" FontSize="14" Grid.Row="1"/>
+        <TextBlock Text="Bestuurder" FontSize="14" Grid.Row="2"/>
+        <TextBox Name="nummerplaat" FontSize="14" HorizontalAlignment="Right" Width="250" Height="30"/>
+        <TextBox Name="kleur" Grid.Row="1" FontSize="14" HorizontalAlignment="Right" Width="250" Height="30"/>
+        <Button Name="bestuurder" Content="Zoek" FontSize="14" HorizontalAlignment="Right" Width="100" Height="25" Grid.Row="2"/>
+        <TextBlock Name="bestuurderresult" FontSize="14" Grid.Row="3"/>
+        <TextBlock Name="result" FontSize="14" Grid.Column="1" Grid.RowSpan="4" Margin="10"/>
+        <Button Name="back" Content="Annuleer" Grid.Row="4" FontSize="14" Width="100" Height="25" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="back_Click"/>
+        <Button Name="update" Content="Aanpassen" Grid.Row="4" FontSize="14" Width="100" Height="25" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="update_Click"/>
+        <Button Name="bevestig" Content="Bevestig" Grid.Row="4" Grid.Column="1" FontSize="14" Width="100" Height="25" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Hidden" Click="bevestig_Click"/>
+    </Grid>
+</Window>

@@ -14,52 +14,39 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UI.bestuurder;
 
-namespace UI
-{
+namespace UI.voertuig {
     /// <summary>
-    /// Logique d'interaction pour VoertuigPage.xaml
+    /// Interaction logic for VoertuigPage.xaml
     /// </summary>
-    public partial class VoertuigPage : Page
-    {
+    public partial class VoertuigPage : Page {
         private BestuurderPage BestuurderPage;
         private TankkaartPage TankkaartPage;
-        public VoertuigPage(BestuurderPage bp = null)
-        {
+        public VoertuigPage(BestuurderPage bp = null) {
             InitializeComponent();
             BestuurderPage = bp;
         }
-        private void btn_back_Click(object sender, RoutedEventArgs e)
-        {
-            if (BestuurderPage == null)
-            {
+        private void btn_back_Click(object sender, RoutedEventArgs e) {
+            if (BestuurderPage == null) {
                 BestuurderPage = new BestuurderPage();
             }
             NavigationService.Navigate(BestuurderPage);
         }
 
-        private void btn_Forward_Click(object sender, RoutedEventArgs e)
-        {
-            if (TankkaartPage == null)
-            {
+        private void btn_Forward_Click(object sender, RoutedEventArgs e) {
+            if (TankkaartPage == null) {
                 TankkaartPage = new TankkaartPage(this);
             }
             NavigationService.Navigate(TankkaartPage);
         }
 
         private void Zoek_Click(object sender, RoutedEventArgs e) {
-
+            var vs = Connection.Voertuig();
+            details.Visibility = Visibility.Visible;
         }
 
-        private void Aanmaken_Click(object sender, RoutedEventArgs e) {
-
-        }
-
-        private void Update_Click(object sender, RoutedEventArgs e) {
-
-        }
-
-        private void Verwijder_Click(object sender, RoutedEventArgs e) {
-
+        private void details_Click(object sender, RoutedEventArgs e) {
+            VoertuigDetails vd = new VoertuigDetails();
+            vd.Show();
         }
     }
 }

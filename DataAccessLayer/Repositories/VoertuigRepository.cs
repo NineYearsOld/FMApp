@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Data;
+using System.Collections.ObjectModel;
 
 namespace DataAccessLayer.Repositories {
     public class VoertuigRepository: IVoertuigRepository {
@@ -201,6 +202,32 @@ namespace DataAccessLayer.Repositories {
                 return v;
             }
             else throw new Exception();
+        }
+
+        public ObservableCollection<Voertuig> GetVoertuigen(string merk, string model, string nummerplaat) {
+            ObservableCollection<Voertuig> voertuigen = new ObservableCollection<Voertuig>();
+
+            string queryMerk = "select top (50) * from dbo.voertuigen where merk like @merk";
+
+            SqlConnection conn = getConnection();
+            SqlCommand command = new SqlCommand(queryMerk,conn);
+            command.Parameters.AddWithValue("merk", merk);
+            try {
+                using (command) {
+                    conn.Open();
+                    IDataReader reader = command.ExecuteReader();
+                    while (reader.Read()) {
+                        Voertuig v = new Voertuig(reader["merk"].ToString(), reader["model"].ToString(), reader["chassisnummer"].ToString(), reader["nummerplaat"].ToString(), reader["brandstof"].ToString(), reader["typewagen"].ToString(), reader["kleur"].ToString(),reader.GetNullableInt("aantaldeuren"),reader.GetNullableInt("bestuurderid"));
+                        voertuigen.Add(v);
+                    }
+                }
+            } catch {
+
+            } finally {
+                conn.Close();
+            }
+
+            return voertuigen;
         }
     }
 }
