@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UI.bestuurder;
-using UI.tankkaart;
+using UI.utils;
 
 namespace UI.voertuig {
     /// <summary>
@@ -48,7 +48,7 @@ namespace UI.voertuig {
 
         private void details_Click(object sender, RoutedEventArgs e) {
             VoertuigDetails vd = new VoertuigDetails();
-            vd.Show();
+            vd.ShowDialog();
         }
     }
 }

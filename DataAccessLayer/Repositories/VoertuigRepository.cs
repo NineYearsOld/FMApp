@@ -13,10 +13,12 @@ namespace DataAccessLayer.Repositories {
         public VoertuigRepository(string connectionString) {
             this.connectionString = connectionString;
         }
+
         public SqlConnection getConnection() {
             SqlConnection connection = new SqlConnection(connectionString);
             return connection;
         }
+
         public bool ExistsVoertuig(string id) {
             string query = "select count(*) from dbo.voertuigen where chassisnummer=@chassisnummer";
             SqlConnection connection = getConnection();
@@ -37,7 +39,6 @@ namespace DataAccessLayer.Repositories {
 
             }
         }
-
 
         public void CreateVoertuig(Voertuig voertuig) {
 

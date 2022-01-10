@@ -20,6 +20,7 @@ using System.Windows.Shapes;
 using System.Timers;
 using System.ComponentModel;
 using UI.utils;
+using UI.voertuig;
 
 namespace UI.bestuurder
 {
