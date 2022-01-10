@@ -14,6 +14,8 @@ namespace UI.utils
         public static void DatePickerOptions(object sender, RoutedEventArgs e)
         {
             DatePicker datepicker = (DatePicker)sender;
+            DateTime legalAge = DateTime.Today.AddYears(-18);
+            datepicker.SelectedDate = legalAge;
             Popup popup = (Popup)datepicker.Template.FindName("PART_Popup", datepicker);
             Calendar cal = (Calendar)popup.Child;
             cal.DisplayMode = CalendarMode.Decade;
