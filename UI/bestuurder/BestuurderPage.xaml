@@ -15,7 +15,6 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="25"/>
             <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -24,7 +23,6 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="0.5*"/>
             <RowDefinition Height="4*"/>
-            <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
 
         <Button Grid.Column="4" Grid.Row="6" FontFamily="Marlett" x:Name="btn_back" Content="3" HorizontalAlignment="Right" VerticalAlignment="Center" IsEnabled="False"/>
