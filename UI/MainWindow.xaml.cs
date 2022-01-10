@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UI.bestuurder;
 using UI.tankkaart;
+using UI.voertuig;
 
 namespace UI
 {
