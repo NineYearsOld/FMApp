@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using UI.utils;
+using BusinessLayer.StaticData;
 
 namespace UI.voertuig {
     /// <summary>
@@ -21,10 +22,11 @@ namespace UI.voertuig {
     public partial class VoertuigMaken : Window {
         public VoertuigMaken() {
             InitializeComponent();
+            LoadCBData();
         }
         int x;
         private void Maak_Click(object sender, RoutedEventArgs e) {
-            result.Text = $"Merk: {merk.Text}\nModel: {model.Text}\nChassisnummer: {chassisnr.Text}\nNummerplaat: {nummerplaat.Text}\nBrandstof: \nType wagen: \nKleur: {kleur.Text}\nAantal deuren: {x}\nBestuurder: ";
+            result.Text = $"Merk: {merk.Text}\nModel: {model.Text}\nChassisnummer: {chassisnr.Text}\nNummerplaat: {nummerplaat.Text}\nBrandstof: {brandstof.Text}\nType wagen: {typewagen.Text}\nKleur: {kleur.Text}\nAantal deuren: {x}\nBestuurder: ";
             bevestig.Visibility = Visibility.Visible;
         }
 
@@ -49,6 +51,11 @@ namespace UI.voertuig {
                 x--;
                 deuren.Text = x.ToString();
             }
+        }
+
+        private void LoadCBData() {
+            brandstof.ItemsSource = Enum.GetValues(typeof(Brandstoffen));
+            typewagen.ItemsSource = Enum.GetValues(typeof(WagenTypes));
         }
     }
 }

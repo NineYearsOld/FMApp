@@ -48,7 +48,7 @@ namespace UI.voertuig {
 
         private void details_Click(object sender, RoutedEventArgs e) {
             VoertuigDetails vd = new VoertuigDetails();
-            vd.Show();
+            vd.ShowDialog();
         }
     }
 }
