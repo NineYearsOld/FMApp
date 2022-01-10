@@ -41,6 +41,7 @@ namespace UI.voertuig {
 
         private void Zoek_Click(object sender, RoutedEventArgs e) {
             var vs = Connection.Voertuig();
+            vs.GetVoertuigen(merk.Text,model.Text,nummerplaat.Text);
             details.Visibility = Visibility.Visible;
         }
 

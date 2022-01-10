@@ -41,7 +41,11 @@
         <TextBox Name="brandstof" HorizontalAlignment="Right" VerticalAlignment="Top" Width="250" Height="25" FontSize="14" Grid.Row="4"/>
         <TextBox Name="typewagen" HorizontalAlignment="Right" VerticalAlignment="Top" Width="250" Height="25" FontSize="14" Grid.Row="5"/>
         <TextBox Name="kleur" HorizontalAlignment="Right" VerticalAlignment="Top" Width="250" Height="25" FontSize="14" Grid.Row="6"/>
-        <TextBox Name="deuren" HorizontalAlignment="Right" VerticalAlignment="Top" Width="250" Height="25" FontSize="14" Grid.Row="7"/>
+        <TextBlock Name="deuren" Text="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="50" Height="25" FontSize="14" Grid.Row="7"/>
+        <StackPanel Grid.Row="7" HorizontalAlignment="Right">
+            <Button FontFamily="Marlett" Content="5" Name="up" Width="25" Height="15" Click="up_Click"/>
+            <Button FontFamily="Marlett" Content="6" Name="down" Width="25" Height="15" Click="down_Click"/>
+        </StackPanel>
         <Button Name="bestuurder" Content="Zoek" HorizontalAlignment="Right" Width="100" Height="25" FontSize="14" Grid.Row="8"/>
         <TextBlock Name="bestuurderresult" Grid.Row="9" FontSize="14"/>
         <TextBlock Name="result" FontSize="14" Grid.Column="1" Grid.RowSpan="9" Width="350"/>

@@ -49,9 +49,11 @@ namespace UI
             bp.lsb_BestuurdersLijst.SelectedItem = bm.b;
         }
 
-        private void btn_VoertuigenBeheer_Click(object sender, RoutedEventArgs e)
+        private void btn_VoertuigMaken_Click(object sender, RoutedEventArgs e)
         {
-            Main.Content = vp;
+            VoertuigMaken vm = new VoertuigMaken();
+            vm.Owner = this;
+            vm.ShowDialog();
         }
 
         private void btn_TankkaartenBeheer_Click(object sender, RoutedEventArgs e)
