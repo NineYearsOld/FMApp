@@ -69,7 +69,7 @@ namespace UnitTests.Repositories {
             Assert.Equal("Jef", result1.Voornaam);
             Assert.Equal(new DateTime(1965, 9, 15), result1.GeboorteDatum);
             Assert.Equal("12345678958", result1.RijksregisterNummer);
-            Assert.Equal("B", result1.Rijbewijs);
+            Assert.Equal("B", result1.Rijbewijs);   
 
             Assert.Null(result1.Gemeente);
             Assert.Null(result1.Straat);

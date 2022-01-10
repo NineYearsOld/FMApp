@@ -9,21 +9,25 @@
         WindowStartupLocation="CenterScreen"
         Loaded="Window_Loaded">
     <Grid>
-        <DockPanel>
-        <Menu DockPanel.Dock="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
             <MenuItem Header="Nieuw">
-                        <MenuItem Header="Bestuurder" Click="btn_BestuurderMaken_Click"/>
-                        <MenuItem Header="Voertuig" Click="btn_VoertuigMaken_Click"/>
-                        <MenuItem Header="Tankkaart" Click="btn_TankkaartenBeheer_Click"/>
-            </MenuItem>
-            <MenuItem Header="Zoeken">
-                    <MenuItem Header="Bestuurder"/>
-                    <MenuItem Header="Voertuig"/>
-                    <MenuItem Header="Tankkaart"/>
+                <MenuItem Header="Bestuurder" Click="btn_BestuurderMaken_Click"/>
+                <MenuItem Header="Voertuig"/>
+                <MenuItem Header="Tankkaart"/>
             </MenuItem>
         </Menu>
-        <Frame x:Name="Main" NavigationUIVisibility="Hidden"/>
-    </DockPanel>
+
+        <TabControl Grid.Row="1" x:Name="tab_Selector" SelectionChanged="TabControl_SelectionChanged">
+            <TabItem Header="Bestuurder" Name="b"/>
+            <TabItem Header="Voertuig" Name="v"/>
+            <TabItem Header="Tankkaart" Name="t"/>
+
+        </TabControl>
+        <Frame Grid.Row="1" x:Name="Main" NavigationUIVisibility="Hidden"/>
     </Grid>
 
 </Window>

@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UI.bestuurder;
+using UI.tankkaart;
 using UI.voertuig;
 
 namespace UI
@@ -51,22 +52,23 @@ namespace UI
             }
         }
 
-        private void btn_VoertuigMaken_Click(object sender, RoutedEventArgs e)
-        {
-            VoertuigMaken vm = new VoertuigMaken();
-            vm.Owner = this;
-            vm.ShowDialog();
-        }
-
-        private void btn_TankkaartenBeheer_Click(object sender, RoutedEventArgs e)
-        {
-            tp.FillCmbBox();
-            Main.Content = tp;
-        }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             LoadPages();
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string name = ((TabItem)tab_Selector.SelectedItem).Name.ToString();
+            switch (name)
+            {
+                case "b": Main.Content = bp;
+                    break;
+                case "v": Main.Content = vp;
+                    break;
+                case "t": Main.Content = tp;
+                    break;
+            }
         }
     }
 }
