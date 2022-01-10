@@ -19,7 +19,7 @@ namespace BusinessLayer.Services {
                 return true;
             } else return false;
         }
-        public void CreateVoertuig(string merk, string model, string chassisNummer, string nummerplaat, string brandstof, string typeWagen, string kleur, int aantalDeuren, int bestuurderId) {
+        public void CreateVoertuig(string merk, string model, string chassisNummer, string nummerplaat, string brandstof, string typeWagen, string kleur, int? aantalDeuren, int? bestuurderId) {
             try {
                 Voertuig v = new Voertuig(merk, model, chassisNummer, nummerplaat, brandstof, typeWagen, kleur, aantalDeuren, bestuurderId);
                 repo.CreateVoertuig(v);

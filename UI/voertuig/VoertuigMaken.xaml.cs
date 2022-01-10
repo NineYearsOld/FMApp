@@ -32,7 +32,16 @@ namespace UI.voertuig {
 
         private void bevestig_Click(object sender, RoutedEventArgs e) {
             var vs = Connection.Voertuig();
-            vs.CreateVoertuig(merk.Text,model.Text,chassisnr.Text,nummerplaat.Text,brandstof.Text,typewagen.Text,kleur.Text,x,0);
+            if (!string.IsNullOrWhiteSpace(kleur.Text) && x != 0) {
+                vs.CreateVoertuig(merk.Text, model.Text, chassisnr.Text, nummerplaat.Text, brandstof.Text, typewagen.Text, kleur.Text, x, null);
+            } else if (string.IsNullOrWhiteSpace(kleur.Text) && x == 0) {
+                vs.CreateVoertuig(merk.Text, model.Text, chassisnr.Text, nummerplaat.Text, brandstof.Text, typewagen.Text, null, null, null);
+            } else if (string.IsNullOrWhiteSpace(kleur.Text)) {
+                vs.CreateVoertuig(merk.Text, model.Text, chassisnr.Text, nummerplaat.Text, brandstof.Text, typewagen.Text, null, x, null);
+            } else if (x == 0) {
+                vs.CreateVoertuig(merk.Text, model.Text, chassisnr.Text, nummerplaat.Text, brandstof.Text, typewagen.Text, kleur.Text, null, null);
+            }
+
         }
 
         private void annuleer_Click(object sender, RoutedEventArgs e) {
