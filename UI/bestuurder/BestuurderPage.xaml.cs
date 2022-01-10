@@ -36,8 +36,8 @@ namespace UI.bestuurder
 
         private VoertuigPage VoertuigPage;
         public ObservableCollection<Bestuurder> bestuurders = new ObservableCollection<Bestuurder>();
-        GridViewColumnHeader _lastHeaderClicked = null;
-        ListSortDirection _lastDirection = ListSortDirection.Ascending;
+        GridViewColumnHeader lastHeaderClicked = null;
+        ListSortDirection lastDirection = ListSortDirection.Ascending;
         private string FillDetails(Bestuurder b)
         {
             string postcode = null;
@@ -145,64 +145,37 @@ namespace UI.bestuurder
 
         private void lsv_BestuurdersLijst_Click(object sender, RoutedEventArgs e)
         {
-            var headerClicked = e.OriginalSource as GridViewColumnHeader;
-            ListSortDirection direction;
 
-            if (headerClicked != null)
+            if (!(e.OriginalSource is GridViewColumnHeader headerClicked))
             {
-                if (headerClicked.Role != GridViewColumnHeaderRole.Padding)
-                {
-                    if (headerClicked != _lastHeaderClicked)
-                    {
-                        direction = ListSortDirection.Ascending;
-                    }
-                    else
-                    {
-                        if (_lastDirection == ListSortDirection.Ascending)
-                        {
-                            direction = ListSortDirection.Descending;
-                        }
-                        else
-                        {
-                            direction = ListSortDirection.Ascending;
-                        }
-                    }
-
-                    var columnBinding = headerClicked.Column.DisplayMemberBinding as Binding;
-                    var sortBy = columnBinding?.Path.Path ?? headerClicked.Column.Header as string;
-
-                    Sort(sortBy, direction);
-
-                    if (direction == ListSortDirection.Ascending)
-                    {
-                        headerClicked.Column.HeaderTemplate =
-                          Resources["HeaderTemplateArrowUp"] as DataTemplate;
-                    }
-                    else
-                    {
-                        headerClicked.Column.HeaderTemplate =
-                          Resources["HeaderTemplateArrowDown"] as DataTemplate;
-                    }
-
-                    if (_lastHeaderClicked != null && _lastHeaderClicked != headerClicked)
-                    {
-                        _lastHeaderClicked.Column.HeaderTemplate = null;
-                    }
-
-                    _lastHeaderClicked = headerClicked;
-                    _lastDirection = direction;
-                }
-
+                return;
             }
-        }
-        private void Sort(string sortBy, ListSortDirection direction)
-        {
-            ICollectionView dataView =
-            CollectionViewSource.GetDefaultView(bestuurders);
-            dataView.SortDescriptions.Clear();
-            SortDescription sd = new SortDescription(sortBy, direction);
-            dataView.SortDescriptions.Add(sd);
-            dataView.Refresh();
+            ListSortDirection direction = ListSortDirection.Ascending;
+
+            if (headerClicked == lastHeaderClicked && lastDirection == ListSortDirection.Ascending)
+            {
+                direction = ListSortDirection.Descending;
+            }
+            Tools.Sort(headerClicked, direction, lsv_BestuurdersLijst);
+
+            if (direction == ListSortDirection.Ascending)
+            {
+                headerClicked.Column.HeaderTemplate =
+                    Resources["HeaderTemplateArrowUp"] as DataTemplate;
+            }
+            else
+            {
+                headerClicked.Column.HeaderTemplate =
+                    Resources["HeaderTemplateArrowDown"] as DataTemplate;
+            }
+
+            if (lastHeaderClicked != null && lastHeaderClicked != headerClicked)
+            {
+                lastHeaderClicked.Column.HeaderTemplate = null;
+            }
+
+            lastHeaderClicked = headerClicked;
+            lastDirection = direction;
         }
 
         private void dpk_ZoekenOpGeboortedatum_CalendarOpened(object sender, RoutedEventArgs e)
