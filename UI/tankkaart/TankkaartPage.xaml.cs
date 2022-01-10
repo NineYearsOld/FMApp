@@ -17,7 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace UI
+namespace UI.tankkaart
 {
     /// <summary>
     /// Logique d'interaction pour TankkaartPage.xaml

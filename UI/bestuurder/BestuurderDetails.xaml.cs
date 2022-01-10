@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,8 +24,12 @@ namespace UI.bestuurder
         public BestuurderDetails(Bestuurder b)
         {
             InitializeComponent();
+            bestuurder = b;
             ToonDetails(b);
         }
+        public Bestuurder bestuurder;
+        private bool hasEdited = false;
+
         private void ToonDetails(Bestuurder b)
         {
             string postcode = null;
@@ -33,33 +38,31 @@ namespace UI.bestuurder
             {
                 postcode = b.Postcode.ToString();
             }
-            if (b.Voertuig.AantalDeuren != null)
-            {
-                aantalDeuren = b.Voertuig.AantalDeuren.ToString();
-            }
+
             string result =
-                $"Bestuurder:\nnaam: {b.Naam} voornaam: {b.Voornaam}\ngeboortedatum: {b.GeboorteDatum.ToShortDateString()}\nrijksregisternummer: {b.RijksregisterNummer}\nrijbewijs: {b.Rijbewijs}\nadres: "
+                $"{b.Naam} {b.Voornaam}\ngeboortedatum: {b.GeboorteDatum.ToShortDateString()}\nrijksregisternummer: {b.RijksregisterNummer}\nrijbewijs: {b.Rijbewijs}\nadres: "
                 + (string.IsNullOrWhiteSpace(b.Huisnummer) ? "n/a huisnr, " : b.Huisnummer + ", ")
                 + (string.IsNullOrWhiteSpace(b.Straat) ? "n/a straat, " : b.Straat + ", ")
-                + (string.IsNullOrWhiteSpace(b.Gemeente) ? "n/a gemeente" : b.Gemeente + ", ")
+                + (string.IsNullOrWhiteSpace(b.Gemeente) ? "n/a gemeente, " : b.Gemeente + ", ")
                 + (string.IsNullOrWhiteSpace(postcode) ? "n/a postcode" : "(" + b.Postcode + ")");
-            if (b.Voertuig.ChassisNummer != null)
+            if (b.Voertuig != null && b.Voertuig.ChassisNummer != null)
             {
+                    if (b.Voertuig.AantalDeuren != null)
+                    {
+                        aantalDeuren = b.Voertuig.AantalDeuren.ToString();
+                    }
                 result +=
-                    "\n\nVoertuig: " + (string.IsNullOrWhiteSpace(b.Voertuig.Merk) ? "\nn/a merk" : "\nMerk: " + b.Voertuig.Merk + ",")
-                    + (string.IsNullOrWhiteSpace(b.Voertuig.Model) ? "\nn/a model" : "\nModel: " + b.Voertuig.Model + ",")
-                    + (string.IsNullOrWhiteSpace(b.Voertuig.TypeWagen) ? "\nn/a carrosserie" : "\nCarrosserie: " + b.Voertuig.TypeWagen + ",")
+                    $"\n\nVoertuig:\nMerk: {b.Voertuig.Merk},\nModel: {b.Voertuig.Model},\nCarrosserie: {b.Voertuig.TypeWagen},"
                     + (string.IsNullOrWhiteSpace(aantalDeuren) ? "\nn/a aantal deuren" : "\nAantal deuren" + b.Voertuig.AantalDeuren + ", ")
-                    + (string.IsNullOrWhiteSpace(b.Voertuig.Brandstoffen) ? "\nn/a brandstof" : "\nBrandstof" + b.Voertuig.Brandstoffen + ",")
-                    + (string.IsNullOrWhiteSpace(b.Voertuig.ChassisNummer) ? "\nn/a chassisnummer" : "\nChassisnummer" + b.Voertuig.ChassisNummer + ",")
+                    + $"\nBrandstof: {b.Voertuig.Brandstoffen},\nChassisnummer: {b.Voertuig.ChassisNummer},"
                     + (string.IsNullOrWhiteSpace(b.Voertuig.Kleur) ? "\nn/a kleur" : "\nKleur " + b.Voertuig.Kleur + ",")
-                    + (string.IsNullOrWhiteSpace(b.Voertuig.Nummerplaat) ? "\nn/a nummerplaat" : "\nNummerplaat: " + b.Voertuig.Nummerplaat + ",");
+                    + $"\nNummerplaat: {b.Voertuig.Nummerplaat}";
             }
             else
             {
                 result += "\n\nGeen geassocieerde voertuig.";
             }
-            if (b.Tankkaart.KaartNummer != null)
+            if (b.Tankkaart != null && b.Tankkaart.KaartNummer != null)
             {
                 result +=
                     "\n\nTankkaart: " + "\nkaartnummer: " + b.Tankkaart.KaartNummer
@@ -77,9 +80,25 @@ namespace UI.bestuurder
             lbl_Details.Content = result;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void btn_Ok_Click(object sender, RoutedEventArgs e)
         {
+            if (hasEdited)
+            {
+                DialogResult = true;
+            }
             this.Close();
+        }
+
+        private void btn_Bewerk_Click(object sender, RoutedEventArgs e)
+        {
+            BestuurderBewerken bw = new BestuurderBewerken(bestuurder);
+            bw.Owner = this;
+            if (bw.ShowDialog() == true)
+            {
+                hasEdited = true;
+                bestuurder = bw.bestuurder;
+                ToonDetails(bw.bestuurder);
+            }
         }
     }
 }

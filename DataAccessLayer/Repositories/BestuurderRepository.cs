@@ -62,12 +62,13 @@ namespace DataAccessLayer.Repositories {
             string query = "insert into dbo.bestuurders (naam, voornaam, postcode, gemeente, straat, huisnummer, geboortedatum, rijksregisternummer, rijbewijs) values(@naam, @voornaam, @postcode, @gemeente, @straat, @huisnummer, @geboortedatum, @rijksregisternummer, @rijbewijs)";
             query += " select scope_identity()";
             SqlConnection connection = getConnection();
-            using(SqlCommand command = new SqlCommand(query, connection))
+
+            connection.Open();
+            SqlTransaction transaction = connection.BeginTransaction();
+            using(SqlCommand command = new SqlCommand(query, connection, transaction))
             {
-                //TODO: Use transactions
                 try
                 {
-                    connection.Open();
                     
                     command.Parameters.Add(new SqlParameter("@naam", SqlDbType.NVarChar));
                     command.Parameters.Add(new SqlParameter("@voornaam", SqlDbType.NVarChar));
@@ -99,15 +100,15 @@ namespace DataAccessLayer.Repositories {
                     command.Parameters["@rijbewijs"].Value = bestuurder.Rijbewijs;
 
                     bestuurder.Id = Convert.ToInt32(command.ExecuteScalar());
+                    transaction.Commit();
                 }
                 catch (Exception)
                 {
-
+                    transaction.Rollback();
                 }
                 finally
                 {
-                    connection.Close();
-                        
+                    connection.Close();                        
                 }
 
             }
@@ -118,7 +119,9 @@ namespace DataAccessLayer.Repositories {
             {
                 string query = "delete from dbo.bestuurders where id=@id";
                 SqlConnection connection = getConnection();
-                using (SqlCommand command = new SqlCommand(query, connection))
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+                using (SqlCommand command = new SqlCommand(query, connection, transaction))
                 {
                     try
                     {
@@ -126,11 +129,11 @@ namespace DataAccessLayer.Repositories {
                         command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
                         command.Parameters["@id"].Value = id;
                         command.ExecuteNonQuery();
+                        transaction.Commit();
                     }
                     catch (Exception)
                     {
-
-                        throw;
+                        transaction.Rollback();
                     }
                     finally
                     {
@@ -148,11 +151,12 @@ namespace DataAccessLayer.Repositories {
             {
                 string query = "update dbo.bestuurders set naam=@naam, voornaam = @voornaam, postcode = @postcode, gemeente = @gemeente, straat = @straat, huisnummer = @huisnummer, geboortedatum = @geboortedatum, rijksregisternummer = @rijksregisternummer, rijbewijs = @rijbewijs where id=@id";
                 SqlConnection connection = getConnection();
-                using (SqlCommand command = new SqlCommand(query, connection))
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+                using (SqlCommand command = new SqlCommand(query, connection, transaction))
                 {
                     try
                     {
-                        connection.Open();
                         command.Parameters.AddWithValue("@id", (int)id);
                         command.Parameters.Add(new SqlParameter("@naam", SqlDbType.NVarChar));
                         command.Parameters.Add(new SqlParameter("@voornaam", SqlDbType.NVarChar));
@@ -184,11 +188,11 @@ namespace DataAccessLayer.Repositories {
                         command.Parameters["@rijbewijs"].Value = bestuurder.Rijbewijs;
 
                         command.ExecuteScalar();
+                        transaction.Commit();
                     }
                     catch (Exception)
                     {
-
-                        throw;
+                        transaction.Rollback();
                     }
                     finally
                     {
@@ -204,11 +208,11 @@ namespace DataAccessLayer.Repositories {
             ObservableCollection<Bestuurder> bestuurders = new ObservableCollection<Bestuurder>();
 
             string query = "";
-            string queryNaam = "select * from dbo.bestuurders where naam like @naam";
-            string queryVoornaam = "select * from dbo.bestuurders where voornaam like @voornaam";
+            string queryNaam = "select top (50) * from bestuurders b left join voertuigen v on v.bestuurderid = b.id left join tankkaarten t on t.Bestuurderid = b.id where naam like @naam";
+            string queryVoornaam = "select top (50) * from bestuurders b left join voertuigen v on v.bestuurderid = b.id left join tankkaarten t on t.Bestuurderid = b.id where voornaam like @voornaam";
+            string queryGeboorteDatum = "select top(50) * from bestuurders b left join voertuigen v on v.bestuurderid = b.id left join tankkaarten t on t.Bestuurderid = b.id where geboortedatum like @geboortedatum";
             string queryWithVoornaam = " and voornaam like @voornaam";
             string queryWithGeboortedatum = " and geboortedatum like @geboortedatum";
-            string queryGeboorteDatum = "select * from dbo.bestuurders where geboortedatum like @geboortedatum";
 
             SqlConnection connection = getConnection();
 
@@ -246,8 +250,8 @@ namespace DataAccessLayer.Repositories {
                 try
                 {
                     connection.Open();
-                    command.Parameters.AddWithValue("naam", naam + '%');
-                    command.Parameters.AddWithValue("voornaam", voornaam + '%');
+                    command.Parameters.AddWithValue("naam", naam);
+                    command.Parameters.AddWithValue("voornaam", voornaam);
                     command.Parameters.AddWithValue("geboortedatum", geboortedatum);
                     IDataReader reader = command.ExecuteReader();
                     do
@@ -256,78 +260,19 @@ namespace DataAccessLayer.Repositories {
                         {
                             Bestuurder bs = new Bestuurder(reader["naam"].ToString(), reader["voornaam"].ToString(), (DateTime)reader["geboortedatum"], reader["rijksregisternummer"].ToString(), reader["rijbewijs"].ToString(), reader["gemeente"].ToString(), reader["straat"].ToString(), reader["huisnummer"].ToString(), reader.GetNullableInt("postcode"));
                             bs.Id = (int)reader["id"];
+                            bs.Voertuig = new Voertuig(reader.GetNullableString("merk"), reader.GetNullableString("model"), reader.GetNullableString("chassisnummer"), reader.GetNullableString("nummerplaat"), reader.GetNullableString("brandstof"), reader.GetNullableString("typewagen"), reader.GetNullableString("kleur"), reader.GetNullableInt("aantaldeuren"), bs.Id);
+                            bs.Tankkaart = new Tankkaart(reader.GetNullableDateTime("geldigheidsdatum"), reader.GetNullableString("pincode"), reader.GetNullableString("brandstof"), bs.Id, reader.GetNullableInt("kaartnummer"));
                             bestuurders.Add(bs);
                         }
                     } while (reader.NextResult());
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
             }
 
             return bestuurders;
-        }
-
-        public Bestuurder ToonBestuurder(int id)
-        {
-            if (ExistsBestuurder(id))
-            {
-                string query = "select * from bestuurders b left join voertuigen v on v.bestuurderid = b.id left join tankkaarten t on t.Bestuurderid = b.id where id=@id";
-                SqlConnection connection = getConnection();
-                Bestuurder bestuurder;
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    try
-                    {
-                        connection.Open();
-                        command.Parameters.AddWithValue("@id", (int)id);
-                        IDataReader reader = command.ExecuteReader();
-                        reader.Read();
-                        bestuurder = new Bestuurder((string)reader["naam"], (string)reader["voornaam"], (DateTime)reader["geboortedatum"], (string)reader["rijksregisternummer"], (string)reader["rijbewijs"], reader.GetNullableString("gemeente"), reader.GetNullableString("straat"), reader.GetNullableString("huisnummer"), reader.GetNullableInt("postcode"));
-                    }
-                    catch (Exception)
-                    {
-
-                        throw;
-                    }
-                }
-                return bestuurder;
-            }
-            else throw new Exception("Bestuurder id bestaat niet");
-        }
-
-        public Bestuurder ToonDetails(int id)
-        {
-            if (ExistsBestuurder(id))
-            {
-                string query = "select * from bestuurders b left join voertuigen v on v.bestuurderid = b.id left join tankkaarten t on t.Bestuurderid = b.id where id=@id";
-                SqlConnection connection = getConnection();
-                Bestuurder bestuurder;
-
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    try
-                    {
-                        connection.Open();
-                        command.Parameters.AddWithValue("@id", (int)id);
-                        IDataReader reader = command.ExecuteReader();
-                        reader.Read();
-                        bestuurder = new Bestuurder((string)reader["naam"], (string)reader["voornaam"], (DateTime)reader["geboortedatum"], (string)reader["rijksregisternummer"], (string)reader["rijbewijs"], reader.GetNullableString("gemeente"), reader.GetNullableString("straat"), reader.GetNullableString("huisnummer"), reader.GetNullableInt("postcode"));
-                        bestuurder.Voertuig = new Voertuig(reader.GetNullableString("merk"), reader.GetNullableString("model"), reader.GetNullableString("chassisnummer"), reader.GetNullableString("nummerplaat"), reader.GetNullableString("brandstof"), reader.GetNullableString("typewagen"), reader.GetNullableString("kleur"), reader.GetNullableInt("aantaldeuren"), id);
-                        bestuurder.Tankkaart = new Tankkaart(reader.GetNullableDateTime("geldigheidsdatum"), reader.GetNullableString("pincode"), reader.GetNullableString("brandstof"), id, reader.GetNullableInt("kaartnummer"));
-                    }
-                    catch (Exception)
-                    {
-
-                        throw;
-                    }
-
-                    return bestuurder;
-                }
-            }
-            else throw new Exception("Bestuurder id bestaat niet");
         }
     }   
 }

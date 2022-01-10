@@ -17,6 +17,7 @@ using BusinessLayer.Entities;
 using BusinessLayer.Services;
 using BusinessLayer.StaticData;
 using DataAccessLayer.Repositories;
+using UI.utils;
 
 namespace UI.bestuurder
 {
@@ -32,7 +33,6 @@ namespace UI.bestuurder
             FillWindow(b);
         }
         public Bestuurder bestuurder;
-        public string ass = "ass";
         HashSet<string> rijbewijzen = new HashSet<string>();
 
         private void FillWindow(Bestuurder b)
@@ -81,18 +81,25 @@ namespace UI.bestuurder
         private void btn_BestuurderAanpassen_Click(object sender, RoutedEventArgs e)
         {
             int id = bestuurder.Id;
+            Tankkaart t = bestuurder.Tankkaart;
+            Voertuig v = bestuurder.Voertuig;
             bestuurder = new Bestuurder(tbk_Naam.Text, tbk_Voornaam.Text, (DateTime)dpk_gebDatum.SelectedDate, tbk_Rijksregnr.Text, tbl_Rijbewijzen.Text.ToString(), tbk_Gemeente.Text, tbk_Straat.Text, tbk_Huisnummer.Text, TryParseNullable(tbk_Postcode.Text));
+            bestuurder.Tankkaart = t;
+            bestuurder.Voertuig = v;
             bestuurder.Id = id;
             Connection.Bestuurder().UpdateBestuurder(bestuurder, id);
-            lbl_BestuurderDetails.Content = FillDetails(bestuurder);
-            btn_Annuleren.Content = "Ok";
+            tbl_BestuurderDetails.Text = FillDetails(bestuurder);
+            btn_Decision.Content = "Ok";
             btn_BestuurderAanpassen.Visibility = Visibility.Hidden;
         }
 
-        private void btn_Annuleren_Click(object sender, RoutedEventArgs e)
+        private void btn_Decision_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = true;
-            this.Close();
+            if (btn_Decision.Content == "Ok")
+            {
+                DialogResult = true;
+            }
+            else { DialogResult = false; }
         }
         private void tbk_Postcode_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -131,6 +138,11 @@ namespace UI.bestuurder
             tbl_Rijbewijzen.Text = null;
             btn_RijbewijsToevoegen.IsEnabled = true;
             btn_RijbewijzenWissen.IsEnabled = false;
+        }
+
+        private void dpk_gebDatum_CalendarOpened(object sender, RoutedEventArgs e)
+        {
+            Tools.DatePickerOptions(sender, e);
         }
     }
 }

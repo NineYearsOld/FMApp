@@ -2,6 +2,7 @@
 using DataAccessLayer.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UI.bestuurder;
+using UI.tankkaart;
 
 namespace UI
 {
@@ -37,27 +39,35 @@ namespace UI
             Main.Content = bp;
         }
 
-        private void btn_BestuurdersBeheer_Click(object sender, RoutedEventArgs e)
+        private void btn_BestuurderMaken_Click(object sender, RoutedEventArgs e)
         {
             BestuurderMaken bm = new BestuurderMaken();
             bm.Owner = this;
-            bm.ShowDialog();
-        }
-
-        private void btn_VoertuigenBeheer_Click(object sender, RoutedEventArgs e)
-        {
-            Main.Content = vp;
-        }
-
-        private void btn_TankkaartenBeheer_Click(object sender, RoutedEventArgs e)
-        {
-            tp.FillCmbBox();
-            Main.Content = tp;
+            if (bm.ShowDialog() == true)
+            {
+                bp.bestuurders.Add(bm.b);
+                bp.lsv_BestuurdersLijst.ItemsSource = bp.bestuurders;
+                bp.lsv_BestuurdersLijst.SelectedItem = bm.b;
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             LoadPages();
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string name = ((TabItem)tab_Selector.SelectedItem).Name.ToString();
+            switch (name)
+            {
+                case "b": Main.Content = bp;
+                    break;
+                case "v": Main.Content = vp;
+                    break;
+                case "t": Main.Content = tp;
+                    break;
+            }
         }
     }
 }
