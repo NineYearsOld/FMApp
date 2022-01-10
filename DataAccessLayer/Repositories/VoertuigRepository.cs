@@ -5,43 +5,33 @@ using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Data;
+using System.Collections.ObjectModel;
 
 namespace DataAccessLayer.Repositories {
-    public class VoertuigRepository: IVoertuigRepository {
+    public class VoertuigRepository : IVoertuigRepository {
         private string connectionString;
         public VoertuigRepository(string connectionString) {
             this.connectionString = connectionString;
         }
-        public SqlConnection getConnection()
-        {
+        public SqlConnection getConnection() {
             SqlConnection connection = new SqlConnection(connectionString);
             return connection;
         }
-        public bool ExistsVoertuig(string id)
-        {
+        public bool ExistsVoertuig(string id) {
             string query = "select count(*) from dbo.voertuigen where chassisnummer=@chassisnummer";
             SqlConnection connection = getConnection();
-            using (SqlCommand command = new SqlCommand(query, connection))
-            {
-                try
-                {
+            using (SqlCommand command = new SqlCommand(query, connection)) {
+                try {
                     connection.Open();
                     command.Parameters.AddWithValue("@chassisnummer", id);
                     int qr = (int)command.ExecuteScalar();
-                    if (qr > 0)
-                    {
+                    if (qr > 0) {
                         return true;
-                    }
-                    else return false;
-                }
-                catch (Exception)
-                {
+                    } else return false;
+                } catch (Exception) {
 
                     throw;
-                }
-
-                finally
-                {
+                } finally {
                     connection.Close();
                 }
 
@@ -54,11 +44,9 @@ namespace DataAccessLayer.Repositories {
             string query = "insert into dbo.voertuigen (chassisnummer, merk, model, nummerplaat, brandstof, typewagen, kleur, aantaldeuren, bestuurderid) values(@chassisnummer, @merk, @model, @nummerplaat, @brandstof, @typewagen, @kleur, @aantaldeuren, @bestuurderid)";
             query += " select scope_identity()";
             SqlConnection connection = getConnection();
-            using (SqlCommand command = new SqlCommand(query, connection))
-            {
+            using (SqlCommand command = new SqlCommand(query, connection)) {
                 //TODO: Use transactions
-                try
-                {
+                try {
                     connection.Open();
 
                     command.Parameters.AddWithValue("@chassisnummer", voertuig.ChassisNummer);
@@ -81,13 +69,9 @@ namespace DataAccessLayer.Repositories {
                     command.Parameters["@aantaldeuren"].Value = voertuig.AantalDeuren;
 
                     voertuig.ChassisNummer = command.ExecuteScalar().ToString();
-                }
-                catch (Exception)
-                {
-
-                }
-                finally
-                {
+                } catch (Exception) {
+                    throw;
+                } finally {
                     connection.Close();
 
                 }
@@ -96,43 +80,32 @@ namespace DataAccessLayer.Repositories {
         }
 
         public void DeleteVoertuig(string chassisnummer) {
-            if (ExistsVoertuig(chassisnummer))
-            {
+            if (ExistsVoertuig(chassisnummer)) {
                 string query = "delete from dbo.voertuigen where chassisnummer=@chassisnummer";
                 SqlConnection connection = getConnection();
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    try
-                    {
+                using (SqlCommand command = new SqlCommand(query, connection)) {
+                    try {
                         connection.Open();
                         command.Parameters.AddWithValue("chassisnummer", chassisnummer);
                         command.ExecuteScalar();
-                    }
-                    catch (Exception)
-                    {
+                    } catch (Exception) {
 
                         throw;
-                    }
-                    finally
-                    {
+                    } finally {
                         connection.Close();
                     }
 
                 }
-            }
-            else throw new Exception("Chassisnummer bestaat niet.");
+            } else throw new Exception("Chassisnummer bestaat niet.");
 
         }
 
         public void UpdateVoertuig(Voertuig voertuig, string chassisnummer) { // Nog uit te werken
-            if (ExistsVoertuig(chassisnummer))
-            {
+            if (ExistsVoertuig(chassisnummer)) {
                 string query = "update dbo.voertuigen set merk = @merk, model = @model, nummerplaat = @nummerplaat, brandstof = @brandstof, typewagen = @typewagen, kleur = @kleur, aantaldeuren = @aantaldeuren, bestuurderId = bestuurderId where chassisnummer=@chassisnummer";
                 SqlConnection connection = getConnection();
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    try
-                    {
+                using (SqlCommand command = new SqlCommand(query, connection)) {
+                    try {
                         connection.Open();
 
                         command.Parameters.AddWithValue("@chassisnummer", voertuig.ChassisNummer);
@@ -155,51 +128,91 @@ namespace DataAccessLayer.Repositories {
                         command.Parameters["@aantaldeuren"].Value = voertuig.AantalDeuren;
 
                         command.ExecuteScalar();
-                    }
-                    catch (Exception)
-                    {
+                    } catch (Exception) {
 
                         throw;
-                    }
-                    finally
-                    {
+                    } finally {
                         connection.Close();
                     }
                 }
-            }
-            else throw new Exception("Chassisnummer bestaat niet.");
+            } else throw new Exception("Chassisnummer bestaat niet.");
         }
+
         public Voertuig ToonDetails(string chassisnummer) {
-            if (ExistsVoertuig(chassisnummer))
-            {
+            if (ExistsVoertuig(chassisnummer)) {
                 SqlConnection connection = getConnection();
                 Voertuig v;
 
                 string query = "select chassisnummer, merk, model, nummerplaat, brandstof, typewagen, kleur, aantaldeuren, bestuurderid where chassisnummer=@chassisnummer";
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    try
-                    {
+                using (SqlCommand command = new SqlCommand(query, connection)) {
+                    try {
                         connection.Open();
                         command.Parameters.AddWithValue("@chassisnummer", chassisnummer);
                         IDataReader reader = command.ExecuteReader();
                         reader.Read();
                         v = new Voertuig((string)reader["merk"], (string)reader["model"], (string)reader["chassisnummer"], (string)reader["nummerplaat"], (string)reader["brandstof"], (string)reader["typewagen"], (string)reader["kleur"], (int)reader["aantaldeuren"], (int)reader["bestuurderid"]);
-                    }
-                    catch (Exception)
-                    {
+                    } catch (Exception) {
 
                         throw;
-                    }
-                    finally
-                    {
-                        connection.Close(); 
+                    } finally {
+                        connection.Close();
                     }
 
                 }
                 return v;
+            } else throw new Exception();
+        }
+
+        public ObservableCollection<Voertuig> GetVoertuigen(string merk, string model, string nummerplaat) {
+            ObservableCollection<Voertuig> voertuigen = new ObservableCollection<Voertuig>();
+
+            string query;
+            string queryMerk = "select top (50) * from dbo.voertuigen where merk like @merk";
+            string queryModel = "select top (50) * from dbo.voertuigen where model like @model";
+            string queryNummerplaat = "select top (50) * from dbo.voertuigen where nummerplaat like @nummerplaat";
+            string queryWithModel = " and model like @model";
+            string queryWithNummerplaat = " and nummerplaat like @ nummerplaat";
+
+            if (!string.IsNullOrWhiteSpace(merk) && !string.IsNullOrWhiteSpace(model) && !string.IsNullOrWhiteSpace(nummerplaat)) {
+                query = queryMerk + queryWithModel + queryWithNummerplaat;
+            } else if (!string.IsNullOrWhiteSpace(merk) && !string.IsNullOrWhiteSpace(model)) {
+                query = queryMerk + queryWithModel;
+            } else if (!string.IsNullOrWhiteSpace(merk) && !string.IsNullOrWhiteSpace(nummerplaat)) {
+                query = queryMerk + queryWithNummerplaat;
+            } else if (!string.IsNullOrWhiteSpace(model) && !string.IsNullOrWhiteSpace(nummerplaat)) {
+                query = queryModel + queryWithNummerplaat;
+            } else if (!string.IsNullOrWhiteSpace(merk)) {
+                query = queryMerk;
+            } else if (!string.IsNullOrWhiteSpace(model)) {
+                query = queryModel;
+            } else if (!string.IsNullOrWhiteSpace(nummerplaat)) {
+                query = queryNummerplaat;
+            } else {
+                return voertuigen;
             }
-            else throw new Exception();
+
+            SqlConnection conn = getConnection();
+            SqlCommand command = new SqlCommand(query, conn);
+            command.Parameters.AddWithValue("merk", merk);
+            command.Parameters.AddWithValue("model", model);
+            command.Parameters.AddWithValue("nummerplaat", nummerplaat);
+
+            try {
+                using (command) {
+                    conn.Open();
+                    IDataReader reader = command.ExecuteReader();
+                    while (reader.Read()) {
+                        Voertuig v = new Voertuig(reader["merk"].ToString(), reader["model"].ToString(), reader["chassisnummer"].ToString(), reader["nummerplaat"].ToString(), reader["brandstof"].ToString(), reader["typewagen"].ToString(), reader.GetNullableString("kleur"), reader.GetNullableInt("aantaldeuren"), reader.GetNullableInt("bestuurderid"));
+                        voertuigen.Add(v);
+                    }
+                }
+            } catch {
+
+            } finally {
+                conn.Close();
+            }
+
+            return voertuigen;
         }
     }
 }
