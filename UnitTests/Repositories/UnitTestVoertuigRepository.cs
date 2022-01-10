@@ -21,7 +21,7 @@ namespace UnitTests.Repositories {
             Assert.IsType<SqlConnection>(c);
             Assert.Equal(conn, c.ConnectionString);
         }
-
+        /*
         [Fact]
         public void TestBestaatVoertuig() {
             var vr = new VoertuigRepository(conn);
@@ -76,5 +76,6 @@ namespace UnitTests.Repositories {
             Assert.Equal(5, result1.AantalDeuren);
             Assert.Equal(0, result1.BestuurderId);
         }
+        */
     }
 }

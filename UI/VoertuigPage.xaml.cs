@@ -43,9 +43,24 @@ namespace UI
             if (TankkaartPage == null)
             {
                 TankkaartPage = new TankkaartPage(this);
-                TankkaartPage.FillCmbBox();
             }
             NavigationService.Navigate(TankkaartPage);
+        }
+
+        private void Zoek_Click(object sender, RoutedEventArgs e) {
+
+        }
+
+        private void Aanmaken_Click(object sender, RoutedEventArgs e) {
+
+        }
+
+        private void Update_Click(object sender, RoutedEventArgs e) {
+
+        }
+
+        private void Verwijder_Click(object sender, RoutedEventArgs e) {
+
         }
     }
 }

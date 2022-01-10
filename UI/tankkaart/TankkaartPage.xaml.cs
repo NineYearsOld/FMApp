@@ -29,6 +29,7 @@ namespace UI.tankkaart
         {
             InitializeComponent();
             VoertuigPage = vp;
+            FillCmbBox();
         }
         private TankkaartService TankkaartService()
         {
