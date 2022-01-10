@@ -26,10 +26,10 @@
             <RowDefinition Height="4*"/>
             <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
-        
+
         <Button Grid.Column="4" Grid.Row="6" FontFamily="Marlett" x:Name="btn_back" Content="3" HorizontalAlignment="Right" VerticalAlignment="Center" IsEnabled="False"/>
         <Button Grid.Column="5" Grid.Row="6" FontFamily="Marlett" x:Name="btn_Forward" Content="4" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Naar voertuigbeheer." Click="btn_Forward_Click"/>
-        
+
         <Label Content="Bestuurder zoeken" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10"/>
         <TextBox Grid.Column="0" Grid.Row="1" Margin="2" x:Name="tbk_ZoekenOpNaam"  TextWrapping="WrapWithOverflow" HorizontalAlignment="Right" Width="125">
             <TextBox.Style>
@@ -80,7 +80,7 @@
             </TextBox.Style>
         </TextBox>
 
-        <DatePicker Grid.Row="3" Margin="2" x:Name="dpk_ZoekenOpGeboortedatum" HorizontalAlignment="Right" VerticalAlignment="Top" Width="125" Height="24">
+        <DatePicker Grid.Row="3" Margin="2" x:Name="dpk_ZoekenOpGeboortedatum" CalendarOpened="dpk_ZoekenOpGeboortedatum_CalendarOpened" HorizontalAlignment="Right" VerticalAlignment="Top" Width="125" Height="24">
             <DatePicker.Resources>
                 <Style TargetType="DatePickerTextBox">
                     <Setter Property="Text" Value="Geboortedatum"/>
@@ -88,33 +88,54 @@
             </DatePicker.Resources>
         </DatePicker>
         <Button Grid.Column="2" Grid.Row="3" Margin="2" Content="Toon overeenkomende" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Height="24" Click="btn_ToonOvereenkomende_Click"/>
-        
+
         <Border Grid.Row="0" Grid.RowSpan="4" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="LightSlateGray"/>
         <Label Grid.Row="5" Grid.ColumnSpan="3" BorderThickness="1,1,1,1" BorderBrush="LightSlateGray">
             <TextBlock x:Name="tbl_BestuurderDetails" x:FieldModifier="public"/>
         </Label>
-        <Button Grid.Row="5" Grid.Column="2" Visibility="Hidden"  x:Name="btnOpties" VerticalAlignment="Bottom" HorizontalAlignment="Right" Content="Toon details" Margin="10" Click="btnOpties_Click" />
+        <Button Grid.Row="5" Grid.Column="2" Visibility="Hidden"  x:Name="btnOpties" VerticalAlignment="Bottom" HorizontalAlignment="Right" Content="Toon details" Margin="10" Click="btn_ToonDetails_Click" />
 
         <CheckBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" x:Name="ckb_ExacteNaam"/>
         <Label Grid.Column="2" Grid.Row="1" Content="zoeken op exacte term"/>
         <CheckBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" x:Name="cbk_ExacteVoornaam"/>
         <Label Grid.Column="2" Grid.Row="2" Content="zoeken op exacte term"/>
 
-
-        <ListBox Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="6" x:Name="lsb_BestuurdersLijst" SelectionChanged="lsb_BestuurdersLijst_SelectionChanged" x:FieldModifier="public">
-            <ListBox.Resources>
+        <ListView Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="6" x:Name="lsv_BestuurdersLijst" SelectionChanged="lsv_BestuurdersLijst_SelectionChanged" x:FieldModifier="public" GridViewColumnHeader.Click ="lsv_BestuurdersLijst_Click">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Naam}" Header="Naam"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Voornaam}" Header="Voornaam"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding GeboorteDatum, StringFormat='yyyy-MM-dd'}" Header="Geboortedatum"/>
+                </GridView>
+            </ListView.View>
+            <ListView.Resources>
                 <ContextMenu x:Key="lsbCtxMenu">
                     <MenuItem Header="Toon Details" Click="btn_ToonDetails_Click"/>
                     <MenuItem Header="Bewerk" Click="btn_BestuurderAanpassen_Click"/>
                     <Separator/>
                     <MenuItem Header="Verwijder" Click="btn_BestuurderVerwijderen_Click"/>
                 </ContextMenu>
-            </ListBox.Resources>
-            <ListBox.ItemContainerStyle>
+            </ListView.Resources>
+            <ListView.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="ContextMenu" Value="{StaticResource lsbCtxMenu}"/>
                 </Style>
-            </ListBox.ItemContainerStyle>
-        </ListBox>
+            </ListView.ItemContainerStyle>
+        </ListView>
     </Grid>
+    <Page.Resources>
+        <DataTemplate x:Key="HeaderTemplateArrowUp">
+            <DockPanel LastChildFill="True" Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type GridViewColumnHeader}}}">
+                <Path x:Name="arrowUp" StrokeThickness="1" Fill="Gray" Data="M 5,10 L 15,10 L 10,5 L 5,10" DockPanel.Dock="Right" Width="20" HorizontalAlignment="Right" Margin="5,0,5,0" SnapsToDevicePixels="True"/>
+                <TextBlock Text="{Binding }" />
+            </DockPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="HeaderTemplateArrowDown">
+            <DockPanel LastChildFill="True" Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type GridViewColumnHeader}}}">
+                <Path x:Name="arrowDown" StrokeThickness="1" Fill="Gray"  Data="M 5,5 L 10,10 L 15,5 L 5,5" DockPanel.Dock="Right" Width="20" HorizontalAlignment="Right" Margin="5,0,5,0" SnapsToDevicePixels="True"/>
+                <TextBlock Text="{Binding }" />
+            </DockPanel>
+        </DataTemplate>
+    </Page.Resources>
 </Page>
