@@ -10,7 +10,7 @@ namespace UI.utils
 {
     public class Connection
     {
-        private static string connectionString = @"Data Source=LAPTOP-TFOBODKP\SQLEXPRESS;Initial Catalog=FleetManagementDb;Integrated Security=True;TrustServerCertificate=True";
+        private static string connectionString = @"Data Source=LAPTOP-3DP97NFE\SQLEXPRESS;Initial Catalog=FleetManagementDb;Integrated Security=True; TrustServerCertificate=True;";
 
         public static BestuurderService Bestuurder()
         {
