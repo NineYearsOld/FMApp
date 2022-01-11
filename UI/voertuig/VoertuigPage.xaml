@@ -8,7 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="VoertuigPage">
 
-    <Grid Margin="20">
+    <Grid Margin="50">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="250"/>
@@ -34,11 +34,11 @@
         <TextBox Name="nummerplaat" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="3" Grid.Column="1" FontSize="14" Width="250" Height="25"/>
         <Button Name="Zoek" Content="Zoek" Width="100" Grid.Row="4" Grid.Column="1" Height="30" FontSize="14" Click="Zoek_Click"/>
         <Label Name="selectie" Grid.Row="5" Grid.Column="1" BorderThickness="1" BorderBrush="LightSlateGray">
-
+            <TextBlock Name="details" FontSize="14"/>
         </Label>
-        <ListBox Name="lstbx" HorizontalAlignment="Right" Grid.RowSpan="5" Grid.Row="1" Grid.Column="2" Width="330">
+        <ListView Name="lv" Grid.Column="2" Grid.Row="1" Grid.RowSpan="5" Margin="10" SelectionChanged="lv_SelectionChanged">
 
-        </ListBox>
-        <Button Name="details" Content="Details" Grid.Row="6" Grid.Column="1" Width="100" Height="25" FontSize="14" Visibility="Hidden" Click="details_Click"/>
+        </ListView>
+        <Button Name="detailview" Content="Details" Grid.Row="6" Grid.Column="1" Width="100" Height="25" FontSize="14" Visibility="Hidden" Click="detailview_Click"/>
     </Grid>
 </Page>

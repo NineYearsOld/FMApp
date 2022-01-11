@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessLayer.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,14 +43,29 @@ namespace UI.voertuig {
         }
 
         private void Zoek_Click(object sender, RoutedEventArgs e) {
+            detailview.Visibility = Visibility.Hidden;
+            details.Text = "";
             var vs = Connection.Voertuig();
-            vs.GetVoertuigen(merk.Text,model.Text,nummerplaat.Text);
-            details.Visibility = Visibility.Visible;
+            var voertuigen = vs.GetVoertuigen(merk.Text,model.Text,nummerplaat.Text);
+            lv.ItemsSource = voertuigen;
         }
 
-        private void details_Click(object sender, RoutedEventArgs e) {
-            VoertuigDetails vd = new VoertuigDetails();
+        private void detailview_Click(object sender, RoutedEventArgs e) {
+            Voertuig v = (Voertuig)lv.SelectedItem;
+            VoertuigDetails vd = new VoertuigDetails(v);
             vd.ShowDialog();
+        }
+
+        private void lv_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            if (lv.SelectedIndex > -1) {
+                Voertuig v = (Voertuig)lv.SelectedItem;
+                FillDetails(v);
+                detailview.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void FillDetails(Voertuig v) {
+            details.Text = $"Chassisnummer: {v.ChassisNummer}\nNummerplaat: {v.Nummerplaat}\nMerk: {v.Merk} Model: {v.Model}\nBestuurder: {v.BestuurderId}";
         }
     }
 }

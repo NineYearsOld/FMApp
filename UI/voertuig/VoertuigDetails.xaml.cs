@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Services;
+﻿using BusinessLayer.Entities;
+using BusinessLayer.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,19 +20,26 @@ namespace UI.voertuig {
     /// Interaction logic for VoertuigDetails.xaml
     /// </summary>
     public partial class VoertuigDetails : Window {
-        public VoertuigDetails() {
+        public VoertuigDetails(Voertuig v) {
             InitializeComponent();
+            this.v = v;
+            FillText();
+        }
+        Voertuig v;
+
+        private void FillText() {
+            result.Text = $"Chassisnummer: {v.ChassisNummer}\nNummerplaat: {v.Nummerplaat}\nMerk: {v.Merk}\nModel: {v.Model}\nBrandstoffen: {v.Brandstoffen}\nType wagen: {v.TypeWagen}\nKleur: {v.Kleur}\nAantal deuren: {v.AantalDeuren}\nBestuurder: ";
         }
 
         private void update_Click(object sender, RoutedEventArgs e) {
-            VoertuigBewerken vb = new VoertuigBewerken();
+            VoertuigBewerken vb = new VoertuigBewerken(v);
             vb.Show();
         }
 
         private void verwijder_Click(object sender, RoutedEventArgs e) {
             if (MessageBox.Show("Bent u zeker dat u dit voertuig wilt verwijderen?", "Voertuig verwijderen  ", MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
                 var vs = Connection.Voertuig();
-                vs.DeleteVoertuig("");
+                vs.DeleteVoertuig(v.ChassisNummer);
             }
         }
 
