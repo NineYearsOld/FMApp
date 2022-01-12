@@ -46,7 +46,7 @@ namespace UnitTests.Repositories {
             tr.DeleteTankkaart(1);
             Assert.False(tr.BestaatTankkaart(1));
         }
-        */
+        
         [Fact]
         public void TestUpdateTankkaart() {
             var tr = new TankkaartRepository(conn);
@@ -68,5 +68,6 @@ namespace UnitTests.Repositories {
             Assert.Equal("Diesel", result1.Brandstoffen);
             Assert.Equal(0, result1.BestuurderId);
         }
+        */
     }
 }

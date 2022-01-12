@@ -47,6 +47,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Name="detailview" Content="Details" VerticalAlignment="Bottom" Grid.Row="6" Margin="10" Grid.Column="1" Width="100" Height="25" FontSize="14" Visibility="Hidden" Click="detailview_Click"/>
+        <Button x:Name="detailview" Content="Details" VerticalAlignment="Bottom" Grid.Row="6" Margin="10" Grid.Column="1" Width="100" Height="25" FontSize="14" Visibility="Hidden" Click="detailview_Click"/>
     </Grid>
 </Page>
