@@ -14,19 +14,27 @@ namespace BusinessLayer.Services {
         public VoertuigService(IVoertuigRepository repo) {
             this.repo = repo;
         }
+
         public bool ExistsVoertuig(string id) {
             if (repo.ExistsVoertuig(id)) {
                 return true;
             } else return false;
         }
-        public void CreateVoertuig(string merk, string model, string chassisNummer, string nummerplaat, string brandstof, string typeWagen, string kleur, int? aantalDeuren, int? bestuurderId) {
+
+        public Voertuig CreateVoertuig(string merk, string model, string chassisNummer, string nummerplaat, string brandstof, string typeWagen, string kleur, int? aantalDeuren, int? bestuurderId) {
             try {
-                Voertuig v = new Voertuig(merk, model, chassisNummer, nummerplaat, brandstof, typeWagen, kleur, aantalDeuren, bestuurderId);
-                repo.CreateVoertuig(v);
+                if (!string.IsNullOrWhiteSpace(merk) && !string.IsNullOrWhiteSpace(model) && !string.IsNullOrWhiteSpace(chassisNummer) && !string.IsNullOrWhiteSpace(nummerplaat) && !string.IsNullOrWhiteSpace(brandstof) && !string.IsNullOrWhiteSpace(typeWagen)) {
+                    Voertuig v = new Voertuig(merk, model, chassisNummer, nummerplaat, brandstof, typeWagen, kleur, aantalDeuren, bestuurderId);
+                    repo.CreateVoertuig(v);
+                    return v;
+                } else {
+                    throw new Exception();
+                }
             } catch (Exception) {
                 throw;
             }
         }
+
         public void DeleteVoertuig(string chassisnummer) {
             try {
                 repo.DeleteVoertuig(chassisnummer);
@@ -38,14 +46,6 @@ namespace BusinessLayer.Services {
         public void UpdateVoertuig(Voertuig voertuig, string chassisnummer) {
             try {
                 repo.UpdateVoertuig(voertuig, chassisnummer);
-            } catch (Exception) {
-                throw;
-            }
-        }
-
-        public Voertuig ToonDetails(string chassisnummer) {
-            try {
-                return repo.ToonDetails(chassisnummer);
             } catch (Exception) {
                 throw;
             }

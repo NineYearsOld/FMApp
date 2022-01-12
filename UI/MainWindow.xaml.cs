@@ -70,5 +70,13 @@ namespace UI
                     break;
             }
         }
+
+        private void btn_VoertuigMaken_Click(object sender, RoutedEventArgs e) {
+            VoertuigMaken vm = new VoertuigMaken();
+            vm.Owner = this;
+            if(vm.ShowDialog() == true) {
+                
+            }
+        }
     }
 }

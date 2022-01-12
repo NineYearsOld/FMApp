@@ -41,7 +41,6 @@ namespace UI.voertuig {
             } else if (x == 0) {
                 vs.CreateVoertuig(merk.Text, model.Text, chassisnr.Text, nummerplaat.Text, brandstof.Text, typewagen.Text, kleur.Text, null, null);
             }
-
         }
 
         private void annuleer_Click(object sender, RoutedEventArgs e) {
@@ -65,6 +64,10 @@ namespace UI.voertuig {
         private void LoadCBData() {
             brandstof.ItemsSource = Enum.GetValues(typeof(Brandstoffen));
             typewagen.ItemsSource = Enum.GetValues(typeof(WagenTypes));
+        }
+
+        private void bestuurder_Click(object sender, RoutedEventArgs e) {
+            new ZoekWindow().ShowDialog();
         }
     }
 }

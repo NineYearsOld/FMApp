@@ -31,14 +31,14 @@ namespace UI.voertuig {
         int? x;
 
         private void update_Click(object sender, RoutedEventArgs e) {
-            result.Text = $"Nummerplaat: {nummerplaat.Text}\nKleur: {kleur.Text}\nBestuurder: ";
+            result.Text = $"Chassissnummer: {chassisnr.Text}\nNummerplaat: {nummerplaat.Text}\nMerk: {merk.Text}\nModel: {model.Text}\nBrandstof: {brandstof.Text}\nType wagen: {typewagen.Text}\nKleur: {kleur.Text}\nAantaldeuren: {x}\nBestuurder: ";
             bevestig.Visibility = Visibility.Visible;
         }
 
         private void bevestig_Click(object sender, RoutedEventArgs e) {
             var vs = Connection.Voertuig();
             var cnr = v.ChassisNummer;
-            v = new Voertuig(merk.Text, model.Text, chassisnr.Text, nummerplaat.Text,brandstof.Text,typewagen.Text, kleur.Text,x, null);
+            v = new Voertuig(merk.Text, model.Text, chassisnr.Text, nummerplaat.Text, brandstof.Text, typewagen.Text, kleur.Text, x, null);
             vs.UpdateVoertuig(v, cnr);
         }
 

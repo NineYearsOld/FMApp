@@ -15,7 +15,6 @@ namespace BusinessLayer.Interfaces
         void CreateVoertuig(Voertuig voertuig);
         void DeleteVoertuig(string chassisnummer);
         void UpdateVoertuig(Voertuig voertuig, string chassisnummer);
-        Voertuig ToonDetails(string chassisnummer);
         ObservableCollection<Voertuig> GetVoertuigen(string merk, string model, string nummerplaat);
     }
 }

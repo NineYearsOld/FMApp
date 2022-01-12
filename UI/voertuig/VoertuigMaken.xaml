@@ -46,7 +46,7 @@
             <Button FontFamily="Marlett" Content="5" Name="up" Width="25" Height="15" Click="up_Click"/>
             <Button FontFamily="Marlett" Content="6" Name="down" Width="25" Height="15" Click="down_Click"/>
         </StackPanel>
-        <Button Name="bestuurder" Content="Zoek" HorizontalAlignment="Right" Width="100" Height="25" FontSize="14" Grid.Row="8"/>
+        <Button Name="bestuurder" Content="Zoek" HorizontalAlignment="Right" Width="100" Height="25" FontSize="14" Grid.Row="8" Click="bestuurder_Click"/>
         <TextBlock Name="bestuurderresult" Grid.Row="9" FontSize="14"/>
         <TextBlock Name="result" FontSize="14" Grid.Column="1" Grid.RowSpan="9" Width="350"/>
         <Button Name="Maak" Content="Aanmaken" Grid.Row="10" FontSize="14" HorizontalAlignment="Right" Width="100" Height="25" Click="Maak_Click"/>
