@@ -21,8 +21,9 @@ namespace UI {
     /// Interaction logic for ZoekWindow.xaml
     /// </summary>
     public partial class ZoekWindow : Window {
-        public ZoekWindow() {
+        public ZoekWindow(BestuurderPage b = null) {
             InitializeComponent();
+            bp = b;
         }
         string origin;
         BestuurderPage bp { get; set; }
@@ -33,9 +34,7 @@ namespace UI {
 
         private void LoadContent() {
             if (origin == "v") {
-                this.Title = "BestuurderZoeken";
-                bp = new BestuurderPage();
-                zoek.Content = bp;
+                
             } else if (origin == "b") {
                 zoek.Content = new VoertuigPage(); // of TankkaartPage
             } else if (origin == "t") {
@@ -65,9 +64,11 @@ namespace UI {
         }
 
         private void bevestig_Click(object sender, RoutedEventArgs e) {
-            if (bp.lsv_BestuurdersLijst.SelectedItem != null) {
-                bestuurder = (Bestuurder)bp.lsv_BestuurdersLijst.SelectedItem;
-                DialogResult = true;
+            if (bp.bestuurders != null) {
+                if (bp.lsv_BestuurdersLijst.SelectedIndex > -1) {
+                    bestuurder = (Bestuurder)bp.lsv_BestuurdersLijst.SelectedItem;
+                    DialogResult = true;
+                }
             } else {
                 error.Text = "Maak eerst een keuze";
             }

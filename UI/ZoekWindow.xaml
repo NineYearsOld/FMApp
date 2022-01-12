@@ -5,11 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UI"
         mc:Ignorable="d"
-        Title="ZoekWindow" Height="450" Width="800"
-        Loaded="Window_Loaded">
+        Title="ZoekWindow" Height="500" Width="800"
+        Loaded="Window_Loaded"
+        WindowStartupLocation="CenterScreen">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <TextBlock Name="error" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Frame Name="zoek"/>
-    <Button Name="bevestig" Content="Bevestig" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20" Click="bevestig_Click"/>
+        <Frame Name="zoek" Grid.ColumnSpan="2"/>
+    <Button Name="bevestig" Content="Bevestig" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,65" Width="100" Height="25" Click="bevestig_Click"/>
     </Grid>
 </Window>

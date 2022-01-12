@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using UI.utils;
 using BusinessLayer.StaticData;
+using UI.bestuurder;
 
 namespace UI.voertuig {
     /// <summary>
@@ -78,10 +79,14 @@ namespace UI.voertuig {
             brandstof.ItemsSource = Enum.GetValues(typeof(Brandstoffen));
             typewagen.ItemsSource = Enum.GetValues(typeof(WagenTypes));
         }
-
+        public BestuurderPage bp;
         private void bestuurder_Click(object sender, RoutedEventArgs e) {
-            var zw = new ZoekWindow();
+            bp = new BestuurderPage();
+            bp.btnOpties.Visibility = Visibility.Hidden;
+            var zw = new ZoekWindow(bp);
+            zw.Title = "BestuurderZoeken";
             zw.Owner = this;
+            zw.zoek.Content = bp;
             if (zw.ShowDialog() == true) {
                 bestuurderresult.Text = $"{zw.bestuurder.Naam} {zw.bestuurder.Voornaam}";
             } else {
