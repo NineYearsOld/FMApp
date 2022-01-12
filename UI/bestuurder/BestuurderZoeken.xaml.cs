@@ -30,6 +30,7 @@ namespace UI.bestuurder
         public ObservableCollection<Bestuurder> bestuurders;
         GridViewColumnHeader lastHeaderClicked = null;
         ListSortDirection lastDirection = ListSortDirection.Ascending;
+        public Bestuurder bestuurder;
 
         private void btn_ToonOvereenkomende_Click(object sender, RoutedEventArgs e)
         {
@@ -53,7 +54,7 @@ namespace UI.bestuurder
             bestuurders = Connection.Bestuurder().FetchBestuurders(naam, voornaam, textDate);
             if (bestuurders.Count == 0)
             {
-                //tbl_BestuurderDetails.Text = "Geen overeenkomende resultaten gevonden";
+                tbl_Result.Text = "Geen overeenkomende resultaten gevonden";
             }
             lsv_BestuurdersLijst.ItemsSource = bestuurders;
         }
@@ -99,7 +100,7 @@ namespace UI.bestuurder
 
         private void lsv_BestuurdersLijst_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            bestuurder = (Bestuurder)lsv_BestuurdersLijst.SelectedItem;
         }
     }
 }

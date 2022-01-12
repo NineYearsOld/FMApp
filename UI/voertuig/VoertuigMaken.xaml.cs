@@ -28,7 +28,7 @@ namespace UI.voertuig {
         int x;
         private void Maak_Click(object sender, RoutedEventArgs e) {
             if (!string.IsNullOrWhiteSpace(merk.Text)&& !string.IsNullOrWhiteSpace(model.Text)&& !string.IsNullOrWhiteSpace(chassisnr.Text)&& !string.IsNullOrWhiteSpace(nummerplaat.Text)&& !string.IsNullOrWhiteSpace(brandstof.Text)&& !string.IsNullOrWhiteSpace(typewagen.Text)) {
-                result.Text = $"Merk: {merk.Text}\nModel: {model.Text}\nChassisnummer: {chassisnr.Text}\nNummerplaat: {nummerplaat.Text}\nBrandstof: {brandstof.Text}\nType wagen: {typewagen.Text}\nKleur: {kleur.Text}\nAantal deuren: {x}\nBestuurder: ";
+                result.Text = $"Merk: {merk.Text}\nModel: {model.Text}\n\nChassisnummer: {chassisnr.Text}\nNummerplaat: {nummerplaat.Text}\n\nBrandstof: {brandstof.Text}\nType wagen: {typewagen.Text}\n\nKleur: {kleur.Text}\nAantal deuren: {x}\n\nBestuurder: ";
                 bevestig.Visibility = Visibility.Visible;
                 error.Text = "";
             } else {
@@ -83,12 +83,11 @@ namespace UI.voertuig {
         private void bestuurder_Click(object sender, RoutedEventArgs e) {
             bp = new BestuurderPage();
             bp.btnOpties.Visibility = Visibility.Hidden;
-            var zw = new ZoekWindow(bp);
-            zw.Title = "BestuurderZoeken";
-            zw.Owner = this;
-            zw.zoek.Content = bp;
-            if (zw.ShowDialog() == true) {
-                bestuurderresult.Text = $"{zw.bestuurder.Naam} {zw.bestuurder.Voornaam}";
+            var bz = new BestuurderZoeken();
+            bz.Title = "BestuurderZoeken";
+            bz.Owner = this;
+            if (bz.ShowDialog() == true) {
+                bestuurderresult.Text = $"{bz.bestuurder.Naam} {bz.bestuurder.Voornaam}";
             } else {
                 bestuurderresult.Text = "Zoekopdracht geannulleerd";
             }

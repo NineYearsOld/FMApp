@@ -14,6 +14,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition Height="7*"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -83,7 +84,7 @@
         <Label Grid.Column="2" Grid.Row="2" Content="zoeken op exacte term"/>
         <Button Grid.Row="3" Grid.Column="2" Margin="2" Content="Toon overeenkomende" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Height="24" Click="btn_ToonOvereenkomende_Click"/>
 
-        <TextBlock Grid.Row="5" Grid.ColumnSpan="3" x:Name="tbl_Result" TextAlignment="Center"/>
+        
         
         <ListView Grid.Row="5" Grid.ColumnSpan="3" x:Name="lsv_BestuurdersLijst" SelectionChanged="lsv_BestuurdersLijst_SelectionChanged" x:FieldModifier="public" GridViewColumnHeader.Click ="lsv_BestuurdersLijst_Click">
             <ListView.View>
@@ -94,6 +95,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
-
+        <TextBlock Grid.Row="5" Grid.ColumnSpan="3" x:Name="tbl_Result" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Window>

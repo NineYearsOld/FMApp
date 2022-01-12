@@ -49,4 +49,19 @@
         </ListView>
         <Button x:Name="detailview" Content="Details" VerticalAlignment="Bottom" Grid.Row="6" Margin="10" Grid.Column="1" Width="100" Height="25" FontSize="14" Visibility="Hidden" Click="detailview_Click"/>
     </Grid>
+    <Page.Resources>
+        <DataTemplate x:Key="HeaderTemplateArrowUp">
+            <DockPanel LastChildFill="True" Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type GridViewColumnHeader}}}">
+                <Path x:Name="arrowUp" StrokeThickness="1" Fill="Gray" Data="M 5,10 L 15,10 L 10,5 L 5,10" DockPanel.Dock="Right" Width="20" HorizontalAlignment="Right" Margin="5,0,5,0" SnapsToDevicePixels="True"/>
+                <TextBlock Text="{Binding }" />
+            </DockPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="HeaderTemplateArrowDown">
+            <DockPanel LastChildFill="True" Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type GridViewColumnHeader}}}">
+                <Path x:Name="arrowDown" StrokeThickness="1" Fill="Gray"  Data="M 5,5 L 10,10 L 15,5 L 5,5" DockPanel.Dock="Right" Width="20" HorizontalAlignment="Right" Margin="5,0,5,0" SnapsToDevicePixels="True"/>
+                <TextBlock Text="{Binding }" />
+            </DockPanel>
+        </DataTemplate>
+    </Page.Resources>
 </Page>
