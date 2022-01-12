@@ -34,7 +34,6 @@ namespace UI.bestuurder
             InitializeComponent();
         }
 
-        private VoertuigPage VoertuigPage;
         public ObservableCollection<Bestuurder> bestuurders = new ObservableCollection<Bestuurder>();
         GridViewColumnHeader lastHeaderClicked = null;
         ListSortDirection lastDirection = ListSortDirection.Ascending;
@@ -58,6 +57,7 @@ namespace UI.bestuurder
         private void btn_BestuurderAanpassen_Click(object sender, RoutedEventArgs e)
         {
             Bestuurder bestuurder = (Bestuurder)lsv_BestuurdersLijst.SelectedItem;
+
             BestuurderBewerken bw = new BestuurderBewerken(bestuurder);
             if (bw.ShowDialog() == true)
             {
@@ -124,15 +124,6 @@ namespace UI.bestuurder
              lsv_BestuurdersLijst.ItemsSource = bestuurders;
         }
 
-        private void btn_Forward_Click(object sender, RoutedEventArgs e)
-        {
-            if (VoertuigPage == null)
-            {
-                VoertuigPage = new VoertuigPage(this);
-            }
-            NavigationService.Navigate(VoertuigPage);
-        }
-
         private void lsv_BestuurdersLijst_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (lsv_BestuurdersLijst.SelectedIndex>-1)
@@ -182,5 +173,16 @@ namespace UI.bestuurder
         {
             Tools.DatePickerOptions(sender, e);
         }
+
+        private void ctx_TankkaartOpties_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ctx_TankkaartVerwijderen_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }

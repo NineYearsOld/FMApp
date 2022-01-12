@@ -46,9 +46,20 @@ namespace UI
             bm.Owner = this;
             if (bm.ShowDialog() == true)
             {
-                bp.bestuurders.Add(bm.b);
+                bp.bestuurders.Add(bm.bestuurder);
                 bp.lsv_BestuurdersLijst.ItemsSource = bp.bestuurders;
-                bp.lsv_BestuurdersLijst.SelectedItem = bm.b;
+                bp.lsv_BestuurdersLijst.SelectedItem = bm.bestuurder;
+            }
+        }
+        private void btn_TankkaartMaken_Click(object sender, RoutedEventArgs e)
+        {
+            TankkaartMaken tm = new TankkaartMaken();
+            tm.Owner = this;
+            if (tm.ShowDialog() == true)
+            {
+                tp.tankkaarten.Add(tm.tankkaart);
+                tp.lsv_TankkaartLijst.ItemsSource = bp.bestuurders;
+                tp.lsv_TankkaartLijst.SelectedItem = tm.tankkaart;
             }
         }
 
@@ -68,6 +79,14 @@ namespace UI
                     break;
                 case "t": Main.Content = tp;
                     break;
+            }
+        }
+
+        private void btn_VoertuigMaken_Click(object sender, RoutedEventArgs e) {
+            VoertuigMaken vm = new VoertuigMaken();
+            vm.Owner = this;
+            if(vm.ShowDialog() == true) {
+                
             }
         }
     }

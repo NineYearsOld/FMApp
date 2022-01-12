@@ -9,13 +9,9 @@ namespace BusinessLayer.Interfaces
 {
     public interface ITankkaartRepository
     {
-        bool ExistsTankkaart(int id);
+        bool ExistsTankkaart(int? id);
         void CreateTankkaart(Tankkaart tankkaart);
-
         void DeleteTankkaart(int kaartnummer);
-
-        void UpdateTankkaart(Tankkaart tankkaart, int kaartnummer);
-
-        Tankkaart ToonDetails(int kaartnummer);
+        void UpdateTankkaart(Tankkaart tankkaart);
     }
 }

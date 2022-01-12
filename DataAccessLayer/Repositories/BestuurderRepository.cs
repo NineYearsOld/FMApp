@@ -208,9 +208,9 @@ namespace DataAccessLayer.Repositories {
             ObservableCollection<Bestuurder> bestuurders = new ObservableCollection<Bestuurder>();
 
             string query = "";
-            string queryNaam = "select top (50) * from bestuurders b left join voertuigen v on v.bestuurderid = b.id left join tankkaarten t on t.Bestuurderid = b.id where naam like @naam";
-            string queryVoornaam = "select top (50) * from bestuurders b left join voertuigen v on v.bestuurderid = b.id left join tankkaarten t on t.Bestuurderid = b.id where voornaam like @voornaam";
-            string queryGeboorteDatum = "select top(50) * from bestuurders b left join voertuigen v on v.bestuurderid = b.id left join tankkaarten t on t.Bestuurderid = b.id where geboortedatum like @geboortedatum";
+            string queryNaam = "select top (50) t.brandstof as brandstof, * from bestuurders b left join voertuigen v on v.bestuurderid = b.id left join tankkaarten t on t.Bestuurderid = b.id where naam like @naam";
+            string queryVoornaam = "select top (50) t.brandstof as brandstof, * from bestuurders b left join voertuigen v on v.bestuurderid = b.id left join tankkaarten t on t.Bestuurderid = b.id where voornaam like @voornaam";
+            string queryGeboorteDatum = "select top(50) t.brandstof as brandstof, * from bestuurders b left join voertuigen v on v.bestuurderid = b.id left join tankkaarten t on t.Bestuurderid = b.id where geboortedatum like @geboortedatum";
             string queryWithVoornaam = " and voornaam like @voornaam";
             string queryWithGeboortedatum = " and geboortedatum like @geboortedatum";
 
@@ -261,7 +261,8 @@ namespace DataAccessLayer.Repositories {
                             Bestuurder bs = new Bestuurder(reader["naam"].ToString(), reader["voornaam"].ToString(), (DateTime)reader["geboortedatum"], reader["rijksregisternummer"].ToString(), reader["rijbewijs"].ToString(), reader["gemeente"].ToString(), reader["straat"].ToString(), reader["huisnummer"].ToString(), reader.GetNullableInt("postcode"));
                             bs.Id = (int)reader["id"];
                             bs.Voertuig = new Voertuig(reader.GetNullableString("merk"), reader.GetNullableString("model"), reader.GetNullableString("chassisnummer"), reader.GetNullableString("nummerplaat"), reader.GetNullableString("brandstof"), reader.GetNullableString("typewagen"), reader.GetNullableString("kleur"), reader.GetNullableInt("aantaldeuren"), bs.Id);
-                            bs.Tankkaart = new Tankkaart(reader.GetNullableDateTime("geldigheidsdatum"), reader.GetNullableString("pincode"), reader.GetNullableString("brandstof"), bs.Id, reader.GetNullableInt("kaartnummer"));
+                            bs.Tankkaart = new Tankkaart(reader.GetNullableDateTime("geldigheidsdatum"), reader.GetNullableString("pincode"), reader.GetNullableString("brandstof"), bs.Id);
+                            bs.Tankkaart.KaartNummer = reader.GetNullableInt("kaartnummer");
                             bestuurders.Add(bs);
                         }
                     } while (reader.NextResult());

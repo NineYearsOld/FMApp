@@ -30,6 +30,7 @@ namespace UI.bestuurder
         public ObservableCollection<Bestuurder> bestuurders;
         GridViewColumnHeader lastHeaderClicked = null;
         ListSortDirection lastDirection = ListSortDirection.Ascending;
+        public Bestuurder bestuurder;
 
         private void btn_ToonOvereenkomende_Click(object sender, RoutedEventArgs e)
         {
@@ -99,7 +100,7 @@ namespace UI.bestuurder
 
         private void lsv_BestuurdersLijst_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            bestuurder = (Bestuurder)lsv_BestuurdersLijst.SelectedItem;
         }
     }
 }

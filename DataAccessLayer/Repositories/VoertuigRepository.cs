@@ -6,6 +6,7 @@ using Microsoft.Data.SqlClient;
 using System;
 using System.Data;
 using System.Collections.ObjectModel;
+using DataAccessLayer;
 
 namespace DataAccessLayer.Repositories {
     public class VoertuigRepository : IVoertuigRepository {
@@ -61,6 +62,7 @@ namespace DataAccessLayer.Repositories {
                     command.Parameters.Add(new SqlParameter("@nummerplaat", SqlDbType.NVarChar));
                     command.Parameters.Add(new SqlParameter("@brandstof", SqlDbType.NVarChar));
                     command.Parameters.Add(new SqlParameter("@typewagen", SqlDbType.NVarChar));
+
                     SqlParameter paramkleur = new SqlParameter("@kleur", voertuig.Kleur == null ? DBNull.Value : voertuig.Kleur);
                     paramkleur.Direction = ParameterDirection.Input;
                     paramkleur.SqlDbType = SqlDbType.NVarChar;
@@ -106,11 +108,13 @@ namespace DataAccessLayer.Repositories {
                     }
 
                 }
-            } else throw new Exception("Chassisnummer bestaat niet.");
+            } else {
+                throw new Exception("Chassisnummer bestaat niet.");
+            }
 
         }
 
-        public void UpdateVoertuig(Voertuig voertuig, string chassisnummer) { // Nog uit te werken
+        public void UpdateVoertuig(Voertuig voertuig, string chassisnummer) {
             if (ExistsVoertuig(chassisnummer)) {
                 string query = "update dbo.voertuigen set merk = @merk, model = @model, nummerplaat = @nummerplaat, brandstof = @brandstof, typewagen = @typewagen, kleur = @kleur, aantaldeuren = @aantaldeuren, bestuurderId = bestuurderId where chassisnummer=@chassisnummer";
                 SqlConnection connection = getConnection();
@@ -119,15 +123,25 @@ namespace DataAccessLayer.Repositories {
                         connection.Open();
 
                         command.Parameters.AddWithValue("@chassisnummer", voertuig.ChassisNummer);
-                        command.Parameters.AddWithValue("@bestuurderid", voertuig.BestuurderId);
+                        SqlParameter parambid = new SqlParameter("@bestuurderid", voertuig.BestuurderId == null ? DBNull.Value : voertuig.BestuurderId);
+                        parambid.Direction = ParameterDirection.Input;
+                        parambid.SqlDbType = SqlDbType.Int;
+                        command.Parameters.Add(parambid);
 
                         command.Parameters.Add(new SqlParameter("@merk", SqlDbType.NVarChar));
                         command.Parameters.Add(new SqlParameter("@model", SqlDbType.NVarChar));
                         command.Parameters.Add(new SqlParameter("@nummerplaat", SqlDbType.NVarChar));
                         command.Parameters.Add(new SqlParameter("@brandstof", SqlDbType.NVarChar));
                         command.Parameters.Add(new SqlParameter("@typewagen", SqlDbType.NVarChar));
-                        command.Parameters.Add(new SqlParameter("@kleur", SqlDbType.NVarChar));
-                        command.Parameters.Add(new SqlParameter("@aantaldeuren", SqlDbType.Int));
+
+                        SqlParameter paramkleur = new SqlParameter("@kleur", voertuig.Kleur == null ? DBNull.Value : voertuig.Kleur);
+                        paramkleur.Direction = ParameterDirection.Input;
+                        paramkleur.SqlDbType = SqlDbType.NVarChar;
+                        command.Parameters.Add(paramkleur);
+                        SqlParameter paramdeuren = new SqlParameter("@aantaldeuren", voertuig.AantalDeuren == null ? DBNull.Value : voertuig.AantalDeuren);
+                        paramdeuren.Direction = ParameterDirection.Input;
+                        paramdeuren.SqlDbType = SqlDbType.Int;
+                        command.Parameters.Add(paramdeuren);
 
                         command.Parameters["@merk"].Value = voertuig.Merk;
                         command.Parameters["@model"].Value = voertuig.Model;
@@ -138,6 +152,7 @@ namespace DataAccessLayer.Repositories {
                         command.Parameters["@aantaldeuren"].Value = voertuig.AantalDeuren;
 
                         command.ExecuteScalar();
+
                     } catch (Exception) {
 
                         throw;
@@ -148,38 +163,14 @@ namespace DataAccessLayer.Repositories {
             } else throw new Exception("Chassisnummer bestaat niet.");
         }
 
-        public Voertuig ToonDetails(string chassisnummer) {
-            if (ExistsVoertuig(chassisnummer)) {
-                SqlConnection connection = getConnection();
-                Voertuig v;
-
-                string query = "select chassisnummer, merk, model, nummerplaat, brandstof, typewagen, kleur, aantaldeuren, bestuurderid where chassisnummer=@chassisnummer";
-                using (SqlCommand command = new SqlCommand(query, connection)) {
-                    try {
-                        connection.Open();
-                        command.Parameters.AddWithValue("@chassisnummer", chassisnummer);
-                        IDataReader reader = command.ExecuteReader();
-                        reader.Read();
-                        v = new Voertuig((string)reader["merk"], (string)reader["model"], (string)reader["chassisnummer"], (string)reader["nummerplaat"], (string)reader["brandstof"], (string)reader["typewagen"], (string)reader["kleur"], (int)reader["aantaldeuren"], (int)reader["bestuurderid"]);
-                    } catch (Exception) {
-
-                        throw;
-                    } finally {
-                        connection.Close();
-                    }
-
-                }
-                return v;
-            } else throw new Exception();
-        }
 
         public ObservableCollection<Voertuig> GetVoertuigen(string merk, string model, string nummerplaat) {
             ObservableCollection<Voertuig> voertuigen = new ObservableCollection<Voertuig>();
 
             string query;
-            string queryMerk = "select top (50) * from dbo.voertuigen where merk like @merk";
-            string queryModel = "select top (50) * from dbo.voertuigen where model like @model";
-            string queryNummerplaat = "select top (50) * from dbo.voertuigen where nummerplaat like @nummerplaat";
+            string queryMerk = "select top (50) * from voertuigen v left join bestuurders b on b.id = v.bestuurderid where merk like @merk";
+            string queryModel = "select top (50) * from voertuigen v left join bestuurders b on b.id = v.bestuurderid where model like @model";
+            string queryNummerplaat = "select top (50) * from voertuigen v left join bestuurders b on b.id = v.bestuurderid where nummerplaat like @nummerplaat";
             string queryWithModel = " and model like @model";
             string queryWithNummerplaat = " and nummerplaat like @ nummerplaat";
 
@@ -200,6 +191,9 @@ namespace DataAccessLayer.Repositories {
             } else {
                 return voertuigen;
             }
+            merk = $"%{merk}%";
+            model = $"%{model}%";
+            nummerplaat = $"%{nummerplaat}%";
 
             SqlConnection conn = getConnection();
             SqlCommand command = new SqlCommand(query, conn);
@@ -213,6 +207,9 @@ namespace DataAccessLayer.Repositories {
                     IDataReader reader = command.ExecuteReader();
                     while (reader.Read()) {
                         Voertuig v = new Voertuig(reader["merk"].ToString(), reader["model"].ToString(), reader["chassisnummer"].ToString(), reader["nummerplaat"].ToString(), reader["brandstof"].ToString(), reader["typewagen"].ToString(), reader.GetNullableString("kleur"), reader.GetNullableInt("aantaldeuren"), reader.GetNullableInt("bestuurderid"));
+                        if (v.BestuurderId != null) {
+                            v.Bestuurder = new Bestuurder(reader["naam"].ToString(), reader.GetNullableString("voornaam"), (DateTime)reader.GetNullableDateTime("geboortedatum"), reader["rijksregisternummer"].ToString(), reader["rijbewijs"].ToString(), reader["gemeente"].ToString(), reader["straat"].ToString(), reader["huisnummer"].ToString(), reader.GetNullableInt("postcode"));
+                        }
                         voertuigen.Add(v);
                     }
                 }
