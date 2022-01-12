@@ -1,30 +1,26 @@
-﻿<Page x:Class="UI.bestuurder.BestuurderPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:UI.bestuurder"
-      mc:Ignorable="d" 
-      Height="450" Width="800"
-      Title="Bestuurder beheer">
-
-    <Grid Margin="50">
+﻿<Window x:Class="UI.bestuurder.BestuurderZoeken"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UI.bestuurder"
+        mc:Ignorable="d"
+        Title="Bestuurder zoeken" Height="450" Width="450">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="7*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
-            <ColumnDefinition Width="25"/>
-            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="4*"/>
-        </Grid.RowDefinitions>
-
+        <Border Grid.Row="0" Grid.RowSpan="6" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="LightSlateGray"/>
         <Label Content="Bestuurder zoeken" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10"/>
         <TextBox Grid.Column="0" Grid.Row="1" Margin="2" x:Name="tbk_ZoekenOpNaam"  TextWrapping="WrapWithOverflow" HorizontalAlignment="Right" Width="125">
             <TextBox.Style>
@@ -74,7 +70,6 @@
                 </Style>
             </TextBox.Style>
         </TextBox>
-
         <DatePicker Grid.Row="3" Margin="2" x:Name="dpk_ZoekenOpGeboortedatum" CalendarOpened="dpk_ZoekenOpGeboortedatum_CalendarOpened" HorizontalAlignment="Right" VerticalAlignment="Top" Width="125" Height="24">
             <DatePicker.Resources>
                 <Style TargetType="DatePickerTextBox">
@@ -82,60 +77,23 @@
                 </Style>
             </DatePicker.Resources>
         </DatePicker>
-        <Button Grid.Column="2" Grid.Row="3" Margin="2" Content="Toon overeenkomende" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Height="24" Click="btn_ToonOvereenkomende_Click"/>
-
-        <Border Grid.Row="0" Grid.RowSpan="4" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="LightSlateGray"/>
-        <Label Grid.Row="5" Grid.ColumnSpan="3" BorderThickness="1,1,1,1" BorderBrush="LightSlateGray">
-            <TextBlock x:Name="tbl_BestuurderDetails" x:FieldModifier="public"/>
-        </Label>
-        <Button Grid.Row="5" Grid.Column="2" Visibility="Hidden"  x:Name="btnOpties" VerticalAlignment="Bottom" HorizontalAlignment="Right" Content="Toon details" Margin="10" Click="btn_ToonDetails_Click" />
-
         <CheckBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" x:Name="ckb_ExacteNaam"/>
         <Label Grid.Column="2" Grid.Row="1" Content="zoeken op exacte term"/>
         <CheckBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" x:Name="cbk_ExacteVoornaam"/>
         <Label Grid.Column="2" Grid.Row="2" Content="zoeken op exacte term"/>
+        <Button Grid.Row="3" Grid.Column="2" Margin="2" Content="Toon overeenkomende" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Height="24" Click="btn_ToonOvereenkomende_Click"/>
 
-        <ListView Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="6" x:Name="lsv_BestuurdersLijst" SelectionChanged="lsv_BestuurdersLijst_SelectionChanged" x:FieldModifier="public" GridViewColumnHeader.Click ="lsv_BestuurdersLijst_Click">
+        <TextBlock Grid.Row="5" Grid.ColumnSpan="3" x:Name="tbl_Result" TextAlignment="Center"/>
+        
+        <ListView Grid.Row="5" Grid.ColumnSpan="3" x:Name="lsv_BestuurdersLijst" SelectionChanged="lsv_BestuurdersLijst_SelectionChanged" x:FieldModifier="public" GridViewColumnHeader.Click ="lsv_BestuurdersLijst_Click">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Naam}" Header="Naam"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Voornaam}" Header="Voornaam"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding GeboorteDatum, StringFormat='yyyy-MM-dd'}" Header="Geboortedatum"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding GeboorteDatum, StringFormat=yyyy-MM-dd}" Header="Geboortedatum"/>
                 </GridView>
             </ListView.View>
-            <ListView.Resources >
-                <ContextMenu x:Key="lsbCtxMenu">
-                    <MenuItem Header="Toon Details" Click="btn_ToonDetails_Click"/>
-                    <MenuItem Header="Bewerk" Click="btn_BestuurderAanpassen_Click"/>
-                    <MenuItem Header="Tankkaart" Visibility="Collapsed">
-                        <MenuItem Tag="add" Click="ctx_TankkaartOpties_Click"/>
-                        <Separator Name="ctx_TankkaartSeparator" Visibility="Collapsed"/>
-                        <MenuItem x:Name="ctx_TankkaartVerwijderen" Visibility="Collapsed" Click="ctx_TankkaartVerwijderen_Click"/>
-                    </MenuItem>
-                    <Separator/>
-                    <MenuItem Header="Verwijder" Click="btn_BestuurderVerwijderen_Click"/>
-                </ContextMenu>
-            </ListView.Resources>
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="ContextMenu" Value="{StaticResource lsbCtxMenu}"/>
-                </Style>
-            </ListView.ItemContainerStyle>
         </ListView>
-    </Grid>
-    <Page.Resources>
-        <DataTemplate x:Key="HeaderTemplateArrowUp">
-            <DockPanel LastChildFill="True" Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type GridViewColumnHeader}}}">
-                <Path x:Name="arrowUp" StrokeThickness="1" Fill="Gray" Data="M 5,10 L 15,10 L 10,5 L 5,10" DockPanel.Dock="Right" Width="20" HorizontalAlignment="Right" Margin="5,0,5,0" SnapsToDevicePixels="True"/>
-                <TextBlock Text="{Binding }" />
-            </DockPanel>
-        </DataTemplate>
 
-        <DataTemplate x:Key="HeaderTemplateArrowDown">
-            <DockPanel LastChildFill="True" Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type GridViewColumnHeader}}}">
-                <Path x:Name="arrowDown" StrokeThickness="1" Fill="Gray"  Data="M 5,5 L 10,10 L 15,5 L 5,5" DockPanel.Dock="Right" Width="20" HorizontalAlignment="Right" Margin="5,0,5,0" SnapsToDevicePixels="True"/>
-                <TextBlock Text="{Binding }" />
-            </DockPanel>
-        </DataTemplate>
-    </Page.Resources>
-</Page>
+    </Grid>
+</Window>

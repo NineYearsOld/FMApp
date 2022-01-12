@@ -24,11 +24,11 @@ namespace BusinessLayer.Services
             else return false;
         }
 
-        public Tankkaart CreateTankkaart(DateTime geldigheidsdatum, string pincode, string brandstof, int bestuurderId, int? kaartnummer = null)
+        public Tankkaart CreateTankkaart(DateTime geldigheidsdatum, string pincode, string brandstof, int? bestuurderId)
         {
             try
             {
-                Tankkaart k = new Tankkaart(geldigheidsdatum, pincode, brandstof, bestuurderId, kaartnummer);
+                Tankkaart k = new Tankkaart(geldigheidsdatum, pincode, brandstof, bestuurderId);
                 repo.CreateTankkaart(k);
                 return k;
             }
@@ -52,24 +52,11 @@ namespace BusinessLayer.Services
             }
         }
 
-        public void UpdateTankkaart(Tankkaart tankkaart, int kaartnummer)
+        public void UpdateTankkaart(Tankkaart tankkaart)
         { 
             try
             {
-                repo.UpdateTankkaart(tankkaart, kaartnummer);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        public Tankkaart ToonDetails(int kaartnummer)
-        {
-            try
-            {
-                return repo.ToonDetails(kaartnummer);
+                repo.UpdateTankkaart(tankkaart);
             }
             catch (Exception)
             {

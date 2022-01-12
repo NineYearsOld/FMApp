@@ -31,12 +31,8 @@ namespace UI.bestuurder
             FillCmbBoxes();
         }
         HashSet<string> rijbewijzen = new HashSet<string>();
-        public Bestuurder b;
-        private void InputValidation(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
+        public Bestuurder bestuurder;
+
         private string FillDetails(Bestuurder b)
         {
             string postcode = null;
@@ -59,16 +55,16 @@ namespace UI.bestuurder
         }
         private void tbk_Postcode_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            InputValidation(sender, e);
+            Tools.InputValidation(sender, e);
         }
         private void tbk_Rijksregnr_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            InputValidation(sender, e);
+            Tools.InputValidation(sender, e);
         }
 
         private void tbk_Id_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            InputValidation(sender, e);
+            Tools.InputValidation(sender, e);
         }
 
         private void btn_BestuurderToevoegen_Click(object sender, RoutedEventArgs e)
@@ -77,8 +73,8 @@ namespace UI.bestuurder
             {
                 if (!Connection.Bestuurder().ExistsBestuurder(0, tbk_Rijksregnr.Text))
                 {
-                    b = Connection.Bestuurder().CreateBestuurder(tbk_Naam.Text, tbk_Voornaam.Text, (DateTime)dpk_gebDatum.SelectedDate, tbl_Rijbewijzen.Text.ToString(), tbk_Rijksregnr.Text, tbk_Gemeente.Text, tbk_Straat.Text, tbk_Huisnummer.Text, TryParseNullable(tbk_Postcode.Text));
-                    tbl_BestuurderDetails.Text = FillDetails(b);
+                    bestuurder = Connection.Bestuurder().CreateBestuurder(tbk_Naam.Text, tbk_Voornaam.Text, (DateTime)dpk_gebDatum.SelectedDate, tbl_Rijbewijzen.Text.ToString(), tbk_Rijksregnr.Text, tbk_Gemeente.Text, tbk_Straat.Text, tbk_Huisnummer.Text, TryParseNullable(tbk_Postcode.Text));
+                    tbl_BestuurderDetails.Text = FillDetails(bestuurder);
                     btn_BestuurderToevoegen.Visibility = Visibility.Hidden;
                     btn_Decision.Content = "Ok";
                 }
@@ -136,7 +132,7 @@ namespace UI.bestuurder
 
         private void btn_Decision_Click(object sender, RoutedEventArgs e)
         {
-            if (btn_Decision.Content == "Ok")
+            if ((string)btn_Decision.Content == "Ok")
             {
                 DialogResult = true;
             } else DialogResult = false;

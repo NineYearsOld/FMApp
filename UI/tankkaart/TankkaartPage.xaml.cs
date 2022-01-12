@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UI.voertuig;
+using System.Collections.ObjectModel;
 
 namespace UI.tankkaart
 {
@@ -30,8 +31,8 @@ namespace UI.tankkaart
         {
             InitializeComponent();
             VoertuigPage = vp;
-            FillCmbBox();
         }
+        public ObservableCollection<Tankkaart> tankkaarten = new ObservableCollection<Tankkaart>();
         private TankkaartService TankkaartService()
         {
             string connectionString = @"Data Source=LAPTOP-3DP97NFE\SQLEXPRESS;Initial Catalog=FleetManagementDb;Integrated Security=True;TrustServerCertificate=True";
@@ -39,31 +40,36 @@ namespace UI.tankkaart
             TankkaartService ts = new TankkaartService(tr);
             return ts;
         }
-        private static int? TryParseNullable(string val)
+
+        private void dpk_ZoekenOpGeldigheid_CalendarOpened(object sender, RoutedEventArgs e)
         {
-            int nInt;
-            return int.TryParse(val, out nInt) ? nInt : null;
+
         }
-        public void FillCmbBox()
+        private void btn_Zoek_Click(object sender, RoutedEventArgs e)
         {
-            cmb_Brandstof.ItemsSource = Enum.GetValues(typeof(Brandstoffen));
+
         }
-        private void btn_back_Click(object sender, RoutedEventArgs e)
+        private void btn_ToonDetails_Click(object sender, RoutedEventArgs e)
         {
-            if (VoertuigPage == null)
-            {
-                VoertuigPage = new VoertuigPage();
-            }
-            NavigationService.Navigate(VoertuigPage);
+
         }
 
-        private void btn_TankkaartToevoegen_Click(object sender, RoutedEventArgs e)
+        private void lsv_TankkaartLijst_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int? id = TankkaartService().CreateTankkaart((DateTime)dpk_Geldigheid.SelectedDate, tbk_Pincode.Text, cmb_Brandstof.SelectedItem.ToString(), Convert.ToInt32(tbk_BestuurderId.Text)).KaartNummer;
-            // ClearFields();
-            Tankkaart t = TankkaartService().ToonDetails((int)id);
-            tbk_BestuurderId.Text = id.ToString();
-            //tbl_BestuurderDetails.Text = $"{b.Naam} {b.Voornaam}\n{b.GeboorteDatum.ToShortDateString()}\nrijksregisternummer: {b.RijksregisterNummer}\nrijbewijs: {b.Rijbewijs}\ngemeente: {b.Gemeente}\nstraat: {b.Straat}\nhuisnummer: {b.Huisnummer}\npostcode: {b.Postcode}";
+
+        }
+
+        private void lsv_TankkaartLijst_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void btn_BestuurderAanpassen_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void btn_BestuurderVerwijderen_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
