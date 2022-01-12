@@ -67,5 +67,9 @@ namespace UI.voertuig {
         private void FillDetails(Voertuig v) {
             details.Text = $"Chassisnummer: {v.ChassisNummer}\nNummerplaat: {v.Nummerplaat}\nMerk: {v.Merk} Model: {v.Model}\nBestuurder: {v.BestuurderId}";
         }
+
+        private void lv_Click(object sender, RoutedEventArgs e) {
+
+        }
     }
 }

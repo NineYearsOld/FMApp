@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="ZoekWindow" Height="500" Width="800"
         Loaded="Window_Loaded"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

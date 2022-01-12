@@ -90,7 +90,7 @@ namespace UI.voertuig {
             if (zw.ShowDialog() == true) {
                 bestuurderresult.Text = $"{zw.bestuurder.Naam} {zw.bestuurder.Voornaam}";
             } else {
-
+                bestuurderresult.Text = "Zoekopdracht geannulleerd";
             }
 
         }

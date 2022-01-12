@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UI.voertuig"
         mc:Ignorable="d"
-        Title="VoertuigDetails" Height="450" Width="450">
+        Title="VoertuigDetails" Height="450" Width="450"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition/>
