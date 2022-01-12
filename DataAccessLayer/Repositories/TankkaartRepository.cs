@@ -62,21 +62,25 @@ namespace DataAccessLayer.Repositories {
                 {
                     connection.Open();
 
-                    command.Parameters.AddWithValue("@bestuurderid", tankkaart.BestuurderId);
-
-                    command.Parameters.Add(new SqlParameter ("@geldigheidsdatum", SqlDbType.Date));
-                    command.Parameters.Add(new SqlParameter("@pincode", SqlDbType.NVarChar));
-                    command.Parameters.Add(new SqlParameter("@brandstof", SqlDbType.NVarChar));
-
-                    command.Parameters["@geldigheidsdatum"].Value = tankkaart.GeldigheidsDatum;
-                    command.Parameters["@pincode"].Value = tankkaart.Pincode;
-                    command.Parameters["@brandstof"].Value = tankkaart.Brandstoffen;
+                    command.Parameters.AddWithValue("@geldigheidsdatum", tankkaart.GeldigheidsDatum);
+                    SqlParameter pincode = new SqlParameter("@pincode", tankkaart.Pincode == null ? DBNull.Value : tankkaart.Pincode);
+                    pincode.SqlDbType = SqlDbType.NVarChar;
+                    pincode.Direction = ParameterDirection.Input;
+                    command.Parameters.Add(pincode);
+                    SqlParameter brandstof = new SqlParameter("@brandstof", tankkaart.Brandstoffen == null ? DBNull.Value : tankkaart.Brandstoffen);
+                    brandstof.SqlDbType = SqlDbType.NVarChar;
+                    brandstof.Direction = ParameterDirection.Input;
+                    command.Parameters.Add(brandstof);
+                    SqlParameter bestuurderId = new SqlParameter("@bestuurderid", tankkaart.BestuurderId == null ? DBNull.Value : tankkaart.BestuurderId);
+                    bestuurderId.SqlDbType = SqlDbType.Int;
+                    bestuurderId.Direction = ParameterDirection.Input;
+                    command.Parameters.Add(bestuurderId);
 
                     tankkaart.KaartNummer = Convert.ToInt32(command.ExecuteScalar());
                 }
                 catch (Exception)
                 {
-
+                    throw;
                 }
                 finally
                 {

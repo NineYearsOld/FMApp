@@ -57,6 +57,7 @@ namespace UI.bestuurder
         private void btn_BestuurderAanpassen_Click(object sender, RoutedEventArgs e)
         {
             Bestuurder bestuurder = (Bestuurder)lsv_BestuurdersLijst.SelectedItem;
+
             BestuurderBewerken bw = new BestuurderBewerken(bestuurder);
             if (bw.ShowDialog() == true)
             {
@@ -172,5 +173,16 @@ namespace UI.bestuurder
         {
             Tools.DatePickerOptions(sender, e);
         }
+
+        private void ctx_TankkaartOpties_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ctx_TankkaartVerwijderen_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }

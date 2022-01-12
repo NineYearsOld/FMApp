@@ -208,9 +208,9 @@ namespace DataAccessLayer.Repositories {
             ObservableCollection<Bestuurder> bestuurders = new ObservableCollection<Bestuurder>();
 
             string query = "";
-            string queryNaam = "select top (50) * from bestuurders b left join voertuigen v on v.bestuurderid = b.id left join tankkaarten t on t.Bestuurderid = b.id where naam like @naam";
-            string queryVoornaam = "select top (50) * from bestuurders b left join voertuigen v on v.bestuurderid = b.id left join tankkaarten t on t.Bestuurderid = b.id where voornaam like @voornaam";
-            string queryGeboorteDatum = "select top(50) * from bestuurders b left join voertuigen v on v.bestuurderid = b.id left join tankkaarten t on t.Bestuurderid = b.id where geboortedatum like @geboortedatum";
+            string queryNaam = "select top (50) t.brandstof as brandstof, * from bestuurders b left join voertuigen v on v.bestuurderid = b.id left join tankkaarten t on t.Bestuurderid = b.id where naam like @naam";
+            string queryVoornaam = "select top (50) t.brandstof as brandstof, * from bestuurders b left join voertuigen v on v.bestuurderid = b.id left join tankkaarten t on t.Bestuurderid = b.id where voornaam like @voornaam";
+            string queryGeboorteDatum = "select top(50) t.brandstof as brandstof, * from bestuurders b left join voertuigen v on v.bestuurderid = b.id left join tankkaarten t on t.Bestuurderid = b.id where geboortedatum like @geboortedatum";
             string queryWithVoornaam = " and voornaam like @voornaam";
             string queryWithGeboortedatum = " and geboortedatum like @geboortedatum";
 

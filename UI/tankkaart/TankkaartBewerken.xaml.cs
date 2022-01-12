@@ -28,7 +28,7 @@ namespace UI.tankkaart
             FillWindow(t);
             tankkaart = t;
         }
-        Tankkaart tankkaart;
+        public Tankkaart tankkaart;
         HashSet<string> brandstoffen = new HashSet<string>();
 
         private void FillWindow(Tankkaart t)
@@ -38,7 +38,7 @@ namespace UI.tankkaart
             if (t.Brandstoffen != null)
             {
                 brandstoffen = t.Brandstoffen.Split("; ").ToHashSet();
-                tbl_Brandstoffen.Text = brandstoffen.ToString();
+                tbl_Brandstoffen.Text = t.Brandstoffen;
             }
             else
             {
@@ -79,12 +79,23 @@ namespace UI.tankkaart
             tankkaart.UpdateGeldigheidsdatum(dpk_Geldigheid.SelectedDate);
             tankkaart.UpdatePincode(tbk_Pincode.Text);
 
-            Connection.Tankkaart().UpdateTankkaart(tankkaart);
+            btn_Aanpassen.Visibility = Visibility.Hidden;
+            btn_Decision.Content = "Ok";
         }
 
         private void btn_Decision_Click(object sender, RoutedEventArgs e)
         {
+            if ((string)btn_Decision.Content == "Ok")
+            {
+                DialogResult = true;
+            }
+            else { DialogResult = false; }
+            Close();
+        }
 
+        private void tbk_Pincode_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Tools.InputValidation(sender, e);
         }
     }
 }

@@ -42,14 +42,14 @@
         <Button Grid.Row="2" Grid.RowSpan="2" VerticalContentAlignment="Center" x:Name="btn_Brandstoffen_Wissen" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="34" Click="btn_Brandstoffen_Wissen_Click" >
             <TextBlock TextAlignment="Center" Padding="0,3,0,0" LineStackingStrategy="BlockLineHeight" LineHeight="12"><Run Text="W"/><LineBreak/><Run Text="i"/><LineBreak/><Run Text="s"/></TextBlock>
         </Button>
-        <TextBox Grid.Row="4" x:Name="tbk_Pincode" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="164"/>
+        <TextBox Grid.Row="4" x:Name="tbk_Pincode" PreviewTextInput="tbk_Pincode_PreviewTextInput" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="164"/>
 
         <Label  Grid.Column="2" Grid.Row="0" Grid.RowSpan="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="1,1,1,1" BorderBrush="LightSlateGray">
             <TextBlock x:Name="tbl_TankkaartDetails" TextWrapping="WrapWithOverflow" x:FieldModifier="public"/>
         </Label>
 
         <Button Grid.Row="7" x:Name="btn_Aanpassen" Content="Aanpassen" HorizontalAlignment="Right" Click="btn_Aanpassen_Click"/>
-        <Button Grid.Column="2" Grid.Row="7" x:Name="btn_Decision" Content="Annuleren" HorizontalAlignment="Right" Click="btn_Decision_Click"/>
+        <Button Grid.Column="2" Grid.Row="7" x:Name="btn_Decision" Content="Annuleren" HorizontalAlignment="Right" Width="60" Click="btn_Decision_Click"/>
 
     </Grid>
 </Window>

@@ -103,10 +103,15 @@
                     <GridViewColumn DisplayMemberBinding="{Binding GeboorteDatum, StringFormat='yyyy-MM-dd'}" Header="Geboortedatum"/>
                 </GridView>
             </ListView.View>
-            <ListView.Resources>
+            <ListView.Resources >
                 <ContextMenu x:Key="lsbCtxMenu">
                     <MenuItem Header="Toon Details" Click="btn_ToonDetails_Click"/>
                     <MenuItem Header="Bewerk" Click="btn_BestuurderAanpassen_Click"/>
+                    <MenuItem Header="Tankkaart" Visibility="Collapsed">
+                        <MenuItem Tag="add" Click="ctx_TankkaartOpties_Click"/>
+                        <Separator Name="ctx_TankkaartSeparator" Visibility="Collapsed"/>
+                        <MenuItem x:Name="ctx_TankkaartVerwijderen" Visibility="Collapsed" Click="ctx_TankkaartVerwijderen_Click"/>
+                    </MenuItem>
                     <Separator/>
                     <MenuItem Header="Verwijder" Click="btn_BestuurderVerwijderen_Click"/>
                 </ContextMenu>

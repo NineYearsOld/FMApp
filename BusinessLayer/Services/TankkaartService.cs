@@ -24,7 +24,7 @@ namespace BusinessLayer.Services
             else return false;
         }
 
-        public Tankkaart CreateTankkaart(DateTime geldigheidsdatum, string pincode, string brandstof, int bestuurderId)
+        public Tankkaart CreateTankkaart(DateTime geldigheidsdatum, string pincode, string brandstof, int? bestuurderId)
         {
             try
             {

@@ -32,11 +32,7 @@ namespace UI.bestuurder
         }
         HashSet<string> rijbewijzen = new HashSet<string>();
         public Bestuurder bestuurder;
-        private void InputValidation(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
+
         private string FillDetails(Bestuurder b)
         {
             string postcode = null;
@@ -59,16 +55,16 @@ namespace UI.bestuurder
         }
         private void tbk_Postcode_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            InputValidation(sender, e);
+            Tools.InputValidation(sender, e);
         }
         private void tbk_Rijksregnr_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            InputValidation(sender, e);
+            Tools.InputValidation(sender, e);
         }
 
         private void tbk_Id_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            InputValidation(sender, e);
+            Tools.InputValidation(sender, e);
         }
 
         private void btn_BestuurderToevoegen_Click(object sender, RoutedEventArgs e)
@@ -136,7 +132,7 @@ namespace UI.bestuurder
 
         private void btn_Decision_Click(object sender, RoutedEventArgs e)
         {
-            if (btn_Decision.Content == "Ok")
+            if ((string)btn_Decision.Content == "Ok")
             {
                 DialogResult = true;
             } else DialogResult = false;

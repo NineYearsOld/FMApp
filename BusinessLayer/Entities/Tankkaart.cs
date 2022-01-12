@@ -31,7 +31,7 @@ namespace BusinessLayer.Entities {
         }
 
         public void UpdatePincode(string pin) {
-            if (int.TryParse(pin, out int p) && pin.Length == 4) {
+            if (int.TryParse(pin, out int p) && pin.Length == 4 || string.IsNullOrWhiteSpace(pin)) {
                 Pincode = pin;
             } else {
                 throw new TankkaartException(""); // Message
