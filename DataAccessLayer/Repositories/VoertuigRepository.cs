@@ -169,8 +169,8 @@ namespace DataAccessLayer.Repositories {
 
             string query;
             string queryMerk = "select top (50) * from voertuigen v left join bestuurders b on b.id = v.bestuurderid where merk like @merk";
-            string queryModel = "select top (50) * from dbo.voertuigen where model like @model";
-            string queryNummerplaat = "select top (50) * from dbo.voertuigen where nummerplaat like @nummerplaat";
+            string queryModel = "select top (50) * from voertuigen v left join bestuurders b on b.id = v.bestuurderid where model like @model";
+            string queryNummerplaat = "select top (50) * from voertuigen v left join bestuurders b on b.id = v.bestuurderid where nummerplaat like @nummerplaat";
             string queryWithModel = " and model like @model";
             string queryWithNummerplaat = " and nummerplaat like @ nummerplaat";
 
