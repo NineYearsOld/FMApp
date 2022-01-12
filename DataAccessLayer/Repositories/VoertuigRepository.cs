@@ -51,15 +51,24 @@ namespace DataAccessLayer.Repositories {
                     connection.Open();
 
                     command.Parameters.AddWithValue("@chassisnummer", voertuig.ChassisNummer);
-                    command.Parameters.AddWithValue("@bestuurderid", voertuig.BestuurderId);
+                    SqlParameter parambid = new SqlParameter("@bestuurderid", voertuig.BestuurderId == null? DBNull.Value : voertuig.BestuurderId);
+                    parambid.Direction = ParameterDirection.Input;
+                    parambid.SqlDbType = SqlDbType.Int;
+                    command.Parameters.Add(parambid);
 
                     command.Parameters.Add(new SqlParameter("@merk", SqlDbType.NVarChar));
                     command.Parameters.Add(new SqlParameter("@model", SqlDbType.NVarChar));
                     command.Parameters.Add(new SqlParameter("@nummerplaat", SqlDbType.NVarChar));
                     command.Parameters.Add(new SqlParameter("@brandstof", SqlDbType.NVarChar));
                     command.Parameters.Add(new SqlParameter("@typewagen", SqlDbType.NVarChar));
-                    command.Parameters.Add(new SqlParameter("@kleur", SqlDbType.NVarChar));
-                    command.Parameters.Add(new SqlParameter("@aantaldeuren", SqlDbType.Int));
+                    SqlParameter paramkleur = new SqlParameter("@kleur", voertuig.Kleur == null ? DBNull.Value : voertuig.Kleur);
+                    paramkleur.Direction = ParameterDirection.Input;
+                    paramkleur.SqlDbType = SqlDbType.NVarChar;
+                    command.Parameters.Add(paramkleur);
+                    SqlParameter paramdeuren = new SqlParameter("@aantaldeuren", voertuig.AantalDeuren == null ? DBNull.Value : voertuig.AantalDeuren);
+                    paramdeuren.Direction = ParameterDirection.Input;
+                    paramdeuren.SqlDbType = SqlDbType.Int;
+                    command.Parameters.Add(paramdeuren);
 
                     command.Parameters["@merk"].Value = voertuig.Merk;
                     command.Parameters["@model"].Value = voertuig.Model;

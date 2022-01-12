@@ -41,5 +41,9 @@ namespace BusinessLayer.Entities {
                 throw new BestuurderException("Merk is verplicht en moet verschillen met de huidige.");
             }
         }
+
+        public override string ToString() {
+            return $"{Merk} {Model} {Nummerplaat}";
+        }
     }
 }
