@@ -23,7 +23,7 @@ namespace UI.utils
             Calendar cal = (Calendar)popup.Child;
             cal.DisplayMode = CalendarMode.Decade;
         }
-        public static void Sort(GridViewColumnHeader columnHeader, ListSortDirection listSortDirection, ItemsControl control)
+        public static void Sort(GridViewColumnHeader columnHeader, ListSortDirection listSortDirection, ItemsControl control = null)
         {
             string binding = (columnHeader.Column.DisplayMemberBinding as Binding)?.Path.Path;
             binding = binding ?? columnHeader.Column.Header as string;

@@ -19,7 +19,7 @@ namespace DataAccessLayer.Repositories {
             SqlConnection connection = new SqlConnection(connectionString);
             return connection;
         }
-        public bool ExistsTankkaart(int id)
+        public bool ExistsTankkaart(int? id)
         {
             string query = "select count(*) from dbo.tankkaarten where kaartnummer=@kaartnummer";
             SqlConnection connection = getConnection();
@@ -115,24 +115,31 @@ namespace DataAccessLayer.Repositories {
             else throw new Exception("Bestuurder id bestaat niet.");
         }
 
-        public void UpdateTankkaart(Tankkaart tankkaart, int kaartnummer) { // Nog uit te werken
-            if (ExistsTankkaart(kaartnummer))
+        public void UpdateTankkaart(Tankkaart tankkaart) { // Nog uit te werken
+            if (ExistsTankkaart(tankkaart.KaartNummer))
             {
-                string query = "update dbo.taankkaarten set geldigheidsdatum = @geldigheidsdatum, pincode = @pincode, brandstof = @brandstof, bestuurderid = @bestuurderid, where kaartnummer=@kaartnummer";
+                string query = "update dbo.tankkaarten set geldigheidsdatum = @geldigheidsdatum, pincode = @pincode, brandstof = @brandstof, bestuurderid = @bestuurderid where kaartnummer=@kaartnummer";
                 SqlConnection connection = getConnection();
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     try
                     {
                         connection.Open();
-                        command.Parameters.AddWithValue("@kaartnummer", (int)kaartnummer);
-                        command.Parameters.Add(new SqlParameter("@geldigheidsdatum", SqlDbType.Date));
-                        command.Parameters.Add(new SqlParameter("@pincode", SqlDbType.NVarChar));
-                        command.Parameters.Add(new SqlParameter("@brandstof", SqlDbType.NVarChar));
+                        command.Parameters.AddWithValue("@kaartnummer", tankkaart.KaartNummer);
+                        command.Parameters.AddWithValue("@geldigheidsdatum", tankkaart.GeldigheidsDatum);
+                        SqlParameter pincode = new SqlParameter("@pincode", tankkaart.Pincode == null ? DBNull.Value : tankkaart.Pincode);
+                        pincode.SqlDbType = SqlDbType.NVarChar;
+                        pincode.Direction = ParameterDirection.Input;
+                        command.Parameters.Add(pincode);
+                        SqlParameter brandstof = new SqlParameter("@brandstof", tankkaart.Brandstoffen == null ? DBNull.Value : tankkaart.Brandstoffen);
+                        brandstof.SqlDbType = SqlDbType.NVarChar;
+                        brandstof.Direction = ParameterDirection.Input;
+                        command.Parameters.Add(brandstof);
+                        SqlParameter bestuurderId = new SqlParameter("@bestuurderid", tankkaart.BestuurderId == null ? DBNull.Value : tankkaart.BestuurderId);
+                        bestuurderId.SqlDbType = SqlDbType.Int;
+                        bestuurderId.Direction = ParameterDirection.Input;
+                        command.Parameters.Add(bestuurderId);
 
-                        command.Parameters["@geldigheidsdatum"].Value = tankkaart.GeldigheidsDatum;
-                        command.Parameters["@pincode"].Value = tankkaart.Pincode;
-                        command.Parameters["@brandstof"].Value = tankkaart.Brandstoffen;
 
                         command.ExecuteScalar();
                     }
@@ -147,40 +154,7 @@ namespace DataAccessLayer.Repositories {
                     }
                 }
             }
-            else throw new Exception("Tankkaart id bestaat niet.");
-        }
-
-        public Tankkaart ToonDetails(int kaartnummer) {
-            if (ExistsTankkaart(kaartnummer))
-            {
-                SqlConnection connection = getConnection();
-                Tankkaart t;
-
-                string query = "select kaartnummer, geldigheidsdatum, pincode, brandstof, bestuurderid from dbo.tankkaarten where kaartnummer=@kaartnummer";
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    try
-                    {
-                        connection.Open();
-                        command.Parameters.AddWithValue("@kaartnummer", kaartnummer); 
-                        IDataReader reader = command.ExecuteReader();
-                        reader.Read();
-                        t = new Tankkaart((DateTime)reader["geldigheidsdatum"], (string)reader["pincode"], (string)reader["brandstof"], (int)reader["bestuurderId"], (int)reader["kaartnummer"]);
-                    }
-                    catch (Exception)
-                    {
-
-                        throw;
-                    }
-                    finally
-                    {
-                        connection.Close();
-                    }
-
-                }
-                return t;
-            }
-            else throw new Exception();
+            else throw new Exception("Tankkaart id bestaat niet.");       
         }
     }
 }

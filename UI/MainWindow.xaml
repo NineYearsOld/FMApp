@@ -17,7 +17,7 @@
             <MenuItem Header="Nieuw">
                 <MenuItem Header="Bestuurder" Click="btn_BestuurderMaken_Click"/>
                 <MenuItem Header="Voertuig"/>
-                <MenuItem Header="Tankkaart"/>
+                <MenuItem Header="Tankkaart" Click="btn_TankkaartMaken_Click"/>
             </MenuItem>
         </Menu>
 

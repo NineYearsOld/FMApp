@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:UI.bestuurder"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="BestuurderDetails" Height="450" Width="450">
+        Title="Bestuurder details" Height="450" Width="450">
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition/>

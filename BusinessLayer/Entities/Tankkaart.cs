@@ -8,8 +8,7 @@ using BusinessLayer.Exceptions;
 
 namespace BusinessLayer.Entities {
     public class Tankkaart {
-        public Tankkaart(DateTime? geldigheidsDatum, string pincode, string brandstoffen, int bestuurderId, int? kaartNummer = null) {
-            KaartNummer = kaartNummer;
+        public Tankkaart(DateTime? geldigheidsDatum, string pincode, string brandstoffen, int? bestuurderId = null) {
             GeldigheidsDatum = UpdateGeldigheidsdatum(geldigheidsDatum);
             Pincode = pincode;
             Brandstoffen = brandstoffen;
@@ -19,8 +18,8 @@ namespace BusinessLayer.Entities {
         public int? KaartNummer { get; set; }
         public DateTime? GeldigheidsDatum { get; private set; }
         public string Pincode { get; private set; }
-        public string Brandstoffen { get; private set; }
-        public int BestuurderId { get; set; }
+        public string Brandstoffen { get; set; }
+        public int? BestuurderId { get; set; }
         public DateTime? UpdateGeldigheidsdatum(DateTime? geldigheid) {
             if (DateTime.Now < geldigheid || geldigheid == null) {
                 GeldigheidsDatum = geldigheid;

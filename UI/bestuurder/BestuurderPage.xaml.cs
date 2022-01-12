@@ -34,7 +34,6 @@ namespace UI.bestuurder
             InitializeComponent();
         }
 
-        private VoertuigPage VoertuigPage;
         public ObservableCollection<Bestuurder> bestuurders = new ObservableCollection<Bestuurder>();
         GridViewColumnHeader lastHeaderClicked = null;
         ListSortDirection lastDirection = ListSortDirection.Ascending;
@@ -122,15 +121,6 @@ namespace UI.bestuurder
                 tbl_BestuurderDetails.Text = "Geen overeenkomende resultaten gevonden"; 
             }
              lsv_BestuurdersLijst.ItemsSource = bestuurders;
-        }
-
-        private void btn_Forward_Click(object sender, RoutedEventArgs e)
-        {
-            if (VoertuigPage == null)
-            {
-                VoertuigPage = new VoertuigPage(this);
-            }
-            NavigationService.Navigate(VoertuigPage);
         }
 
         private void lsv_BestuurdersLijst_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -17,7 +17,9 @@ using BusinessLayer.Entities;
 using BusinessLayer.Services;
 using BusinessLayer.StaticData;
 using DataAccessLayer.Repositories;
+using UI.tankkaart;
 using UI.utils;
+using UI.voertuig;
 
 namespace UI.bestuurder
 {
@@ -34,6 +36,7 @@ namespace UI.bestuurder
         }
         public Bestuurder bestuurder;
         HashSet<string> rijbewijzen = new HashSet<string>();
+        bool hasVoertuig = false, hasTankkaart = false;
 
         private void FillWindow(Bestuurder b)
         {
@@ -48,6 +51,31 @@ namespace UI.bestuurder
             dpk_gebDatum.SelectedDate = b.GeboorteDatum;
             cmb_Rijbewijs.ItemsSource = Enum.GetValues(typeof(Rijbewijzen));
             rijbewijzen = b.Rijbewijs.Split("; ").ToHashSet();
+
+            if (b.Voertuig.ChassisNummer != null)
+            {
+                hasVoertuig = true;
+                tbl_Voertuig.Text = $"Merk: {b.Voertuig.Merk}\nBrandstof: {b.Voertuig.Brandstoffen}";
+                btn_Voertuig.Content = "Bewerken.";
+            }
+            else
+            {
+                tbl_Voertuig.Text = "Geen voertuig gevonden.";
+                btn_Voertuig.Content = "Toevoegen";
+            }
+
+            if (b.Tankkaart.KaartNummer != null)
+            {
+                hasTankkaart = true;
+                tbl_Tankkaart.Text = $"Kaartnummer: {b.Tankkaart.KaartNummer.ToString()}\nBrandstof: " 
+                + (string.IsNullOrWhiteSpace(b.Tankkaart.Brandstoffen) ? "Onbekend." : b.Voertuig.Brandstoffen);
+                btn_Tankkaart.Content = "Bewerken";
+            }
+            else
+            {
+                tbl_Tankkaart.Text = "Geen tankkaart gevonden.";
+                btn_Tankkaart.Content = "Toevoegen";
+            }
 
         }
         private static int? TryParseNullable(string val)
@@ -143,6 +171,34 @@ namespace UI.bestuurder
         private void dpk_gebDatum_CalendarOpened(object sender, RoutedEventArgs e)
         {
             Tools.DatePickerOptions(sender, e);
+        }
+
+        private void btn_Voertuig_Click(object sender, RoutedEventArgs e)
+        {
+            if (hasVoertuig)
+            {
+                VoertuigBewerken vb = new VoertuigBewerken();
+                vb.ShowDialog();
+            }
+            else
+            {
+                VoertuigMaken vm = new VoertuigMaken();
+                vm.ShowDialog();
+            }
+        }
+
+        private void btn_Tankkaart_Click(object sender, RoutedEventArgs e)
+        {
+            if (hasTankkaart)
+            {
+                TankkaartBewerken tb = new TankkaartBewerken(bestuurder.Tankkaart);
+                tb.ShowDialog();
+            }
+            else
+            {
+                TankkaartMaken tm = new TankkaartMaken();
+                tm.ShowDialog();
+            }
         }
     }
 }

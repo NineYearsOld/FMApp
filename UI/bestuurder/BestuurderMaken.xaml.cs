@@ -31,7 +31,7 @@ namespace UI.bestuurder
             FillCmbBoxes();
         }
         HashSet<string> rijbewijzen = new HashSet<string>();
-        public Bestuurder b;
+        public Bestuurder bestuurder;
         private void InputValidation(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
@@ -77,8 +77,8 @@ namespace UI.bestuurder
             {
                 if (!Connection.Bestuurder().ExistsBestuurder(0, tbk_Rijksregnr.Text))
                 {
-                    b = Connection.Bestuurder().CreateBestuurder(tbk_Naam.Text, tbk_Voornaam.Text, (DateTime)dpk_gebDatum.SelectedDate, tbl_Rijbewijzen.Text.ToString(), tbk_Rijksregnr.Text, tbk_Gemeente.Text, tbk_Straat.Text, tbk_Huisnummer.Text, TryParseNullable(tbk_Postcode.Text));
-                    tbl_BestuurderDetails.Text = FillDetails(b);
+                    bestuurder = Connection.Bestuurder().CreateBestuurder(tbk_Naam.Text, tbk_Voornaam.Text, (DateTime)dpk_gebDatum.SelectedDate, tbl_Rijbewijzen.Text.ToString(), tbk_Rijksregnr.Text, tbk_Gemeente.Text, tbk_Straat.Text, tbk_Huisnummer.Text, TryParseNullable(tbk_Postcode.Text));
+                    tbl_BestuurderDetails.Text = FillDetails(bestuurder);
                     btn_BestuurderToevoegen.Visibility = Visibility.Hidden;
                     btn_Decision.Content = "Ok";
                 }
