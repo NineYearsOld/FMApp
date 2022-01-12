@@ -67,7 +67,7 @@ namespace UI.voertuig {
         }
 
         private void bestuurder_Click(object sender, RoutedEventArgs e) {
-            new ZoekWindow().ShowDialog();
+            new ZoekWindow(this).ShowDialog();
         }
     }
 }
