@@ -26,20 +26,33 @@ namespace UI.voertuig {
         }
         int x;
         private void Maak_Click(object sender, RoutedEventArgs e) {
-            result.Text = $"Merk: {merk.Text}\nModel: {model.Text}\nChassisnummer: {chassisnr.Text}\nNummerplaat: {nummerplaat.Text}\nBrandstof: {brandstof.Text}\nType wagen: {typewagen.Text}\nKleur: {kleur.Text}\nAantal deuren: {x}\nBestuurder: ";
-            bevestig.Visibility = Visibility.Visible;
+            if (!string.IsNullOrWhiteSpace(merk.Text)&& !string.IsNullOrWhiteSpace(model.Text)&& !string.IsNullOrWhiteSpace(chassisnr.Text)&& !string.IsNullOrWhiteSpace(nummerplaat.Text)&& !string.IsNullOrWhiteSpace(brandstof.Text)&& !string.IsNullOrWhiteSpace(typewagen.Text)) {
+                result.Text = $"Merk: {merk.Text}\nModel: {model.Text}\nChassisnummer: {chassisnr.Text}\nNummerplaat: {nummerplaat.Text}\nBrandstof: {brandstof.Text}\nType wagen: {typewagen.Text}\nKleur: {kleur.Text}\nAantal deuren: {x}\nBestuurder: ";
+                bevestig.Visibility = Visibility.Visible;
+                error.Text = "";
+            } else {
+                bevestig.Visibility = Visibility.Hidden;
+                error.Text = "*Vul de verplichte velden in.";
+                result.Text = "";
+            }
         }
 
         private void bevestig_Click(object sender, RoutedEventArgs e) {
-            var vs = Connection.Voertuig();
-            if (!string.IsNullOrWhiteSpace(kleur.Text) && x != 0) {
-                vs.CreateVoertuig(merk.Text, model.Text, chassisnr.Text, nummerplaat.Text, brandstof.Text, typewagen.Text, kleur.Text, x, null);
-            } else if (string.IsNullOrWhiteSpace(kleur.Text) && x == 0) {
-                vs.CreateVoertuig(merk.Text, model.Text, chassisnr.Text, nummerplaat.Text, brandstof.Text, typewagen.Text, null, null, null);
-            } else if (string.IsNullOrWhiteSpace(kleur.Text)) {
-                vs.CreateVoertuig(merk.Text, model.Text, chassisnr.Text, nummerplaat.Text, brandstof.Text, typewagen.Text, null, x, null);
-            } else if (x == 0) {
-                vs.CreateVoertuig(merk.Text, model.Text, chassisnr.Text, nummerplaat.Text, brandstof.Text, typewagen.Text, kleur.Text, null, null);
+            if (!string.IsNullOrWhiteSpace(merk.Text) && !string.IsNullOrWhiteSpace(model.Text) && !string.IsNullOrWhiteSpace(chassisnr.Text) && !string.IsNullOrWhiteSpace(nummerplaat.Text) && !string.IsNullOrWhiteSpace(brandstof.Text) && !string.IsNullOrWhiteSpace(typewagen.Text)) {
+                var vs = Connection.Voertuig();
+                if (!string.IsNullOrWhiteSpace(kleur.Text) && x != 0) {
+                    vs.CreateVoertuig(merk.Text, model.Text, chassisnr.Text, nummerplaat.Text, brandstof.Text, typewagen.Text, kleur.Text, x, null);
+                } else if (string.IsNullOrWhiteSpace(kleur.Text) && x == 0) {
+                    vs.CreateVoertuig(merk.Text, model.Text, chassisnr.Text, nummerplaat.Text, brandstof.Text, typewagen.Text, null, null, null);
+                } else if (string.IsNullOrWhiteSpace(kleur.Text)) {
+                    vs.CreateVoertuig(merk.Text, model.Text, chassisnr.Text, nummerplaat.Text, brandstof.Text, typewagen.Text, null, x, null);
+                } else if (x == 0) {
+                    vs.CreateVoertuig(merk.Text, model.Text, chassisnr.Text, nummerplaat.Text, brandstof.Text, typewagen.Text, kleur.Text, null, null);
+                }
+            } else {
+                bevestig.Visibility = Visibility.Hidden;
+                error.Text = "*Vul de verplichte velden in.";
+                result.Text = "";
             }
         }
 
@@ -67,7 +80,14 @@ namespace UI.voertuig {
         }
 
         private void bestuurder_Click(object sender, RoutedEventArgs e) {
-            new ZoekWindow(this).ShowDialog();
+            var zw = new ZoekWindow();
+            zw.Owner = this;
+            if (zw.ShowDialog() == true) {
+                bestuurderresult.Text = $"{zw.bestuurder.Naam} {zw.bestuurder.Voornaam}";
+            } else {
+
+            }
+
         }
     }
 }

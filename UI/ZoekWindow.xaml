@@ -8,6 +8,8 @@
         Title="ZoekWindow" Height="450" Width="800"
         Loaded="Window_Loaded">
     <Grid>
+        <TextBlock Name="error" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Frame Name="zoek"/>
+    <Button Name="bevestig" Content="Bevestig" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20" Click="bevestig_Click"/>
     </Grid>
 </Window>

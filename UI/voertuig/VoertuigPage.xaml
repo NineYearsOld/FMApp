@@ -12,6 +12,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            <ColumnDefinition Width="25"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -22,19 +23,21 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Voertuig zoeken" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14"/>
-        <TextBlock Text="Merk" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" FontSize="14"/>
-        <TextBlock Text="Model" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" FontSize="14"/>
-        <TextBlock Text="Nummerplaat" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="3" FontSize="14"/>
+
+        <Border Grid.Row="0" Grid.RowSpan="4" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="LightSlateGray"/>
+        <TextBlock Text="Voertuig zoeken" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14"/>
+        <TextBlock Text="Merk" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" FontSize="14"/>
+        <TextBlock Text="Model" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" FontSize="14"/>
+        <TextBlock Text="Nummerplaat" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="3" FontSize="14"/>
         
-        <TextBox Name="merk" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" FontSize="14" Height="25"/>
-        <TextBox Name="model" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1" FontSize="14" Height="25"/>
-        <TextBox Name="nummerplaat" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="3" Grid.Column="1" FontSize="14" Height="25"/>
+        <TextBox Name="merk" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" FontSize="14" Height="25"/>
+        <TextBox Name="model" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" FontSize="14" Height="25"/>
+        <TextBox Name="nummerplaat" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" FontSize="14" Height="25"/>
         <Button Name="Zoek" Content="Zoek" Width="100" Grid.Row="4" Grid.Column="1" Height="25" FontSize="14" Click="Zoek_Click"/>
         <Label Name="selectie" Grid.Row="5" Grid.ColumnSpan="2" BorderThickness="1" BorderBrush="LightSlateGray">
             <TextBlock Name="details" FontSize="14"/>
         </Label>
-        <ListView Name="lv" Grid.Column="4" Grid.RowSpan="6" Margin="10" SelectionChanged="lv_SelectionChanged">
+        <ListView Name="lv" Grid.Column="4" Grid.RowSpan="6" SelectionChanged="lv_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Merk}" Header="Merk"/>

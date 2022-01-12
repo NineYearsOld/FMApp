@@ -33,5 +33,10 @@ namespace UI.utils
             defaultView.SortDescriptions.Add(sortDescription);
             defaultView.Refresh();
         }
+
+        public static int? TryParseNullable(string val) {
+            int nInt;
+            return int.TryParse(val, out nInt) ? nInt : null;
+        }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.Data.SqlClient;
 using System;
 using System.Data;
 using System.Collections.ObjectModel;
+using DataAccessLayer;
 
 namespace DataAccessLayer.Repositories {
     public class VoertuigRepository : IVoertuigRepository {
@@ -167,7 +168,7 @@ namespace DataAccessLayer.Repositories {
             ObservableCollection<Voertuig> voertuigen = new ObservableCollection<Voertuig>();
 
             string query;
-            string queryMerk = "select top (50) * from dbo.voertuigen where merk like @merk";
+            string queryMerk = "select top (50) * from voertuigen v left join bestuurders b on b.id = v.bestuurderid where merk like @merk";
             string queryModel = "select top (50) * from dbo.voertuigen where model like @model";
             string queryNummerplaat = "select top (50) * from dbo.voertuigen where nummerplaat like @nummerplaat";
             string queryWithModel = " and model like @model";
@@ -206,6 +207,9 @@ namespace DataAccessLayer.Repositories {
                     IDataReader reader = command.ExecuteReader();
                     while (reader.Read()) {
                         Voertuig v = new Voertuig(reader["merk"].ToString(), reader["model"].ToString(), reader["chassisnummer"].ToString(), reader["nummerplaat"].ToString(), reader["brandstof"].ToString(), reader["typewagen"].ToString(), reader.GetNullableString("kleur"), reader.GetNullableInt("aantaldeuren"), reader.GetNullableInt("bestuurderid"));
+                        if (v.BestuurderId != null) {
+                            v.Bestuurder = new Bestuurder(reader["naam"].ToString(), reader.GetNullableString("voornaam"), (DateTime)reader.GetNullableDateTime("geboortedatum"), reader["rijksregisternummer"].ToString(), reader["rijbewijs"].ToString(), reader["gemeente"].ToString(), reader["straat"].ToString(), reader["huisnummer"].ToString(), reader.GetNullableInt("postcode"));
+                        }
                         voertuigen.Add(v);
                     }
                 }

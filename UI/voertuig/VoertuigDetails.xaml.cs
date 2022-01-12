@@ -28,7 +28,11 @@ namespace UI.voertuig {
         Voertuig v;
 
         private void FillText() {
-            result.Text = $"Chassisnummer: {v.ChassisNummer}\nNummerplaat: {v.Nummerplaat}\nMerk: {v.Merk}\nModel: {v.Model}\nBrandstoffen: {v.Brandstoffen}\nType wagen: {v.TypeWagen}\nKleur: {v.Kleur}\nAantal deuren: {v.AantalDeuren}\nBestuurder: ";
+            if (v.BestuurderId != null) {
+                result.Text = $"Chassisnummer: {v.ChassisNummer}\nNummerplaat: {v.Nummerplaat}\nMerk: {v.Merk}\nModel: {v.Model}\nBrandstoffen: {v.Brandstoffen}\nType wagen: {v.TypeWagen}\nKleur: {v.Kleur}\nAantal deuren: "+ (v.AantalDeuren != null ? v.AantalDeuren:"Niet ingevuld")+ $"\nBestuurder: {v.Bestuurder.Naam} {v.Bestuurder.Voornaam}";
+            } else {
+                result.Text = $"Chassisnummer: {v.ChassisNummer}\nNummerplaat: {v.Nummerplaat}\nMerk: {v.Merk}\nModel: {v.Model}\nBrandstoffen: {v.Brandstoffen}\nType wagen: {v.TypeWagen}\nKleur: {v.Kleur}\nAantal deuren: {v.AantalDeuren}\nBestuurder:";
+            }
         }
 
         private void update_Click(object sender, RoutedEventArgs e) {

@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UI.voertuig"
         mc:Ignorable="d"
-        Title="VoertuigBewerken" Height="450" Width="800">
+        Title="VoertuigBewerken" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
     <Grid Margin="20">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -24,12 +25,13 @@
             <RowDefinition/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Merk" FontSize="14" HorizontalAlignment="Left"/>
-        <TextBlock Text="Model" Grid.Row="1" FontSize="14" HorizontalAlignment="Left"/>
-        <TextBlock Text="Chassisnummer" Grid.Row="2" FontSize="14" HorizontalAlignment="Left"/>
-        <TextBlock Text="Nummerplaat" Grid.Row="3" FontSize="14" HorizontalAlignment="Left"/>
-        <TextBlock Text="Brandstof" Grid.Row="4" FontSize="14" HorizontalAlignment="Left"/>
-        <TextBlock Text="Type wagen" Grid.Row="5" FontSize="14" HorizontalAlignment="Left"/>
+        
+        <TextBlock Text="Merk*" FontSize="14" HorizontalAlignment="Left"/>
+        <TextBlock Text="Model*" Grid.Row="1" FontSize="14" HorizontalAlignment="Left"/>
+        <TextBlock Text="Chassisnummer*" Grid.Row="2" FontSize="14" HorizontalAlignment="Left"/>
+        <TextBlock Text="Nummerplaat*" Grid.Row="3" FontSize="14" HorizontalAlignment="Left"/>
+        <TextBlock Text="Brandstof*" Grid.Row="4" FontSize="14" HorizontalAlignment="Left"/>
+        <TextBlock Text="Type wagen*" Grid.Row="5" FontSize="14" HorizontalAlignment="Left"/>
         <TextBlock Text="Kleur" Grid.Row="6" FontSize="14" HorizontalAlignment="Left"/>
         <TextBlock Text="Aantal deuren" Grid.Row="7" FontSize="14" HorizontalAlignment="Left"/>
         <TextBlock Text="Bestuurder" Grid.Row="8" FontSize="14" HorizontalAlignment="Left"/>
@@ -49,9 +51,10 @@
         <Button Name="bestuurder" Content="Zoek" FontSize="14" HorizontalAlignment="Right" Width="100" Height="25" Grid.Row="8"/>
         
         <TextBlock Name="bestuurderresult" FontSize="14" Grid.Row="9"/>
+        <TextBlock Name="error" Grid.Row="10" HorizontalAlignment="Left"/>
         <TextBlock Name="result" FontSize="14" Grid.Column="1" Grid.RowSpan="9" Margin="10"/>
-        <Button Name="back" Content="Annuleer" Grid.Row="10" FontSize="14" Width="100" Height="25" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="back_Click"/>
+        <Button Name="back" Content="Annuleer" Grid.Row="10" Grid.Column="1" FontSize="14" Width="100" Height="25" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="back_Click"/>
         <Button Name="update" Content="Aanpassen" Grid.Row="10" FontSize="14" Width="100" Height="25" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="update_Click"/>
-        <Button Name="bevestig" Content="Bevestig" Grid.Row="10" Grid.Column="1" FontSize="14" Width="100" Height="25" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Hidden" Click="bevestig_Click"/>
+        <Button Name="bevestig" Content="Bevestig" Grid.Row="10" Grid.Column="1" FontSize="14" Width="100" Height="25" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0" Visibility="Hidden" Click="bevestig_Click"/>
     </Grid>
 </Window>

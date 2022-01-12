@@ -34,6 +34,7 @@
         <TextBlock HorizontalAlignment="Left" Text="Kleur" FontSize="14" Grid.Row="6"/>
         <TextBlock HorizontalAlignment="Left" Text="Aantal deuren" FontSize="14" Grid.Row="7"/>
         <TextBlock HorizontalAlignment="Left" Text="Bestuurder" FontSize="14" Grid.Row="8"/>
+        
         <TextBox Name="merk" HorizontalAlignment="Right" VerticalAlignment="Top" Width="250" Height="25" FontSize="14"/>
         <TextBox Name="model" HorizontalAlignment="Right" VerticalAlignment="Top" Width="250" Height="25" FontSize="14" Grid.Row="1"/>
         <TextBox Name="chassisnr" HorizontalAlignment="Right" VerticalAlignment="Top" Width="250" Height="25" FontSize="14" Grid.Row="2"/>
@@ -48,7 +49,9 @@
         </StackPanel>
         <Button Name="bestuurder" Content="Zoek" HorizontalAlignment="Right" Width="100" Height="25" FontSize="14" Grid.Row="8" Click="bestuurder_Click"/>
         <TextBlock Name="bestuurderresult" Grid.Row="9" FontSize="14"/>
+        
         <TextBlock Name="result" FontSize="14" Grid.Column="1" Grid.RowSpan="9" Width="350"/>
+        <TextBlock Name="error" Grid.Row="10" HorizontalAlignment="Left"/>
         <Button Name="Maak" Content="Aanmaken" Grid.Row="10" FontSize="14" HorizontalAlignment="Right" Width="100" Height="25" Click="Maak_Click"/>
         <Button Name="bevestig" Content="Bevestig" Grid.Column="1" Grid.Row="10" FontSize="14" HorizontalAlignment="Left" Margin="20,0" Width="100" Height="25" Visibility="Hidden" Click="bevestig_Click"/>
         <Button Name="annuleer" Content="Annuleer" Grid.Column="1" Grid.Row="10" FontSize="14" HorizontalAlignment="Right" Width="100" Height="25" Click="annuleer_Click"/>
