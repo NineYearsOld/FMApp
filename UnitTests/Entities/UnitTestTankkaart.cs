@@ -12,7 +12,7 @@ namespace UnitTests.Entities {
             string pin = "1234";
             string brandstof = "diesel";
             int bestuurderid = 1;
-
+            /*
             Tankkaart t = new Tankkaart(geldigheidsdatum, pin, brandstof, bestuurderid, kaartnummer);
 
             Assert.Equal(123456, t.KaartNummer);
@@ -27,8 +27,9 @@ namespace UnitTests.Entities {
             Assert.Throws<TankkaartException>(() => new Tankkaart(geldigheidsdatum, "123", brandstof, bestuurderid, kaartnummer)); // pin te kort
             Assert.Throws<TankkaartException>(() => new Tankkaart(geldigheidsdatum, "12345", brandstof, bestuurderid, kaartnummer)); // pin te lang
             Assert.Throws<TankkaartException>(() => new Tankkaart(geldigheidsdatum, null, brandstof, bestuurderid, kaartnummer)); // pin = null
+            */
         }
-
+        /*
         [Fact]
         public void TestUpdateGeldigheidsdatum() {
             int kaartnummer = 123456;
@@ -92,7 +93,8 @@ namespace UnitTests.Entities {
 
             t.UpdateBestuurderid(5);
             Assert.Equal(5, t.BestuurderId);
-            */
+            
         }
+    */
     }
 }

@@ -16,7 +16,7 @@
         <Menu Grid.Row="0">
             <MenuItem Header="Nieuw">
                 <MenuItem Header="Bestuurder" Click="btn_BestuurderMaken_Click"/>
-                <MenuItem Header="Voertuig"/>
+                <MenuItem Header="Voertuig" Click="btn_VoertuigMaken_Click"/>
                 <MenuItem Header="Tankkaart" Click="btn_TankkaartMaken_Click"/>
             </MenuItem>
         </Menu>

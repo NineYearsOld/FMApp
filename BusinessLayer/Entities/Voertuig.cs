@@ -30,6 +30,7 @@ namespace BusinessLayer.Entities {
         public string Kleur { get; private set; }
         public int? AantalDeuren { get; private set; }
         public int? BestuurderId { get; set; }
+        public Bestuurder Bestuurder { get; set; }
 
         public void UpdateMerk(string merk) {
             if (!string.IsNullOrWhiteSpace(merk) && Merk != merk)

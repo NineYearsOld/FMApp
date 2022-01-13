@@ -10,35 +10,58 @@
 
     <Grid Margin="50">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="250"/>
-            <ColumnDefinition />
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="25"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
             <RowDefinition/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+            <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
-        <Button FontFamily="Marlett" x:Name="btn_back" Content="3" Grid.Column="2" Grid.Row="6" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,15,0" ToolTip="Naar bestuurderbeheer." Click="btn_back_Click"/>
-        <Button FontFamily="Marlett" x:Name="btn_Forward" Content="4" Grid.Column="2" Grid.Row="6" HorizontalAlignment="Right" VerticalAlignment="Bottom" ToolTip="Naar tankkaartbeheer." Click="btn_Forward_Click"/>
-        <TextBlock Text="Voertuig zoeken" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14"/>
-        <TextBlock Text="Merk" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" FontSize="14"/>
-        <TextBlock Text="Model" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" FontSize="14"/>
-        <TextBlock Text="Nummerplaat" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="3" FontSize="14"/>
-        <TextBox Name="merk" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" FontSize="14" Width="250" Height="25"/>
-        <TextBox Name="model" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1" FontSize="14" Width="250" Height="25"/>
-        <TextBox Name="nummerplaat" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="3" Grid.Column="1" FontSize="14" Width="250" Height="25"/>
-        <Button Name="Zoek" Content="Zoek" Width="100" Grid.Row="4" Grid.Column="1" Height="30" FontSize="14" Click="Zoek_Click"/>
-        <Label Name="selectie" Grid.Row="5" Grid.Column="1" BorderThickness="1" BorderBrush="LightSlateGray">
+
+        <Border Grid.Row="0" Grid.RowSpan="5" Grid.ColumnSpan="2" BorderThickness="1" BorderBrush="LightSlateGray"/>
+        <TextBlock Text="Voertuig zoeken" HorizontalAlignment="Right" VerticalAlignment="Center" Width="130" FontSize="14"/>
+        <TextBlock Text="Merk" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="1" Width="125" FontSize="14"/>
+        <TextBlock Text="Model" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="2" Width="125" FontSize="14"/>
+        <TextBlock Text="Nummerplaat" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="3" Width="125" FontSize="14"/>
+        
+        <TextBox Name="merk" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Margin="0,0,5,0" FontSize="14" Height="25"/>
+        <TextBox Name="model" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Margin="0,0,5,0" FontSize="14" Height="25"/>
+        <TextBox Name="nummerplaat" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Margin="0,0,5,0" FontSize="14" Height="25"/>
+        <Button Name="Zoek" Content="Zoek" Width="100" Grid.Row="4" Grid.Column="1" Height="25" FontSize="14" Click="Zoek_Click"/>
+        <Label Name="selectie" Grid.Row="6" Grid.ColumnSpan="2" BorderThickness="1" BorderBrush="LightSlateGray">
             <TextBlock Name="details" FontSize="14"/>
         </Label>
-        <ListView Name="lv" Grid.Column="2" Grid.Row="1" Grid.RowSpan="5" Margin="10" SelectionChanged="lv_SelectionChanged">
-
+        <ListView Name="lv" Grid.Column="4" Grid.RowSpan="7" SelectionChanged="lv_SelectionChanged" GridViewColumnHeader.Click="lv_Click">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Merk}" Header="Merk" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Model}" Header="Model" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Nummerplaat}" Header="Nummerplaat" Width="100"/>
+                </GridView>
+            </ListView.View>
         </ListView>
-        <Button Name="detailview" Content="Details" Grid.Row="6" Grid.Column="1" Width="100" Height="25" FontSize="14" Visibility="Hidden" Click="detailview_Click"/>
+        <Button x:Name="detailview" Content="Details" VerticalAlignment="Bottom" Grid.Row="6" Margin="10" Grid.Column="1" Width="100" Height="25" FontSize="14" Visibility="Hidden" Click="detailview_Click"/>
     </Grid>
+    <Page.Resources>
+        <DataTemplate x:Key="HeaderTemplateArrowUp">
+            <DockPanel LastChildFill="True" Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type GridViewColumnHeader}}}">
+                <Path x:Name="arrowUp" StrokeThickness="1" Fill="Gray" Data="M 5,10 L 15,10 L 10,5 L 5,10" DockPanel.Dock="Right" Width="20" HorizontalAlignment="Right" Margin="5,0,5,0" SnapsToDevicePixels="True"/>
+                <TextBlock Text="{Binding }" />
+            </DockPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="HeaderTemplateArrowDown">
+            <DockPanel LastChildFill="True" Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type GridViewColumnHeader}}}">
+                <Path x:Name="arrowDown" StrokeThickness="1" Fill="Gray"  Data="M 5,5 L 10,10 L 15,5 L 5,5" DockPanel.Dock="Right" Width="20" HorizontalAlignment="Right" Margin="5,0,5,0" SnapsToDevicePixels="True"/>
+                <TextBlock Text="{Binding }" />
+            </DockPanel>
+        </DataTemplate>
+    </Page.Resources>
 </Page>
