@@ -116,7 +116,7 @@ namespace DataAccessLayer.Repositories {
 
         public void UpdateVoertuig(Voertuig voertuig, string chassisnummer) {
             if (ExistsVoertuig(chassisnummer)) {
-                string query = "update dbo.voertuigen set merk = @merk, model = @model, nummerplaat = @nummerplaat, brandstof = @brandstof, typewagen = @typewagen, kleur = @kleur, aantaldeuren = @aantaldeuren, bestuurderId = bestuurderId where chassisnummer=@chassisnummer";
+                string query = "update dbo.voertuigen set merk = @merk, model = @model, nummerplaat = @nummerplaat, brandstof = @brandstof, typewagen = @typewagen, kleur = @kleur, aantaldeuren = @aantaldeuren, bestuurderId = @bestuurderId where chassisnummer=@chassisnummer";
                 SqlConnection connection = getConnection();
                 using (SqlCommand command = new SqlCommand(query, connection)) {
                     try {

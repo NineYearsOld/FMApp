@@ -50,6 +50,7 @@ namespace UI.voertuig {
                 } else if (x == 0) {
                     vs.CreateVoertuig(merk.Text, model.Text, chassisnr.Text, nummerplaat.Text, brandstof.Text, typewagen.Text, kleur.Text, null, null);
                 }
+                DialogResult = true;
             } else {
                 bevestig.Visibility = Visibility.Hidden;
                 error.Text = "*Vul de verplichte velden in.";
@@ -81,17 +82,13 @@ namespace UI.voertuig {
         }
         public BestuurderPage bp;
         private void bestuurder_Click(object sender, RoutedEventArgs e) {
-            bp = new BestuurderPage();
-            bp.btnOpties.Visibility = Visibility.Hidden;
             var bz = new BestuurderZoeken();
-            bz.Title = "BestuurderZoeken";
             bz.Owner = this;
             if (bz.ShowDialog() == true) {
                 bestuurderresult.Text = $"{bz.bestuurder.Naam} {bz.bestuurder.Voornaam}";
             } else {
                 bestuurderresult.Text = "Zoekopdracht geannulleerd";
             }
-
         }
     }
 }

@@ -9,15 +9,15 @@ using BusinessLayer.Exceptions;
 namespace BusinessLayer.Entities {
     public class Voertuig {
         public Voertuig(string merk, string model, string chassisNummer, string nummerplaat, string brandstoffen, string typeWagen, string kleur, int? aantalDeuren = null, int? bestuurdeId = null) {
-            Merk = merk;
-            Model = model;
-            ChassisNummer = chassisNummer;
-            Nummerplaat = nummerplaat;
-            Brandstoffen = brandstoffen;
-            TypeWagen = typeWagen;
-            Kleur = kleur;
-            AantalDeuren = aantalDeuren;
-            BestuurderId = bestuurdeId;
+            UpdateMerk(merk);
+            UpdateModel(model);
+            UpdateChassisnummer(chassisNummer);
+            UpdateNummerplaat(nummerplaat);
+            UpdateBrandstoffen(brandstoffen);
+            UpdateTypeWagen(typeWagen);
+            UpdateKleur(kleur);
+            UpdateAantalDeuren(aantalDeuren);
+            UpdateBestuurderId(bestuurdeId);
         }
 
         public string Merk { get; private set; }
@@ -32,50 +32,50 @@ namespace BusinessLayer.Entities {
         public Bestuurder Bestuurder { get; set; }
 
         public void UpdateMerk(string merk) {
-            if (!string.IsNullOrWhiteSpace(merk)) {
+            if (!string.IsNullOrWhiteSpace(merk) || merk == null) {
                 Merk = merk;
             } else {
-                throw new BestuurderException("Merk is verplicht.");
+                throw new VoertuigException("Merk is verplicht.");
             }
         }
 
         public void UpdateModel(string model) {
-            if (!string.IsNullOrWhiteSpace(model)) {
+            if (!string.IsNullOrWhiteSpace(model) || model == null) {
                 Model = model;
             } else {
-                throw new BestuurderException("Model is verplicht.");
+                throw new VoertuigException("Model is verplicht.");
             }
         }
 
-        public void UpdateChassisnummer(string chassisnr) {
-            if (!string.IsNullOrWhiteSpace(chassisnr)) {
+        private void UpdateChassisnummer(string chassisnr) {
+            if (!string.IsNullOrWhiteSpace(chassisnr) || chassisnr == null) {
                 ChassisNummer = chassisnr;
             } else {
-                throw new BestuurderException("Chassisnummer is verplicht.");
+                throw new VoertuigException("Chassisnummer is verplicht.");
             }
         }
 
         public void UpdateNummerplaat(string nummerplaat) {
-            if (!string.IsNullOrWhiteSpace(nummerplaat)) {
+            if (!string.IsNullOrWhiteSpace(nummerplaat) || nummerplaat == null) {
                 Nummerplaat = nummerplaat;
             } else {
-                throw new BestuurderException("Nummerplaat is verplicht.");
+                throw new VoertuigException("Nummerplaat is verplicht.");
             }
         }
 
         public void UpdateBrandstoffen(string brandstoffen) {
-            if (!string.IsNullOrWhiteSpace(brandstoffen)) {
+            if (!string.IsNullOrWhiteSpace(brandstoffen) || brandstoffen == null) {
                 Brandstoffen = brandstoffen;
             } else {
-                throw new BestuurderException("Brandstof is verplicht.");
+                throw new VoertuigException("Brandstof is verplicht.");
             }
         }
 
         public void UpdateTypeWagen(string typewagen) {
-            if (!string.IsNullOrWhiteSpace(typewagen)) {
+            if (!string.IsNullOrWhiteSpace(typewagen) || typewagen == null) {
                 TypeWagen = typewagen;
             } else {
-                throw new BestuurderException("Type wagen is verplicht.");
+                throw new VoertuigException("Type wagen is verplicht.");
             }
         }
 
@@ -84,11 +84,19 @@ namespace BusinessLayer.Entities {
         }
 
         public void UpdateAantalDeuren(int? deuren) {
-            AantalDeuren = deuren;
+            if (deuren > -1 || deuren == null) {
+                AantalDeuren = deuren;
+            } else {
+                throw new VoertuigException("Aantal deuren kan niet negatief zijn.");
+            }
         }
 
         public void UpdateBestuurderId(int? bid) {
-            BestuurderId = bid;
+            if (bid > -1 || bid == null) {
+                BestuurderId = bid;
+            } else {
+                throw new VoertuigException("Bestuurderid kan niet negatief zijn.");
+            }
         }
 
         public void UpdateBestuurder(Bestuurder bestuurder) {

@@ -96,5 +96,8 @@
             </ListView.View>
         </ListView>
         <TextBlock Grid.Row="5" Grid.ColumnSpan="3" x:Name="tbl_Result" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Name="select" Content="Select" Grid.Row="6" Grid.ColumnSpan="3" Width="100" Click="select_Click"/>
+        <Button Name="selectnull" Content="Select Null" HorizontalAlignment="Left" Grid.Row="6" Width="100" Click="selectnull_Click"/>
+        <Button Name="cancel" Content="Annuleer" HorizontalAlignment="Right" Grid.Row="6" Grid.Column="2" Width="100" Click="cancel_Click"/>
     </Grid>
 </Window>

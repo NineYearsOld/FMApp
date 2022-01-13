@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using UI.bestuurder;
 using UI.utils;
 
 namespace UI.voertuig {
@@ -45,7 +46,11 @@ namespace UI.voertuig {
             kleur.Text = v.Kleur;
             x = v.AantalDeuren;
             deuren.Text = x.ToString();
-            //BESTUURDER
+            if (v.BestuurderId!=null) {
+                bestuurderresult.Text = $"{v.Bestuurder.Naam} {v.Bestuurder.Voornaam} \n{v.Bestuurder.RijksregisterNummer}";
+            } else {
+                bestuurderresult.Text = "Geen bestuurder gekoppeld";
+            }
         }
 
         private void update_Click(object sender, RoutedEventArgs e) {
@@ -66,6 +71,7 @@ namespace UI.voertuig {
                 string cnr = v.ChassisNummer;
                 v = new Voertuig(merk.Text, model.Text, chassisnr.Text, nummerplaat.Text, brandstof.Text, typewagen.Text, kleur.Text, x, null);
                 vs.UpdateVoertuig(v, cnr);
+                DialogResult = true;
             } else {
                 result.Text = "";
                 bevestig.Visibility = Visibility.Hidden;
@@ -88,6 +94,20 @@ namespace UI.voertuig {
             if (x > 0) {
                 x--;
                 deuren.Text = x.ToString();
+            }
+        }
+
+        private void bestuurder_Click(object sender, RoutedEventArgs e) {
+            var bz = new BestuurderZoeken();
+            bz.Owner = this;
+            if (bz.ShowDialog() == true) {
+                if (bz.bestuurder != null) {
+                    v.Bestuurder = bz.bestuurder;
+                    v.BestuurderId = bz.bestuurder.Id;
+                    bestuurderresult.Text = $"{v.Bestuurder.Naam} {v.Bestuurder.Voornaam}\n{v.Bestuurder.RijksregisterNummer}";
+                }
+            } else {
+                bestuurderresult.Text = "Zoekopdracht geannuleerd";
             }
         }
     }

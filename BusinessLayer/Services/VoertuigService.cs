@@ -24,7 +24,7 @@ namespace BusinessLayer.Services {
         public Voertuig CreateVoertuig(string merk, string model, string chassisNummer, string nummerplaat, string brandstof, string typeWagen, string kleur, int? aantalDeuren, int? bestuurderId) {
             try {
                 if (!string.IsNullOrWhiteSpace(merk) && !string.IsNullOrWhiteSpace(model) && !string.IsNullOrWhiteSpace(chassisNummer) && !string.IsNullOrWhiteSpace(nummerplaat) && !string.IsNullOrWhiteSpace(brandstof) && !string.IsNullOrWhiteSpace(typeWagen)) {
-                    Voertuig v = new Voertuig(merk, model, chassisNummer, nummerplaat, brandstof, typeWagen, kleur, aantalDeuren, bestuurderId);
+                    Voertuig v = new Voertuig(merk, model, chassisNummer, nummerplaat, brandstof, typeWagen, (kleur != null ? kleur : ""), (aantalDeuren!=null? aantalDeuren:0), (bestuurderId != null ? bestuurderId : null));
                     repo.CreateVoertuig(v);
                     return v;
                 } else {

@@ -102,5 +102,24 @@ namespace UI.bestuurder
         {
             bestuurder = (Bestuurder)lsv_BestuurdersLijst.SelectedItem;
         }
+
+        private void select_Click(object sender, RoutedEventArgs e) {
+            if (lsv_BestuurdersLijst.SelectedIndex > -1) {
+                bestuurder = (Bestuurder)lsv_BestuurdersLijst.SelectedItem;
+                DialogResult = true;
+                this.Close();
+            }
+        }
+
+        private void selectnull_Click(object sender, RoutedEventArgs e) {
+            bestuurder = null;
+            DialogResult = true;
+            this.Close();
+        }
+
+        private void cancel_Click(object sender, RoutedEventArgs e) {
+            DialogResult = false;
+            this.Close();
+        }
     }
 }
