@@ -20,6 +20,7 @@ namespace BusinessLayer.Entities {
         public string Pincode { get; private set; }
         public string Brandstoffen { get; set; }
         public int? BestuurderId { get; set; }
+
         public DateTime? UpdateGeldigheidsdatum(DateTime? geldigheid) {
             if (DateTime.Now < geldigheid || geldigheid == null) {
                 GeldigheidsDatum = geldigheid;
