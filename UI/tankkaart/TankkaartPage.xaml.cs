@@ -66,6 +66,7 @@ namespace UI.tankkaart
             }
             if (cmb_ZoekenOpBrandstof.SelectedIndex > -1)
             {
+                brandstof = cmb_ZoekenOpBrandstof.SelectedValue.ToString();
                 goForIt = true;
             }
             if (dpk_ZoekenOpGeldigheid.SelectedDate != null)
@@ -77,6 +78,8 @@ namespace UI.tankkaart
             if (goForIt==true)
             {
                 tankkaarten = Connection.Tankkaart().FetchBestuurders(kaartnummer, brandstof, textDate);
+                lsv_TankkaartLijst.ItemsSource = tankkaarten;
+
                 if (tankkaarten.Count == 0)
                 {
                     tbl_Details.Text = "Geen overeenkomende resultaten gevonden";
@@ -87,7 +90,6 @@ namespace UI.tankkaart
                 tbl_Details.Text = "Gelieve een zoekparameter in te geven.";
             }
 
-            lsv_TankkaartLijst.ItemsSource = tankkaarten;
         }
 
         private void lsv_TankkaartLijst_SelectionChanged(object sender, SelectionChangedEventArgs e)
