@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Entities;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,5 +14,7 @@ namespace BusinessLayer.Interfaces
         void CreateTankkaart(Tankkaart tankkaart);
         void DeleteTankkaart(int kaartnummer);
         void UpdateTankkaart(Tankkaart tankkaart);
+        ObservableCollection<Tankkaart> FetchTankkaarten(string kaartnummer, string brandstof, string geldigheid);
+
     }
 }

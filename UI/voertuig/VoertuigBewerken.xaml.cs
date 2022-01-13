@@ -27,7 +27,7 @@ namespace UI.voertuig {
             LoadCBData();
             FillData();
         }
-        Voertuig v;
+        public Voertuig v;
         int? x;
 
         private void LoadCBData() {

@@ -16,7 +16,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using UI.tankkaart;
 using UI.utils;
+using UI.voertuig;
 
 namespace UI.bestuurder
 {
@@ -33,6 +35,7 @@ namespace UI.bestuurder
         HashSet<string> rijbewijzen = new HashSet<string>();
         public Bestuurder bestuurder;
 
+
         private string FillDetails(Bestuurder b)
         {
             string postcode = null;
@@ -47,6 +50,18 @@ namespace UI.bestuurder
                 + (string.IsNullOrWhiteSpace(b.Gemeente) ? "n/a gemeente" : b.Gemeente + ", ")
                 + (string.IsNullOrWhiteSpace(postcode) ? "n/a postcode" : "(" + b.Postcode + ")");
             return result;
+        }
+        private void FillTankkaartField(Tankkaart t)
+        {
+            tbl_Tankkaart.Text = $"Kaartnummer: {t.KaartNummer.ToString()}\nBrandstof: "
+            + (string.IsNullOrWhiteSpace(t.Brandstoffen) ? "Onbekend." : t.Brandstoffen);
+        }
+        private void FillVoertuigField(Voertuig v)
+        {
+            if (v.ChassisNummer != null)
+            {
+                tbl_Voertuig.Text = $"Nummerplaat: {v.Nummerplaat}\nMerk: {v.Merk} {v.Model}";
+            }
         }
         private static int? TryParseNullable(string val)
         {
@@ -142,6 +157,23 @@ namespace UI.bestuurder
         private void dpk_gebDatum_CalendarOpened(object sender, RoutedEventArgs e)
         {
             Tools.DatePickerOptions(sender, e);
+        }
+        private void btn_Voertuig_Click(object sender, RoutedEventArgs e)
+        {
+            VoertuigMaken vm = new VoertuigMaken();
+            if (vm.ShowDialog() == true)
+            {
+                DialogResult = true;
+            }
+        }
+
+        private void btn_Tankkaart_Click(object sender, RoutedEventArgs e)
+        {
+            TankkaartMaken tm = new TankkaartMaken(bestuurder.Id);
+            if (tm.ShowDialog() == true)
+            {
+                DialogResult = true;
+            }
         }
     }
 }

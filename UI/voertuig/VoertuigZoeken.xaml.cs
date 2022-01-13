@@ -25,7 +25,7 @@ namespace UI.voertuig {
         }
         GridViewColumnHeader lastHeaderClicked = null;
         ListSortDirection lastDirection = ListSortDirection.Ascending;
-        Voertuig voertuig;
+        public Voertuig voertuig;
 
         private void Zoek_Click(object sender, RoutedEventArgs e) {
             select.IsEnabled = false;

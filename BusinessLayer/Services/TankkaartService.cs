@@ -2,6 +2,7 @@
 using BusinessLayer.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,6 +58,18 @@ namespace BusinessLayer.Services
             try
             {
                 repo.UpdateTankkaart(tankkaart);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public ObservableCollection<Tankkaart> FetchBestuurders(string kaartnummer, string brandstof, string geldigheid)
+        {
+            try
+            {
+                return repo.FetchTankkaarten(kaartnummer, brandstof, geldigheid);
             }
             catch (Exception)
             {

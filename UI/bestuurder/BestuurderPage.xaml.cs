@@ -102,7 +102,7 @@ namespace UI.bestuurder
             DateTime date;
             string textDate = string.Empty;
             string naam = (tbk_ZoekenOpNaam.Text).Trim();
-            string voornaam = tbk_ZoekenOpVoornaam.Text;
+            string voornaam = (tbk_ZoekenOpVoornaam.Text).Trim();
             if (dpk_ZoekenOpGeboortedatum.SelectedDate != null)
             {
                 date = (DateTime)dpk_ZoekenOpGeboortedatum.SelectedDate;

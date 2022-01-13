@@ -34,12 +34,13 @@ namespace UI.bestuurder
             bestuurder = b;
             oldBestuurder = b;
             FillWindow(b);
+            FillVoertuigField(b.Voertuig);
             FillTankkaartField(b.Tankkaart);
         }
         private Bestuurder oldBestuurder;
         public Bestuurder bestuurder;
         HashSet<string> rijbewijzen = new HashSet<string>();
-        bool hasTankkaart = false, changedTankkaart = false;
+        bool hasTankkaart = false, changedTankkaart = false, hasVoertuig = false, changedVoeruig = false;
 
         private void FillWindow(Bestuurder b)
         {
@@ -69,6 +70,19 @@ namespace UI.bestuurder
             {
                 tbl_Tankkaart.Text = "Geen tankkaart gevonden.";
                 btn_Tankkaart.Content = "Toevoegen";
+            }
+        }
+        private void FillVoertuigField(Voertuig v)
+        {
+            if (v.ChassisNummer != null)
+            {
+                hasVoertuig = true;
+                tbl_Voertuig.Text = $"Nummerplaat: {v.Nummerplaat}\nMerk: {v.Merk} {v.Model}";
+            }
+            else
+            {
+                tbl_Voertuig.Text = "Geen voertuig gevonden.";
+                btn_Voertuig.Content = "Toevoegen";
             }
         }
         private static int? TryParseNullable(string val)
@@ -171,6 +185,28 @@ namespace UI.bestuurder
         private void dpk_gebDatum_CalendarOpened(object sender, RoutedEventArgs e)
         {
             Tools.DatePickerOptions(sender, e);
+        }
+
+        private void btn_Voertuig_Click(object sender, RoutedEventArgs e)
+        {
+            if (hasVoertuig)
+            {
+                VoertuigBewerken vb = new VoertuigBewerken(bestuurder.Voertuig);
+                if (vb.ShowDialog() == true)
+                {
+                    changedVoeruig = true;
+                    bestuurder.Voertuig = vb.v;
+                    FillVoertuigField(vb.v);
+                }
+            }
+            else
+            {
+                VoertuigMaken vm = new VoertuigMaken();
+                if (vm.ShowDialog() == true)
+                {
+                    changedVoeruig = true;
+                }
+            }
         }
 
         private void btn_Tankkaart_Click(object sender, RoutedEventArgs e)

@@ -4,6 +4,7 @@ using BusinessLayer.StaticData;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 
 namespace DataAccessLayer.Repositories {
@@ -119,6 +120,7 @@ namespace DataAccessLayer.Repositories {
             else throw new Exception("Bestuurder id bestaat niet.");
         }
 
+
         public void UpdateTankkaart(Tankkaart tankkaart) { // Nog uit te werken
             if (ExistsTankkaart(tankkaart.KaartNummer))
             {
@@ -160,6 +162,74 @@ namespace DataAccessLayer.Repositories {
             }
             else throw new Exception("Tankkaart id bestaat niet.");       
         }
-    }
-}
+        public ObservableCollection<Tankkaart> FetchTankkaarten(string kaartnummer, string brandstof, string geldigheid)
+        {
+            ObservableCollection<Tankkaart> tankkaarten = new ObservableCollection<Tankkaart>();
 
+            string query = "";
+            string queryKaartnummer = "select top (50) * from tankkaarten where kaartnummer like @kaartnummer";
+            string queryBrandstof = "select top (50) * from tankkaarten where brandstof like @brandstof";
+            string queryGeldigheid = "select top(50) * from tankkaarten where geldigheidsdatum like @geldigheidsdatum";
+            string queryWithBrandstof = " and brandstof like @brandstof";
+            string queryWithGeldigheid = " and geldigheidsdatum like @geldigheidsdatum";
+
+
+            if (!string.IsNullOrWhiteSpace(kaartnummer) && !string.IsNullOrWhiteSpace(brandstof) && !string.IsNullOrWhiteSpace(geldigheid))
+            {
+                query = queryKaartnummer + queryWithBrandstof + queryWithGeldigheid;
+            }
+            else if (!string.IsNullOrWhiteSpace(kaartnummer) && !string.IsNullOrWhiteSpace(brandstof))
+            {
+                query = queryKaartnummer + queryWithBrandstof;
+            }
+            else if (!string.IsNullOrWhiteSpace(kaartnummer) && !string.IsNullOrWhiteSpace(geldigheid))
+            {
+                query = queryKaartnummer + queryWithGeldigheid;
+            }
+            else if (!string.IsNullOrWhiteSpace(brandstof) && !string.IsNullOrWhiteSpace(geldigheid))
+            {
+                query = queryBrandstof + queryWithGeldigheid;
+            }
+            else if (!string.IsNullOrWhiteSpace(kaartnummer))
+            {
+                query = queryKaartnummer;
+            }
+            else if (!string.IsNullOrWhiteSpace(brandstof))
+            {
+                query = queryBrandstof;
+            }
+            else if (!string.IsNullOrWhiteSpace(geldigheid))
+            {
+                query = queryGeldigheid;
+            }
+
+            SqlConnection connection = getConnection();
+
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                try
+                {                    
+                    connection.Open();
+                    command.Parameters.AddWithValue("kaartnummer", kaartnummer);
+                    command.Parameters.AddWithValue("brandstof", brandstof);
+                    command.Parameters.AddWithValue("geldigheidsdatum", geldigheid);
+                    IDataReader reader = command.ExecuteReader();
+                    do
+                    {
+                        while (reader.Read())
+                        {
+                            Tankkaart tk = new Tankkaart((DateTime)reader["geldigheidsdatum"], reader.GetNullableString("pincode"), reader.GetNullableString("brandstof"), reader.GetNullableInt("bestuurderid"));
+                            tankkaarten.Add(tk);
+                        }
+                    } while (reader.NextResult());
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+
+            return tankkaarten;
+        }
+}
+}   
